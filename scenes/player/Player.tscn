@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://datasoul_player"]
+
+[ext_resource type="Script" path="res://scripts/player/PlayerController.cs" id="1_ctrl"]
+[ext_resource type="Script" path="res://scripts/player/PlayerCamera.cs" id="2_cam"]
+[ext_resource type="Script" path="res://scripts/player/PlayerCombat.cs" id="3_combat"]
+[ext_resource type="Script" path="res://scripts/player/PlayerStats.cs" id="4_stats"]
+[ext_resource type="Script" path="res://scripts/systems/DataGauge.cs" id="5_gauge"]
+[ext_resource type="Script" path="res://scripts/player/DataAbsorption.cs" id="6_absorb"]
+[ext_resource type="Script" path="res://scripts/systems/SkillSystem.cs" id="7_skills"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_Player"]
+albedo_color = Color(0.5, 0.2, 0.8, 1)
+
+[sub_resource type="SphereShape3D" id="HitboxShape"]
+radius = 1.2
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_ctrl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1")
+surface_material_override/0 = SubResource("Mat_Player")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="HitboxArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxArea"]
+shape = SubResource("HitboxShape")
+disabled = false
+
+[node name="PlayerCamera" type="Node3D" parent="."]
+script = ExtResource("2_cam")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="PlayerCamera"]
+spring_length = 5.0
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="PlayerCamera/SpringArm3D"]
+fov = 75.0
+
+[node name="PlayerCombat" type="Node" parent="."]
+script = ExtResource("3_combat")
+
+[node name="PlayerStats" type="Node" parent="."]
+script = ExtResource("4_stats")
+
+[node name="DataGauge" type="Node" parent="."]
+script = ExtResource("5_gauge")
+
+[node name="DataAbsorption" type="Node" parent="."]
+script = ExtResource("6_absorb")
+
+[node name="SkillSystem" type="Node" parent="."]
+script = ExtResource("7_skills")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

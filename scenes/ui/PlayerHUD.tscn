@@ -1,0 +1,189 @@
+[gd_scene load_steps=2 format=3 uid="uid://datasoul_hud"]
+
+[ext_resource type="Script" path="res://scripts/ui/HUDController.cs" id="1_hud"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+layer = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TopLeft" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/TopLeft"]
+text = "LVL 1"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="HPBar" type="ProgressBar" parent="MarginContainer/TopLeft"]
+custom_minimum_size = Vector2(200, 18)
+max_value = 100.0
+value = 100.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp")
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="MarginContainer/TopLeft"]
+text = "HP"
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+
+[node name="DataGaugeBar" type="ProgressBar" parent="MarginContainer/TopLeft"]
+custom_minimum_size = Vector2(200, 14)
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="DataLabel" type="Label" parent="MarginContainer/TopLeft"]
+text = "DATA GAUGE"
+theme_override_colors/font_color = Color(0.2, 0.8, 1.0, 1)
+
+[node name="CompanionHP" type="ProgressBar" parent="."]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -50.0
+offset_right = 212.0
+offset_bottom = -32.0
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="CompanionLabel" type="Label" parent="."]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 1.0
+offset_left = 12.0
+offset_top = -65.0
+offset_right = 150.0
+offset_bottom = -50.0
+text = "LYRA"
+theme_override_colors/font_color = Color(0.7, 0.85, 1.0, 1)
+
+[node name="SkillBar" type="HBoxContainer" parent="."]
+anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -70.0
+offset_right = 110.0
+offset_bottom = -10.0
+
+[node name="Slot1" type="Panel" parent="SkillBar"]
+custom_minimum_size = Vector2(50, 50)
+
+[node name="SlotLabel" type="Label" parent="SkillBar/Slot1"]
+text = "1"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Slot1"]
+text = ""
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Slot2" type="Panel" parent="SkillBar"]
+custom_minimum_size = Vector2(50, 50)
+
+[node name="SlotLabel" type="Label" parent="SkillBar/Slot2"]
+text = "2"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Slot2"]
+text = ""
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Slot3" type="Panel" parent="SkillBar"]
+custom_minimum_size = Vector2(50, 50)
+
+[node name="SlotLabel" type="Label" parent="SkillBar/Slot3"]
+text = "3"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Slot3"]
+text = ""
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Slot4" type="Panel" parent="SkillBar"]
+custom_minimum_size = Vector2(50, 50)
+
+[node name="SlotLabel" type="Label" parent="SkillBar/Slot4"]
+text = "4"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Slot4"]
+text = ""
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="AbsorptionPopup" type="Label" parent="."]
+anchors_preset = 0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -20.0
+offset_right = -10.0
+offset_bottom = 20.0
+text = "[Fragment] absorbed!"
+theme_override_colors/font_color = Color(0.2, 1.0, 0.6, 1)
+visible = false
+
+[node name="OverloadWarning" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(1, 0, 0, 0.15)
+mouse_filter = 2
+visible = false

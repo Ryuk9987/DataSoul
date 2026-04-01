@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_firewallnode"]
+
+[ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Firewall"]
+albedo_color = Color(0.1, 0.1, 0.6, 1)
+
+[node name="FirewallNode" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_ai")
+MaxHp = 25.0
+Atk = 8.0
+Def = 5.0
+Spd = 0.0
+AggroRange = 10.0
+IsStationary = true
+IsRanged = true
+RangedRange = 12.0
+ProjectileCooldown = 2.0
+SkillDropId = "common_electro_resistance"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+surface_material_override/0 = SubResource("Mat_Firewall")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -12)

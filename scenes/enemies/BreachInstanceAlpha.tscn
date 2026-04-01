@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://datasoul_boss"]
+
+[ext_resource type="Script" path="res://scripts/enemies/BreachInstanceAlpha.cs" id="1_boss"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.6
+height = 2.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+radius = 0.6
+height = 2.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_Boss"]
+albedo_color = Color(0.9, 0.1, 0.2, 1)
+emission_enabled = true
+emission = Color(0.5, 0.0, 0.1, 1)
+emission_energy_multiplier = 1.5
+
+[node name="BreachInstanceAlpha" type="CharacterBody3D" groups=["enemies", "boss"]]
+script = ExtResource("1_boss")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1")
+surface_material_override/0 = SubResource("Mat_Boss")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

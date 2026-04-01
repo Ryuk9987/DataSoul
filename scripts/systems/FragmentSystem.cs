@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class FragmentSystem : Node
@@ -10,7 +9,6 @@ public partial class FragmentSystem : Node
 
     public override void _Ready()
     {
-        // Initialization if needed
     }
 
     public void AbsorbSkill(string skillId)
@@ -18,3 +16,23 @@ public partial class FragmentSystem : Node
         if (SkillLevels.ContainsKey(skillId))
         {
             SkillLevels[skillId] = Mathf.Min(SkillLevels[skillId] + 1, 10);
+        }
+        else
+        {
+            SkillLevels[skillId] = 1;
+        }
+
+        int newLevel = SkillLevels[skillId];
+        EmitSignal(SignalName.SkillAbsorbed, skillId, newLevel);
+    }
+
+    public int GetSkillLevel(string skillId)
+    {
+        return SkillLevels.TryGetValue(skillId, out int level) ? level : 0;
+    }
+
+    public bool HasSkill(string skillId)
+    {
+        return SkillLevels.ContainsKey(skillId) && SkillLevels[skillId] > 0;
+    }
+}

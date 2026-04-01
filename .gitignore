@@ -1,0 +1,15 @@
+# Godot
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# C# / .NET
+.mono/
+obj/
+bin/
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

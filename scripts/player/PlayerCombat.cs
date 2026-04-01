@@ -127,7 +127,7 @@ public partial class PlayerCombat : Node
         _hitThisAttack.Clear();
 
         float baseDamage = (_stats?.Attack ?? 10f) * multiplier;
-        var origin = _controller?.GlobalPosition ?? GlobalPosition;
+        var origin = _controller?.GlobalPosition ?? Vector3.Zero;
         var forward = -(_controller?.Transform.Basis.Z ?? Vector3.Forward);
 
         // Sphere cast in front of player
@@ -174,7 +174,7 @@ public partial class PlayerCombat : Node
         if (_skillCooldown > 0) return;
         _skillCooldown = SKILL_COOLDOWN;
 
-        var origin = _controller?.GlobalPosition ?? GlobalPosition;
+        var origin = _controller?.GlobalPosition ?? Vector3.Zero;
         var spaceState = _controller?.GetWorld3D()?.DirectSpaceState;
         if (spaceState == null) return;
 

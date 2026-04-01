@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://datasoul_hud"]
+[gd_scene load_steps=1 format=3 uid="uid://datasoul_hud"]
 
 [ext_resource type="Script" path="res://scripts/ui/HUDController.cs" id="1_hud"]
 
@@ -29,7 +29,6 @@ custom_minimum_size = Vector2(200, 18)
 max_value = 100.0
 value = 100.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/fill = SubResource("StyleBoxFlat_hp")
 show_percentage = false
 
 [node name="HPLabel" type="Label" parent="MarginContainer/TopLeft"]

@@ -71,10 +71,11 @@ public partial class PlayerCombat : Node
         if (lightPressed) HandleLightAttack();
         else if (heavyPressed) HandleHeavyAttack();
 
-        // Skill inputs
+        // Skill inputs (only skill_1 and skill_2 are defined in project.godot)
         for (int i = 0; i < 4; i++)
         {
-            if (Input.IsActionJustPressed($"skill_{i + 1}"))
+            string actionName = $"skill_{i + 1}";
+            if (InputMap.HasAction(actionName) && Input.IsActionJustPressed(actionName))
                 GetParent().GetNodeOrNull<SkillSystem>("SkillSystem")?.UseSkill(i);
         }
     }

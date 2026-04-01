@@ -86,7 +86,7 @@ public partial class PlayerController : CharacterBody3D
             }
 
             // Block
-            IsBlocking = Input.IsActionPressed("block");
+            IsBlocking = Input.IsActionPressed("block", true);
 
             // Dodge
             if (Input.IsActionJustPressed("dodge") && !(_combat?.IsAttacking ?? false))

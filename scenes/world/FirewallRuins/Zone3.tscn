@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://datasoul_zone3"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/DataWraith.tscn" id="1_wraith"]
+[ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallTerminal.tscn" id="3_terminal"]
+[ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(35, 0.5, 35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(35, 0.5, 35)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.08, 0.08, 0.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall"]
+size = Vector3(6, 4, 0.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(6, 4, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.15, 0.15, 0.25, 1)
+emission_enabled = true
+emission = Color(0.0, 0.1, 0.3, 1)
+emission_energy_multiplier = 0.2
+
+[node name="Zone3" type="Node3D"]
+script = ExtResource("4_zone")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape_floor")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("Mat_Floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, -12)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
+shape = SubResource("BoxShape_wall")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallNorth"]
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 10)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
+shape = SubResource("BoxShape_wall")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSouth"]
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="OmniLight1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+light_color = Color(0.2, 0.3, 0.8, 1)
+light_energy = 1.5
+omni_range = 20.0
+
+[node name="Terminal1" parent="." instance=ExtResource("3_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+
+[node name="Terminal2" parent="." instance=ExtResource("3_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
+
+[node name="Terminal3" parent="." instance=ExtResource("3_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Wraith1" parent="." instance=ExtResource("1_wraith")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 3)
+
+[node name="Wraith2" parent="." instance=ExtResource("1_wraith")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -8)
+
+[node name="DoorToZone4" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
+
+[node name="DoorToSecret" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 6)

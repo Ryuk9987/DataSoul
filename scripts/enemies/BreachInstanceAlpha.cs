@@ -139,18 +139,19 @@ public partial class BreachInstanceAlpha : BossBase
         // Real clone is brighter
         var mat = new StandardMaterial3D();
         mat.AlbedoColor = isReal
-            ? new Color(1f, 0.3f, 0.3f, 0.9f)  // Brighter red = real
-            : new Color(0.5f, 0.1f, 0.1f, 0.5f); // Dark = fake
+            ? new Color(1f, 0.3f, 0.3f, 0.9f)
+            : new Color(0.5f, 0.1f, 0.1f, 0.5f);
         mat.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
         clone.MaterialOverride = mat;
 
-        // Random offset position
+        // Add to scene FIRST, then set GlobalPosition (requires scene tree)
+        GetParent().AddChild(clone);
+
         var rng = new RandomNumberGenerator();
         rng.Randomize();
         clone.GlobalPosition = GlobalPosition + new Vector3(
             rng.RandfRange(-4f, 4f), 0, rng.RandfRange(-4f, 4f));
 
-        GetParent().AddChild(clone);
         return clone;
     }
 

@@ -10,13 +10,15 @@ public partial class PlayerCamera : Node3D
 
     private SpringArm3D _springArm;
     private Camera3D _camera;
+    private float _yaw = 0f;
     private float _pitch = -15.0f;
     private float _currentDistance;
     private bool _inCombat = false;
     private Node3D _lockOnTarget = null;
+    private Node3D _followTarget = null;
 
-    public Vector3 ForwardDirection => -GlobalTransform.Basis.Z.Normalized();
-    public Vector3 RightDirection => GlobalTransform.Basis.X.Normalized();
+    public Vector3 ForwardDirection => (-new Vector3(Mathf.Sin(_yaw), 0, Mathf.Cos(_yaw))).Normalized();
+    public Vector3 RightDirection => new Vector3(Mathf.Cos(_yaw), 0, -Mathf.Sin(_yaw)).Normalized();
 
     public override void _Ready()
     {
@@ -27,6 +29,11 @@ public partial class PlayerCamera : Node3D
             _camera = _springArm.GetNodeOrNull<Camera3D>("Camera3D");
             _springArm.SpringLength = _currentDistance;
         }
+
+        // Decouple from parent rotation — follow position only
+        TopLevel = true;
+        _followTarget = GetParent() as Node3D;
+
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
@@ -34,10 +41,8 @@ public partial class PlayerCamera : Node3D
     {
         if (@event is InputEventMouseMotion mouseMotion && _lockOnTarget == null)
         {
-            RotateY(-mouseMotion.Relative.X * MouseSensitivity);
-            _pitch = Mathf.Clamp(_pitch - mouseMotion.Relative.Y * MouseSensitivity * 57.3f, -60f, 20f);
-            if (_springArm != null)
-                _springArm.RotationDegrees = new Vector3(_pitch, 0, 0);
+            _yaw -= mouseMotion.Relative.X * MouseSensitivity;
+            _pitch = Mathf.Clamp(_pitch - mouseMotion.Relative.Y * MouseSensitivity, -1.0f, 0.35f);
         }
 
         if (@event is InputEventMouseButton mouseBtn)
@@ -60,27 +65,27 @@ public partial class PlayerCamera : Node3D
 
     public override void _Process(double delta)
     {
-        // Combat shift: raise camera slightly in combat
-        if (_springArm != null)
+        // Follow player position
+        if (_followTarget != null)
         {
-            float targetHeight = _inCombat ? CombatShiftHeight : 0f;
-            var pos = _springArm.Position;
-            pos.Y = Mathf.Lerp(pos.Y, targetHeight, (float)delta * 5f);
-            _springArm.Position = pos;
+            float targetHeight = 1.5f + (_inCombat ? CombatShiftHeight : 0f);
+            GlobalPosition = GlobalPosition.Lerp(
+                _followTarget.GlobalPosition + Vector3.Up * targetHeight,
+                (float)delta * 20f);
         }
 
-        // Lock-on: rotate toward target
+        // Apply yaw + pitch via rotation
+        Rotation = new Vector3(0, _yaw, 0);
+        if (_springArm != null)
+            _springArm.Rotation = new Vector3(_pitch, 0, 0);
+
+        // Lock-on: override yaw toward target
         if (_lockOnTarget != null && IsInstanceValid(_lockOnTarget))
         {
-            var dir = (_lockOnTarget.GlobalPosition - GlobalPosition).Normalized();
+            var dir = (_lockOnTarget.GlobalPosition - GlobalPosition);
             dir.Y = 0;
             if (dir.LengthSquared() > 0.001f)
-            {
-                var targetBasis = Basis.LookingAt(dir, Vector3.Up);
-                GlobalTransform = new Transform3D(
-                    GlobalTransform.Basis.Slerp(targetBasis, (float)delta * 10f),
-                    GlobalPosition);
-            }
+                _yaw = Mathf.LerpAngle(_yaw, Mathf.Atan2(-dir.X, -dir.Z), (float)delta * 10f);
         }
     }
 

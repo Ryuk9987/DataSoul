@@ -1,0 +1,16 @@
+res://scripts/systems/FragmentSystem.cs
+res://scenes/world/TestLevel.tscn
+res://scripts/enemies/BreachInstanceAlpha.cs
+res://scripts/ui/HUDController.cs
+res://scripts/companions/CompanionAI.cs
+res://scripts/enemies/EnemyAI.cs
+res://scripts/systems/SkillSystem.cs
+res://scripts/player/DataAbsorption.cs
+res://scripts/systems/DataGauge.cs
+res://scripts/player/PlayerStats.cs
+res://scripts/player/PlayerCombat.cs
+res://scripts/player/PlayerCamera.cs
+res://scripts/player/PlayerController.cs
+res://scripts/companions/CompanionBase.cs
+res://scripts/enemies/EnemyBase.cs
+res://scripts/enemies/BossBase.cs

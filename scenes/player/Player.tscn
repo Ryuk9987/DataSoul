@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/systems/DataGauge.cs" id="5_gauge"]
 [ext_resource type="Script" path="res://scripts/player/DataAbsorption.cs" id="6_absorb"]
 [ext_resource type="Script" path="res://scripts/systems/SkillSystem.cs" id="7_skills"]
+[ext_resource type="Script" path="res://scripts/systems/LevelSystem.cs" id="8_level"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -66,5 +67,8 @@ script = ExtResource("6_absorb")
 
 [node name="SkillSystem" type="Node" parent="."]
 script = ExtResource("7_skills")
+
+[node name="LevelSystem" type="Node" parent="."]
+script = ExtResource("8_level")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

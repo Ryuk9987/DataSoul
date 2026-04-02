@@ -3,7 +3,7 @@ using Godot;
 public partial class PlayerCamera : Node3D
 {
     [Export] public float DefaultDistance = 5.0f;
-    [Export] public float MinZoom = 2.0f;
+    [Export] public float MinZoom = 2.5f;
     [Export] public float MaxZoom = 10.0f;
     [Export] public float MouseSensitivity = 0.003f;
     [Export] public float CombatShiftHeight = 0.3f;
@@ -39,6 +39,9 @@ public partial class PlayerCamera : Node3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        // Keine Kamera-Bewegung wenn ein Menü die Maus übernommen hat
+        if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
+
         if (@event is InputEventMouseMotion mouseMotion && _lockOnTarget == null)
         {
             _yaw -= mouseMotion.Relative.X * MouseSensitivity;
@@ -56,8 +59,8 @@ public partial class PlayerCamera : Node3D
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
-            if (keyEvent.Keycode == Key.Escape)
-                Input.MouseMode = Input.MouseModeEnum.Visible;
+            // MouseMode wird zentral vom GameManager via ESC gesteuert.
+            // F: Maus manuell wieder einfangen (z.B. nach Alt+Tab)
             if (keyEvent.PhysicalKeycode == Key.F)
                 Input.MouseMode = Input.MouseModeEnum.Captured;
         }

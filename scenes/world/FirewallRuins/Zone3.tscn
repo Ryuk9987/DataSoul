@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://datasoul_zone3"]
+[gd_scene load_steps=9 format=3 uid="uid://datasoul_zone3"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/DataWraith.tscn" id="1_wraith"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallTerminal.tscn" id="3_terminal"]
 [ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
+[ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(35, 0.5, 35)
@@ -54,8 +55,8 @@ surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="OmniLight1" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-light_color = Color(0.2, 0.3, 0.8, 1)
-light_energy = 1.5
+light_color = Color(0.4, 0.55, 1.0, 1)
+light_energy = 2.2
 omni_range = 20.0
 
 [node name="Terminal1" parent="." instance=ExtResource("3_terminal")]
@@ -75,6 +76,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -8)
 
 [node name="DoorToZone4" parent="." instance=ExtResource("2_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
+TargetZoneName = "Zone4"
 
 [node name="DoorToSecret" parent="." instance=ExtResource("2_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 6)
+IsLocked = true
+TargetZoneName = "SecretRoom"
+
+; Wandinschrift Akademie-Forschungsteam Beta-7
+[node name="AkademieInschrift" parent="." instance=ExtResource("5_envstory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5, 10)
+StoryText = "HIER WAR DAS AKADEMIE-FORSCHUNGSTEAM BETA-7\n\n'Wir haben The Root gefunden. Sie wissen es.\nSie kommen für uns.\nWenn du das liest: Traue Valdris nicht.'\n\n— Unterschrift unleserlich, Datum: 12.831 PC"
+InteractLabel = "[F] Inschrift lesen"

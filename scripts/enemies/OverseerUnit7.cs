@@ -37,7 +37,7 @@ public partial class OverseerUnit7 : BossBase
         }
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(float damage, bool isBackAttack = false)
     {
         if (_isShieldActive)
         {
@@ -48,7 +48,7 @@ public partial class OverseerUnit7 : BossBase
                 _shieldHealth = ShieldHealth;
                 _shieldHits = 0;
             }
-            else if (damage >= 15) // Heavy attack threshold
+            else if (damage >= 15f) // Heavy attack threshold
             {
                 _shieldHits++;
                 if (_shieldHits >= ShieldBreakThreshold)
@@ -61,35 +61,49 @@ public partial class OverseerUnit7 : BossBase
         }
         else
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(damage, isBackAttack);
         }
     }
 
-    protected override void UpdatePhase()
+    protected override void OnPhaseChange(int newPhase)
     {
-        if (Health < MaxHealth * 0.5f && !_isShieldActive)
+        if (newPhase >= 2 && !_isShieldActive)
         {
             _isShieldActive = true;
             // Visual feedback for shield activation
-            var material = (StandardMaterial3D)GetNode<MeshInstance3D>("Mesh").MaterialOverlay;
-            material.EmissionEnabled = true;
-            material.Emission = new Color(0.2f, 0.5f, 1.0f);
+            var meshInst = GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
+            if (meshInst != null)
+            {
+                var material = (meshInst.GetActiveMaterial(0) as StandardMaterial3D)?.Duplicate() as StandardMaterial3D;
+                if (material != null)
+                {
+                    material.EmissionEnabled = true;
+                    material.Emission = new Color(0.2f, 0.5f, 1.0f);
+                    meshInst.SetSurfaceOverrideMaterial(0, material);
+                }
+            }
         }
     }
 
     private void FireProjectiles()
     {
+        var projectileScene = GD.Load<PackedScene>("res://scenes/projectiles/FirewallProjectile.tscn");
+        if (projectileScene == null) return;
+
         for (int i = 0; i < ProjectileCount; i++)
         {
-            var projectile = GD.Load<PackedScene>("res://scenes/projectiles/FirewallProjectile.tscn").Instantiate<Area3D>();
+            var projectile = projectileScene.Instantiate<Node3D>();
             GetParent().AddChild(projectile);
             projectile.GlobalPosition = GlobalPosition;
 
-            // Calculate angle for fan pattern
-            float angle = (i - (ProjectileCount - 1) / 2.0f) * 30.0f;
-            Vector3 direction = (GlobalRotation.Y + Mathf.DegToRad(angle)).Normalized();
+            // Build a direction vector from the boss's Y rotation + fan offset angle
+            float angleOffset = (i - (ProjectileCount - 1) / 2.0f) * 30.0f;
+            float totalAngle = GlobalRotation.Y + Mathf.DegToRad(angleOffset);
+            Vector3 direction = new Vector3(Mathf.Sin(totalAngle), 0f, Mathf.Cos(totalAngle)).Normalized();
 
-            projectile.LinearVelocity = direction * 10.0f;
+            // Use the Projectile API (SetDirection) instead of LinearVelocity
+            if (projectile.HasMethod("SetDirection"))
+                projectile.Call("SetDirection", direction, Atk);
         }
     }
 }

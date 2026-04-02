@@ -13,12 +13,13 @@ public partial class DataWraith : EnemyAI
     private float _invisibilityTimer = 0.0f;
     private float _vulnerabilityTimer = 0.0f;
     private bool _isVulnerable = false;
-    private PlayerController _player;
+    private CharacterBody3D _player;
 
     public override void _Ready()
     {
         base._Ready();
-        _player = GetNode<PlayerController>("/root/Player");
+        // Player wird von EnemyAI base._Ready() gesucht — hier nochmal als CharacterBody3D holen
+        _player = GetTree().Root.FindChild("Player", true, false) as CharacterBody3D;
         SetVisibility(false);
     }
 
@@ -26,14 +27,16 @@ public partial class DataWraith : EnemyAI
     {
         base._PhysicsProcess(delta);
 
-        if (_player == null) return;
+        if (_player == null)
+        {
+            _player = GetTree().Root.FindChild("Player", true, false) as CharacterBody3D;
+            return;
+        }
 
         float distance = GlobalPosition.DistanceTo(_player.GlobalPosition);
 
         if (distance < VisibilityRange && !_isVisible)
-        {
             SetVisibility(true);
-        }
 
         if (_isVisible)
         {
@@ -56,21 +59,17 @@ public partial class DataWraith : EnemyAI
         }
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(float damage, bool isBackAttack = false)
     {
         if (_isVulnerable)
-        {
-            base.TakeDamage(damage * 2); // Double damage during vulnerability window
-        }
+            base.TakeDamage(damage * 2f, isBackAttack);
         else
-        {
-            base.TakeDamage(damage);
-        }
+            base.TakeDamage(damage, isBackAttack);
     }
 
-    protected override void Attack()
+    protected override void OnAttack()
     {
-        base.Attack();
+        base.OnAttack();
         _isVulnerable = true;
         SetVisibility(false);
     }
@@ -78,8 +77,18 @@ public partial class DataWraith : EnemyAI
     private void SetVisibility(bool visible)
     {
         _isVisible = visible;
-        var material = (StandardMaterial3D)GetNode<MeshInstance3D>("Mesh").MaterialOverlay;
-        material.AlbedoColor = new Color(0.2f, 0.1f, 0.3f, visible ? 1.0f : 0.0f);
-        SetCollisionLayerBit(1, visible); // Toggle collision layer
+        // MeshInstance3D-Child heißt "MeshInstance3D" in der Scene
+        var mesh = GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
+        if (mesh != null)
+        {
+            var material = mesh.GetActiveMaterial(0) as StandardMaterial3D;
+            if (material != null)
+            {
+                material = (StandardMaterial3D)material.Duplicate();
+                material.AlbedoColor = new Color(0.2f, 0.1f, 0.3f, visible ? 0.5f : 0.0f);
+                mesh.SetSurfaceOverrideMaterial(0, material);
+            }
+        }
+        SetCollisionLayerValue(2, visible);
     }
 }

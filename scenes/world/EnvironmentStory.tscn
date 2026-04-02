@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://datasoul_envstory"]
+
+[ext_resource type="Script" path="res://scripts/world/EnvironmentStory.cs" id="1_script"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_stone"]
+size = Vector3(0.8, 1.0, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Stone"]
+albedo_color = Color(0.28, 0.26, 0.30, 1)
+roughness = 0.95
+metallic = 0.0
+emission_enabled = true
+emission = Color(0.05, 0.08, 0.15, 1)
+emission_energy_multiplier = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape_stone"]
+size = Vector3(0.8, 1.0, 0.3)
+
+[sub_resource type="SphereShape3D" id="SphereShape_interact"]
+radius = 2.5
+
+[node name="EnvironmentStory" type="Node3D"]
+script = ExtResource("1_script")
+StoryText = ""
+InteractLabel = "[F] Untersuchen"
+
+; Stein/Inschriften-Sockel
+[node name="StoneMesh" type="StaticBody3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoneMesh"]
+shape = SubResource("BoxShape_stone")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StoneMesh"]
+mesh = SubResource("BoxMesh_stone")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+surface_material_override/0 = SubResource("Mat_Stone")
+
+; Schwaches Glühen — subtiler Hinweis dass hier etwas zu finden ist
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.2)
+light_color = Color(0.3, 0.4, 0.7, 1)
+light_energy = 0.6
+omni_range = 2.5
+
+; Label3D — wird durch Script gesteuert
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+text = "[F] Untersuchen"
+font_size = 22
+modulate = Color(0.8, 0.9, 1.0, 1)
+billboard = 1
+no_depth_test = true
+visible = false
+
+; Interact-Radius 2.5m
+[node name="InteractArea" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("SphereShape_interact")

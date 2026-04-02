@@ -32,6 +32,7 @@ public partial class PlayerController : CharacterBody3D
         _camera = GetNodeOrNull<PlayerCamera>("PlayerCamera");
         _dataGauge = GetNodeOrNull<DataGauge>("DataGauge");
         _combat = GetNodeOrNull<PlayerCombat>("PlayerCombat");
+        AddToGroup("player");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -74,10 +75,34 @@ public partial class PlayerController : CharacterBody3D
             {
                 velocity.X = moveDir.X * speed;
                 velocity.Z = moveDir.Z * speed;
-                // Face movement direction
-                var lookDir = new Vector3(moveDir.X, 0, moveDir.Z);
-                if (lookDir.LengthSquared() > 0.001f)
-                    LookAt(GlobalPosition + lookDir, Vector3.Up);
+
+                // Spieler dreht sich sanft zur Bewegungsrichtung — aber NUR
+                // wenn sich die Richtung nicht stark ändert (verhindert 180°-Flip bei S).
+                // Strafe (A/D/S) dreht nicht weiter als 90° von der aktuellen Blickrichtung.
+                var lookDir = new Vector3(moveDir.X, 0f, moveDir.Z).Normalized();
+                var currentForward = -Transform.Basis.Z;
+                float dot = currentForward.Dot(lookDir);
+
+                // Nur drehen wenn Bewegungsrichtung nicht fast direkt hinter dem Spieler liegt
+                if (dot > -0.1f)
+                {
+                    // Smooth rotation via Slerp
+                    var targetBasis = Basis.LookingAt(lookDir, Vector3.Up);
+                    Basis = Basis.Slerp(targetBasis, 0.25f);
+                }
+                else
+                {
+                    // Bei S: Kamera-Vorwärtsrichtung beibehalten, nicht flippen
+                    if (_camera != null)
+                    {
+                        var camFwd = new Vector3(_camera.ForwardDirection.X, 0f, _camera.ForwardDirection.Z).Normalized();
+                        if (camFwd.LengthSquared() > 0.001f)
+                        {
+                            var targetBasis = Basis.LookingAt(camFwd, Vector3.Up);
+                            Basis = Basis.Slerp(targetBasis, 0.1f);
+                        }
+                    }
+                }
             }
             else
             {
@@ -92,6 +117,20 @@ public partial class PlayerController : CharacterBody3D
             if (Input.IsActionJustPressed("dodge") && !(_combat?.IsAttacking ?? false))
             {
                 StartDodge(moveDir.LengthSquared() > 0.01f ? moveDir : -Transform.Basis.Z);
+            }
+
+            // Lock-On toggle (Tab)
+            if (Input.IsActionJustPressed("lock_on") && _camera != null)
+            {
+                if (_camera.GetLockOnTarget() != null)
+                {
+                    _camera.ClearLockOn();
+                }
+                else
+                {
+                    var target = FindNearestEnemy();
+                    if (target != null) _camera.SetLockOnTarget(target);
+                }
             }
         }
 
@@ -127,5 +166,25 @@ public partial class PlayerController : CharacterBody3D
     {
         _hitIncoming = true;
         _hitIncomingTimer = windowSeconds;
+    }
+
+    private Node3D FindNearestEnemy()
+    {
+        var enemies = GetTree().GetNodesInGroup("enemies");
+        Node3D nearest = null;
+        float nearestDist = 20f; // Max lock-on range
+        foreach (var e in enemies)
+        {
+            if (e is Node3D enemy3D && IsInstanceValid(enemy3D))
+            {
+                float dist = GlobalPosition.DistanceTo(enemy3D.GlobalPosition);
+                if (dist < nearestDist)
+                {
+                    nearestDist = dist;
+                    nearest = enemy3D;
+                }
+            }
+        }
+        return nearest;
     }
 }

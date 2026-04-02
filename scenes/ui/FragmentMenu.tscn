@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://datasoul_fragmentmenu"]
+
+[ext_resource type="Script" path="res://scripts/ui/FragmentMenuController.cs" id="1_fmc"]
+
+[node name="FragmentMenu" type="CanvasLayer"]
+layer = 9
+process_mode = 3
+script = ExtResource("1_fmc")

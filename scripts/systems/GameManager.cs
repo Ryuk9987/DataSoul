@@ -10,10 +10,13 @@ public partial class GameManager : Node
     private PlayerStats _playerStats;
     private LevelSystem _levelSystem;
     private HUDController _hud;
+    private CanvasLayer _pauseMenu;
 
     public override void _Ready()
     {
         Instance = this;
+        // Muss auch im pausierten Zustand Input verarbeiten
+        ProcessMode = ProcessModeEnum.Always;
         CallDeferred(MethodName.ConnectSystems);
     }
 
@@ -32,14 +35,13 @@ public partial class GameManager : Node
 
         _hud = GetTree().Root.FindChild("PlayerHUD", true, false) as HUDController;
 
-        // Connect level-up to HUD
         if (_levelSystem != null && _hud != null)
-        {
             _levelSystem.LevelUp += (level) => _hud.UpdateLevel(level);
-        }
 
-        // Connect enemy kills to XP
         GetTree().Connect("node_added", new Callable(this, MethodName.OnNodeAdded));
+
+        // PauseMenu suchen (wird als Child in FirewallRuins.tscn instanziiert)
+        _pauseMenu = GetTree().Root.FindChild("PauseMenu", true, false) as CanvasLayer;
     }
 
     private void OnNodeAdded(Node node)
@@ -60,9 +62,7 @@ public partial class GameManager : Node
     {
         if (CurrentState == GameState.GameOver) return;
         CurrentState = GameState.GameOver;
-        GD.Print("[GameManager] Game Over!");
 
-        // Simple restart after 3 seconds
         var timer = new Timer();
         timer.WaitTime = 3.0f;
         timer.OneShot = true;
@@ -71,19 +71,37 @@ public partial class GameManager : Node
         timer.Start();
     }
 
+    public void ResumeGame()
+    {
+        if (CurrentState != GameState.Paused) return;
+        CurrentState = GameState.Playing;
+        GetTree().Paused = false;
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+        _pauseMenu?.Hide();
+    }
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
         {
+            // DataNode-Menü hat Vorrang — dessen _UnhandledInput setzt Input als handled
+            if (DataNode.IsMenuOpen) return;
+
             if (CurrentState == GameState.Playing)
             {
                 CurrentState = GameState.Paused;
                 GetTree().Paused = true;
+                Input.MouseMode = Input.MouseModeEnum.Visible;
+
+                // PauseMenu beim ersten ESC suchen falls noch nicht gefunden
+                if (_pauseMenu == null)
+                    _pauseMenu = GetTree().Root.FindChild("PauseMenu", true, false) as CanvasLayer;
+
+                _pauseMenu?.Show();
             }
             else if (CurrentState == GameState.Paused)
             {
-                CurrentState = GameState.Playing;
-                GetTree().Paused = false;
+                ResumeGame();
             }
         }
     }

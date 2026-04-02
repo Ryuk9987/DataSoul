@@ -16,7 +16,7 @@ public partial class PlayerStats : Node
     [Signal] public delegate void DataGaugeChangedEventHandler(float current, float max);
     [Signal] public delegate void DiedEventHandler();
 
-    [Export] public Background PlayerBackground { get; set; } = Background.Programmer;
+    [Export] public Background PlayerBackground { get; set; } = Background.Gamer;
 
     public float MaxHealth { get; private set; } = 100;
     public float CurrentHealth { get; private set; } = 100;

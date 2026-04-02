@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://datasoul_datanode"]
+
+[ext_resource type="Script" path="res://scripts/world/DataNode.cs" id="1_node"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_base"]
+size = Vector3(0.8, 1.8, 0.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+size = Vector3(0.8, 1.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Base"]
+albedo_color = Color(0.08, 0.1, 0.22, 1)
+emission_enabled = true
+emission = Color(0.05, 0.15, 0.5, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_orb"]
+radius = 0.28
+height = 0.56
+
+[sub_resource type="StandardMaterial3D" id="Mat_Orb"]
+albedo_color = Color(0.2, 0.7, 1.0, 1)
+emission_enabled = true
+emission = Color(0.1, 0.5, 1.0, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="SphereShape3D" id="InteractShape"]
+radius = 3.0
+
+[node name="DataNode" type="StaticBody3D"]
+script = ExtResource("1_node")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_base")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="Base" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_base")
+surface_material_override/0 = SubResource("Mat_Base")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="Orb" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_orb")
+surface_material_override/0 = SubResource("Mat_Orb")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+
+[node name="OrbLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+light_color = Color(0.2, 0.6, 1.0, 1)
+light_energy = 1.2
+omni_range = 6.0
+
+[node name="InteractArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("InteractShape")
+
+[node name="HintLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+text = "[F] Speichern"
+font_size = 20
+modulate = Color(0.3, 0.8, 1.0, 1)
+billboard = 1
+visible = false

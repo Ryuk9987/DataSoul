@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://datasoul_zone2"]
+[gd_scene load_steps=10 format=3 uid="uid://datasoul_zone2"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FirewallNode.tscn" id="1_fw"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/OverseerUnit7.tscn" id="2_overseer"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="3_door"]
 [ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
+[ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(30, 0.5, 50)
@@ -66,8 +67,8 @@ surface_material_override/0 = SubResource("Mat_Pillar")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866, -0.4, 0.3, 0, 0.6, 0.8, -0.5, -0.7, 0.5, 0, 15, 0)
-light_color = Color(0.4, 0.4, 0.6, 1)
-light_energy = 0.5
+light_color = Color(0.6, 0.65, 0.9, 1)
+light_energy = 1.2
 shadow_enabled = true
 
 [node name="FirewallNodeLeft" parent="." instance=ExtResource("1_fw")]
@@ -81,3 +82,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16)
 
 [node name="DoorToZone3" parent="." instance=ExtResource("3_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+IsLocked = true
+TargetZoneName = "Zone3"
+
+; Brotherhood Terminal Log — Overseer Unit 7 Wartungsprotokoll
+[node name="OverseerTerminalLog" parent="." instance=ExtResource("5_envstory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 0)
+StoryText = "OVERSEER UNIT 7 — WARTUNGSPROTOKOLL\n\nLetzte Wartung: 12.803 PC\nStatus: KORRUMPIERT\nEmpfehlung: Sofortige Isolierung\nAutorisierung: [AUSSTEHEND seit 44 Jahren]\n\nHinweis: Unit zeigt anomales Verhalten. Reagiert nicht mehr auf Brotherhood-Credentials."
+InteractLabel = "[F] Terminal lesen"

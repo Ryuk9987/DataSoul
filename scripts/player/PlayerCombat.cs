@@ -83,6 +83,15 @@ public partial class PlayerCombat : Node
         // Skill 1: Code-Injection
         if (InputMap.HasAction("skill_1") && Input.IsActionJustPressed("skill_1"))
             UseCodeInjection();
+
+        // Synergy-Attack: Q
+        if (InputMap.HasAction("synergy") && Input.IsActionJustPressed("synergy"))
+        {
+            if (SynergySystem.Instance != null && SynergySystem.Instance.IsReady)
+                SynergySystem.Instance.TryActivate();
+            else
+                DialogueSystem.Instance?.ShowLine("Lyra", "Die Synergy-Gauge ist noch nicht voll.", 2f);
+        }
     }
 
     private void HandleLightAttack()
@@ -163,6 +172,7 @@ public partial class PlayerCombat : Node
 
                 enemy.TakeDamage(baseDamage, isBackAttack);
                 _dataGauge?.AddGauge(isHeavy ? DataGauge.HEAVY_HIT : DataGauge.LIGHT_HIT);
+                SynergySystem.Instance?.AddGauge(isHeavy ? 8f : 4f);
                 EmitSignal(SignalName.HitLanded, enemy, baseDamage, isHeavy);
             }
         }
@@ -217,6 +227,7 @@ public partial class PlayerCombat : Node
     {
         _dataGauge?.AddGauge(DataGauge.KILL);
         _absorption?.StartAbsorption(enemy);
+        SynergySystem.Instance?.AddGauge(20f); // Kill = +20 Synergy
         _currentCombo = ComboState.None;
         _isAttacking = false;
     }

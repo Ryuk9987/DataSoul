@@ -81,12 +81,15 @@ public partial class PlayerController : CharacterBody3D
                 velocity.X = moveDir.X * speed;
                 velocity.Z = moveDir.Z * speed;
 
-                // Mesh zur Bewegungsrichtung drehen (nicht den CharacterBody3D!)
+                // Mesh zur Bewegungsrichtung drehen — nur Y-Achse!
+                // Atan2(X, Z) gibt den korrekten Winkel für KayKit (+Z = vorwärts)
                 var lookDir = new Vector3(moveDir.X, 0f, moveDir.Z).Normalized();
                 if (_characterMesh != null && lookDir.LengthSquared() > 0.001f)
                 {
-                    var targetBasis = Basis.LookingAt(lookDir, Vector3.Up);
-                    _characterMesh.Basis = _characterMesh.Basis.Slerp(targetBasis, 0.2f);
+                    float targetAngle = Mathf.Atan2(-lookDir.X, -lookDir.Z);
+                    float currentAngle = _characterMesh.Rotation.Y;
+                    float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, 0.2f);
+                    _characterMesh.Rotation = new Vector3(0, smoothAngle, 0);
                 }
             }
             else
@@ -137,8 +140,10 @@ public partial class PlayerController : CharacterBody3D
             dir.Y = 0;
             if (dir.LengthSquared() > 0.01f)
             {
-                var tb = Basis.LookingAt(dir.Normalized(), Vector3.Up);
-                _characterMesh.Basis = _characterMesh.Basis.Slerp(tb, 0.25f);
+                var d = dir.Normalized();
+                float lockAngle = Mathf.Atan2(-d.X, -d.Z);
+                float curAngle = _characterMesh.Rotation.Y;
+                _characterMesh.Rotation = new Vector3(0, Mathf.LerpAngle(curAngle, lockAngle, 0.25f), 0);
             }
         }
 

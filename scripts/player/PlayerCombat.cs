@@ -177,7 +177,7 @@ public partial class PlayerCombat : Node
                 _dataGauge?.AddGauge(isHeavy ? DataGauge.HEAVY_HIT : DataGauge.LIGHT_HIT);
                 SynergySystem.Instance?.AddGauge(isHeavy ? 8f : 4f);
                 EmitSignal(SignalName.HitLanded, enemy, baseDamage, isHeavy);
-                AudioManager.Instance?.PlaySfx(isHeavy ? "hit_heavy" : "hit_light", GlobalPosition);
+                AudioManager.Instance?.PlaySfx(isHeavy ? "hit_heavy" : "hit_light", _controller?.GlobalPosition ?? Vector3.Zero);
             }
         }
     }

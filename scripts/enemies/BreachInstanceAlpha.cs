@@ -101,6 +101,7 @@ public partial class BreachInstanceAlpha : BossBase
         for (int i = 0; i < count; i++)
         {
             var clone = CreateClone(false);
+            if (clone == null) continue;
             _activeClones.Add(clone);
 
             // Auto-remove after lifetime
@@ -131,12 +132,10 @@ public partial class BreachInstanceAlpha : BossBase
 
     private Node3D CreateClone(bool isReal)
     {
-        // Create a simple visual clone (MeshInstance3D placeholder)
-        var clone = new MeshInstance3D();
-        var capsule = new CapsuleMesh();
-        clone.Mesh = capsule;
+        if (!IsInsideTree() || GetParent() == null) return null;
 
-        // Real clone is brighter
+        var clone = new MeshInstance3D();
+        clone.Mesh = new CapsuleMesh();
         var mat = new StandardMaterial3D();
         mat.AlbedoColor = isReal
             ? new Color(1f, 0.3f, 0.3f, 0.9f)
@@ -144,7 +143,6 @@ public partial class BreachInstanceAlpha : BossBase
         mat.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
         clone.MaterialOverride = mat;
 
-        // Add to scene FIRST, then set GlobalPosition (requires scene tree)
         GetParent().AddChild(clone);
 
         var rng = new RandomNumberGenerator();

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://datasoul_firewallruins"]
+[gd_scene load_steps=26 format=3 uid="uid://datasoul_firewallruins"]
 
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone1.tscn" id="1_z1"]
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone2.tscn" id="2_z2"]
@@ -17,6 +17,27 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/FragmentMenu.tscn" id="15_fm"]
 [ext_resource type="Script" path="res://scripts/systems/CorruptionSystem.cs" id="16_cs"]
 
+[sub_resource type="BoxShape3D" id="Wall_NS"]
+size = Vector3(50, 12, 2.0)
+
+[sub_resource type="BoxShape3D" id="Wall_EW"]
+size = Vector3(2.0, 12, 50)
+
+[sub_resource type="BoxShape3D" id="Floor_Main"]
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="BoxShape3D" id="Wall2_NS"]
+size = Vector3(35, 12, 2.0)
+
+[sub_resource type="BoxShape3D" id="Wall2_EW"]
+size = Vector3(2.0, 12, 35)
+
+[sub_resource type="BoxShape3D" id="Wall3_NS"]
+size = Vector3(40, 12, 2.0)
+
+[sub_resource type="BoxShape3D" id="Wall3_EW"]
+size = Vector3(2.0, 12, 40)
+
 [sub_resource type="NavigationMesh" id="NavMesh_1"]
 agent/radius = 0.5
 
@@ -34,6 +55,91 @@ environment = SubResource("Env_dungeon")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavMesh_1")
+
+[node name="GlobalFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -75)
+[node name="Col" type="CollisionShape3D" parent="GlobalFloor"]
+shape = SubResource("Floor_Main")
+
+[node name="Z1WallN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -21)
+[node name="Col" type="CollisionShape3D" parent="Z1WallN"]
+shape = SubResource("Wall_NS")
+
+[node name="Z1WallS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 21)
+[node name="Col" type="CollisionShape3D" parent="Z1WallS"]
+shape = SubResource("Wall_NS")
+
+[node name="Z1WallE" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 6, 0)
+[node name="Col" type="CollisionShape3D" parent="Z1WallE"]
+shape = SubResource("Wall_EW")
+
+[node name="Z1WallW" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 6, 0)
+[node name="Col" type="CollisionShape3D" parent="Z1WallW"]
+shape = SubResource("Wall_EW")
+
+[node name="Z2WallN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -76)
+[node name="Col" type="CollisionShape3D" parent="Z2WallN"]
+shape = SubResource("Wall2_NS")
+
+[node name="Z2WallS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -24)
+[node name="Col" type="CollisionShape3D" parent="Z2WallS"]
+shape = SubResource("Wall2_NS")
+
+[node name="Z2WallE" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 6, -50)
+[node name="Col" type="CollisionShape3D" parent="Z2WallE"]
+shape = SubResource("Wall2_EW")
+
+[node name="Z2WallW" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 6, -50)
+[node name="Col" type="CollisionShape3D" parent="Z2WallW"]
+shape = SubResource("Wall2_EW")
+
+[node name="Z3WallN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -119)
+[node name="Col" type="CollisionShape3D" parent="Z3WallN"]
+shape = SubResource("Wall_NS")
+
+[node name="Z3WallS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -81)
+[node name="Col" type="CollisionShape3D" parent="Z3WallS"]
+shape = SubResource("Wall_NS")
+
+[node name="Z3WallE" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 6, -100)
+[node name="Col" type="CollisionShape3D" parent="Z3WallE"]
+shape = SubResource("Wall_EW")
+
+[node name="Z3WallW" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 6, -100)
+[node name="Col" type="CollisionShape3D" parent="Z3WallW"]
+shape = SubResource("Wall_EW")
+
+[node name="Z4WallN" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -164)
+[node name="Col" type="CollisionShape3D" parent="Z4WallN"]
+shape = SubResource("Wall3_NS")
+
+[node name="Z4WallS" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -136)
+[node name="Col" type="CollisionShape3D" parent="Z4WallS"]
+shape = SubResource("Wall3_NS")
+
+[node name="Z4WallE" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 6, -150)
+[node name="Col" type="CollisionShape3D" parent="Z4WallE"]
+shape = SubResource("Wall3_EW")
+
+[node name="Z4WallW" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 6, -150)
+[node name="Col" type="CollisionShape3D" parent="Z4WallW"]
+shape = SubResource("Wall3_EW")
 
 [node name="Zone1" parent="." instance=ExtResource("1_z1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

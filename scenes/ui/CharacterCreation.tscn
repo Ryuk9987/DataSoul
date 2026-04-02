@@ -1,64 +1,95 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7j34k56l8m9n0p1q2r3s4t5u6v7w8x9"]
+[gd_scene load_steps=2 format=3 uid="uid://datasoul_charcreation"]
 
-[ext_resource path="res://scripts/ui/CharacterCreationController.cs" type="Script" id="CharacterCreationController"]
+[ext_resource type="Script" path="res://scripts/ui/CharacterCreationController.cs" id="1_ctrl"]
 
-[node name="CharacterCreation" type="Control" script="CharacterCreationController"]
-
-[sub_resource type="StyleBoxFlat" id="BackgroundStyle"]
-color = Color(0.1, 0.1, 0.2, 1)
-
-[sub_resource type="StyleBoxFlat" id="ButtonStyle"]
-color = Color(0.1, 0.2, 0.3, 1)
-
-[sub_resource type="StyleBoxFlat" id="SelectedButtonStyle"]
-color = Color(0.1, 0.3, 0.5, 1)
+[node name="CharacterCreation" type="Control"]
+script = ExtResource("1_ctrl")
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Background" type="ColorRect" parent="."]
-color = Color(0.1, 0.1, 0.2, 1)
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.04, 0.04, 0.1, 1)
+mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-rect_min_size = Vector2(400, 600)
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="TitleLabel" type="Label" parent="./VBoxContainer"]
-text = "DataSoul"
-align = CENTER
+[node name="VBox" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(600, 0)
+theme_override_constants/separation = 16
 
-[node name="NameLabel" type="Label" parent="./VBoxContainer"]
+[node name="Title" type="Label" parent="CenterContainer/VBox"]
+text = "— DataSoul —"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.2, 0.8, 1.0, 1)
+theme_override_font_sizes/font_size = 28
+
+[node name="Subtitle" type="Label" parent="CenterContainer/VBox"]
+text = "Erstelle deinen Charakter"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="Sep1" type="HSeparator" parent="CenterContainer/VBox"]
+
+[node name="NameLabel" type="Label" parent="CenterContainer/VBox"]
 text = "Name:"
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 
-[node name="NameLineEdit" type="LineEdit" parent="./VBoxContainer"]
+[node name="NameLineEdit" type="LineEdit" parent="CenterContainer/VBox"]
 placeholder_text = "Dein Name..."
 max_length = 20
+custom_minimum_size = Vector2(0, 36)
 
-[node name="BackgroundLabel" type="Label" parent="./VBoxContainer"]
-text = "Background:"
+[node name="Sep2" type="HSeparator" parent="CenterContainer/VBox"]
 
-[node name="BackgroundOptions" type="HBoxContainer" parent="./VBoxContainer"]
+[node name="BackgroundLabel" type="Label" parent="CenterContainer/VBox"]
+text = "Background wählen:"
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 
-[node name="ProgrammerButton" type="Button" parent="./VBoxContainer/BackgroundOptions"]
+[node name="BackgroundGrid" type="GridContainer" parent="CenterContainer/VBox"]
+columns = 5
+theme_override_constants/h_separation = 8
+
+[node name="ProgrammerButton" type="Button" parent="CenterContainer/VBox/BackgroundGrid"]
 text = "Programmierer"
+custom_minimum_size = Vector2(108, 48)
+theme_override_font_sizes/font_size = 11
 
-[node name="GamerButton" type="Button" parent="./VBoxContainer/BackgroundOptions"]
+[node name="GamerButton" type="Button" parent="CenterContainer/VBox/BackgroundGrid"]
 text = "Gamer"
+custom_minimum_size = Vector2(108, 48)
+theme_override_font_sizes/font_size = 11
 
-[node name="HackerButton" type="Button" parent="./VBoxContainer/BackgroundOptions"]
+[node name="HackerButton" type="Button" parent="CenterContainer/VBox/BackgroundGrid"]
 text = "Hacker"
+custom_minimum_size = Vector2(108, 48)
+theme_override_font_sizes/font_size = 11
 
-[node name="CreatorButton" type="Button" parent="./VBoxContainer/BackgroundOptions"]
+[node name="CreatorButton" type="Button" parent="CenterContainer/VBox/BackgroundGrid"]
 text = "Creator"
+custom_minimum_size = Vector2(108, 48)
+theme_override_font_sizes/font_size = 11
 
-[node name="AnalystButton" type="Button" parent="./VBoxContainer/BackgroundOptions"]
+[node name="AnalystButton" type="Button" parent="CenterContainer/VBox/BackgroundGrid"]
 text = "Analyst"
+custom_minimum_size = Vector2(108, 48)
+theme_override_font_sizes/font_size = 11
 
-[node name="InfoLabel" type="Label" parent="./VBoxContainer"]
-text = ""
+[node name="InfoLabel" type="Label" parent="CenterContainer/VBox"]
+text = "Waehle einen Background"
+horizontal_alignment = 1
+autowrap_mode = 3
+custom_minimum_size = Vector2(0, 60)
+theme_override_colors/font_color = Color(0.6, 0.85, 1.0, 1)
+theme_override_font_sizes/font_size = 13
 
-[node name="StartButton" type="Button" parent="./VBoxContainer"]
+[node name="Sep3" type="HSeparator" parent="CenterContainer/VBox"]
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBox"]
 text = "Ins Abenteuer!"
-
-[connection signal="pressed" from="./VBoxContainer/BackgroundOptions/ProgrammerButton" to="./CharacterCreationController" method="_on_programmer_button_pressed"]
-[connection signal="pressed" from="./VBoxContainer/BackgroundOptions/GamerButton" to="./CharacterCreationController" method="_on_gamer_button_pressed"]
-[connection signal="pressed" from="./VBoxContainer/BackgroundOptions/HackerButton" to="./CharacterCreationController" method="_on_hacker_button_pressed"]
-[connection signal="pressed" from="./VBoxContainer/BackgroundOptions/CreatorButton" to="./CharacterCreationController" method="_on_creator_button_pressed"]
-[connection signal="pressed" from="./VBoxContainer/BackgroundOptions/AnalystButton" to="./CharacterCreationController" method="_on_analyst_button_pressed"]
-[connection signal="pressed" from="./VBoxContainer/StartButton" to="./CharacterCreationController" method="_on_start_button_pressed"]
+custom_minimum_size = Vector2(0, 48)
+theme_override_font_sizes/font_size = 16

@@ -92,6 +92,6 @@ public partial class CharacterCreationController : Control
         GameSession.PlayerBackground = _selectedBackground;
         GameSession.IsInitialized    = true;
 
-        GetTree().ChangeSceneToFile("res://scenes/world/FirewallRuins/FirewallRuins.tscn");
+        GetTree().ChangeSceneToFile("res://scenes/ui/IntroSequence.tscn");
     }
 }

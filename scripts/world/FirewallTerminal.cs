@@ -10,9 +10,9 @@ public partial class FirewallTerminal : StaticBody3D
     [Signal] public delegate void TerminalActivatedEventHandler(int terminalId);
 
     private bool _isActivated = false;
+    private bool _playerNearby = false;
+    private PlayerController _nearbyPlayer = null;
 
-    // Puzzle-Zustand: NICHT static — wird von Terminal 1 (TerminalId=1) als "Koordinator" verwaltet
-    // Alle Terminals fragen Terminal 1 nach dem aktuellen Stand
     private static List<int> _activationOrder = new List<int>();
     private static int _correctOrder = 1;
     private static bool _puzzleSolved = false;
@@ -23,9 +23,11 @@ public partial class FirewallTerminal : StaticBody3D
         AddToGroup("firewall_terminals");
         var area = GetNodeOrNull<Area3D>("InteractArea");
         if (area != null)
+        {
             area.BodyEntered += OnPlayerEnter;
+            area.BodyExited += OnPlayerExit;
+        }
 
-        // Reset bei Scene-Load (falls Spiel neu gestartet)
         if (TerminalId == 1)
         {
             _activationOrder = new List<int>();
@@ -35,26 +37,46 @@ public partial class FirewallTerminal : StaticBody3D
         }
     }
 
+    public override void _Process(double delta)
+    {
+        if (_playerNearby && _nearbyPlayer != null && Input.IsActionJustPressed("interact"))
+        {
+            if (_isActivated || _puzzleSolved) return;
+
+            if (!_bypassUsed)
+            {
+                var stats = _nearbyPlayer.GetNodeOrNull<PlayerStats>("PlayerStats");
+                if (stats != null &&
+                    (stats.PlayerBackground == PlayerStats.Background.Hacker ||
+                     stats.PlayerBackground == PlayerStats.Background.Programmer))
+                {
+                    _bypassUsed = true;
+                    BypassWithExploit();
+                    return;
+                }
+            }
+
+            ActivateTerminal();
+        }
+    }
+
     private void OnPlayerEnter(Node3D body)
     {
-        if (!(body is PlayerController player)) return;
-        if (_isActivated || _puzzleSolved) return;
-
-        // Hacker/Programmer-Bypass — nur einmal pro Puzzle
-        if (!_bypassUsed)
+        if (body is PlayerController player)
         {
-            var stats = player.GetNodeOrNull<PlayerStats>("PlayerStats");
-            if (stats != null &&
-                (stats.PlayerBackground == PlayerStats.Background.Hacker ||
-                 stats.PlayerBackground == PlayerStats.Background.Programmer))
-            {
-                _bypassUsed = true;
-                BypassWithExploit();
-                return;
-            }
+            _playerNearby = true;
+            _nearbyPlayer = player;
+            DialogueSystem.Instance?.ShowLine("System", $"[F] Terminal aktivieren", 0f);
         }
+    }
 
-        ActivateTerminal();
+    private void OnPlayerExit(Node3D body)
+    {
+        if (body is PlayerController)
+        {
+            _playerNearby = false;
+            _nearbyPlayer = null;
+        }
     }
 
     private void BypassWithExploit()

@@ -18,25 +18,25 @@
 [ext_resource type="Script" path="res://scripts/systems/CorruptionSystem.cs" id="16_cs"]
 
 [sub_resource type="BoxShape3D" id="Wall_NS"]
-size = Vector3(50, 12, 2.0)
+size = Vector3(50, 12, 4.0)
 
 [sub_resource type="BoxShape3D" id="Wall_EW"]
-size = Vector3(2.0, 12, 50)
+size = Vector3(4.0, 12, 50)
 
 [sub_resource type="BoxShape3D" id="Floor_Main"]
-size = Vector3(50, 0.5, 50)
+size = Vector3(50, 1.0, 200)
 
 [sub_resource type="BoxShape3D" id="Wall2_NS"]
-size = Vector3(35, 12, 2.0)
+size = Vector3(35, 12, 4.0)
 
 [sub_resource type="BoxShape3D" id="Wall2_EW"]
-size = Vector3(2.0, 12, 35)
+size = Vector3(4.0, 12, 35)
 
 [sub_resource type="BoxShape3D" id="Wall3_NS"]
-size = Vector3(40, 12, 2.0)
+size = Vector3(40, 12, 4.0)
 
 [sub_resource type="BoxShape3D" id="Wall3_EW"]
-size = Vector3(2.0, 12, 40)
+size = Vector3(4.0, 12, 40)
 
 [sub_resource type="NavigationMesh" id="NavMesh_1"]
 agent/radius = 0.5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://datasoul_zone1"]
+[gd_scene load_steps=17 format=3 uid="uid://datasoul_zone1"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FragmentedSentinel.tscn" id="1_sentinel"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
@@ -17,10 +17,16 @@ size = Vector3(40, 0.5, 40)
 albedo_color = Color(0.12, 0.12, 0.16, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape_wallNS"]
-size = Vector3(42, 8, 0.5)
+size = Vector3(42, 8, 1.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wallNS"]
+size = Vector3(42, 8, 1.0)
 
 [sub_resource type="BoxShape3D" id="BoxShape_wallEW"]
-size = Vector3(0.5, 8, 42)
+size = Vector3(1.0, 8, 42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wallEW"]
+size = Vector3(1.0, 8, 42)
 
 [sub_resource type="StandardMaterial3D" id="Mat_Wall"]
 albedo_color = Color(0.2, 0.2, 0.25, 1)
@@ -34,6 +40,7 @@ size = Vector3(1.5, 5, 1.5)
 
 [node name="Zone1" type="Node3D"]
 script = ExtResource("3_zone")
+ZoneName = "Zone1"
 
 [node name="Floor" type="StaticBody3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
@@ -46,21 +53,33 @@ surface_material_override/0 = SubResource("Mat_Floor")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -21)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
 shape = SubResource("BoxShape_wallNS")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallNorth"]
+mesh = SubResource("BoxMesh_wallNS")
+surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="WallSouth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 21)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
 shape = SubResource("BoxShape_wallNS")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSouth"]
+mesh = SubResource("BoxMesh_wallNS")
+surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="WallEast" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 4, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallEast"]
 shape = SubResource("BoxShape_wallEW")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallEast"]
+mesh = SubResource("BoxMesh_wallEW")
+surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="WallWest" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 4, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
 shape = SubResource("BoxShape_wallEW")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallWest"]
+mesh = SubResource("BoxMesh_wallEW")
+surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="Pillar1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.5, -8)
@@ -79,9 +98,9 @@ mesh = SubResource("BoxMesh_pillar")
 surface_material_override/0 = SubResource("Mat_Wall")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866, -0.4, 0.3, 0, 0.6, 0.8, -0.5, -0.7, 0.5, 0, 10, 0)
+transform = Transform3D(0.866, -0.45, 0.23, 0, 0.45, 0.89, -0.5, -0.78, 0.4, 0, 15, 0)
 light_color = Color(0.7, 0.75, 1.0, 1)
-light_energy = 1.4
+light_energy = 1.0
 shadow_enabled = true
 
 [node name="DataNode1" parent="." instance=ExtResource("4_datanode")]
@@ -106,7 +125,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
 IsLocked = true
 TargetZoneName = "Zone2"
 
-; Brotherhood-Namensliste — Environmental Storytelling
 [node name="BrotherhoodNameList" parent="." instance=ExtResource("5_envstory")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 1.5, -5)
 StoryText = "VERMISSTE HELDEN — AKTUALISIERT 847.3 PC\n\nKael Dawnward — Vermisst seit 12.847 PC\nAria Solmere — Process Terminated — Order of the Root\nTomas Veth — Process Terminated — Order of the Root\nYuki Hana — Status unbekannt\nDrei weitere — [GESCHWÄRZT]\n\nBitte melden Sie unberechtigte Datenzugriffe umgehend der Brotherhood."

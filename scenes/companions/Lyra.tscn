@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://datasoul_lyra"]
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_lyra"]
 
 [ext_resource type="Script" path="res://scripts/companions/CompanionAI.cs" id="1_ai"]
 [ext_resource type="Script" path="res://scripts/assets/LyraVisual.cs" id="2_visual"]
 [ext_resource type="Script" path="res://scripts/companions/LyraDialogue.cs" id="3_dialogue"]
+[ext_resource type="PackedScene" path="res://assets/models/companions/kaykit_mage.glb" id="4_mage"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.35
@@ -24,11 +25,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_1")
-surface_material_override/0 = SubResource("Mat_Lyra")
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 
 [node name="LyraVisual" type="Node3D" parent="MeshInstance3D"]
 script = ExtResource("2_visual")
+
+[node name="CharacterMesh" type="Node3D" parent="."]
+
+[node name="kaykit_mage" parent="CharacterMesh" instance=ExtResource("4_mage")]
 
 [node name="LyraDialogue" type="Node" parent="."]
 script = ExtResource("3_dialogue")

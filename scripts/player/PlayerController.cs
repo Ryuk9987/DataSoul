@@ -9,6 +9,7 @@ public partial class PlayerController : CharacterBody3D
     private PlayerCamera _camera;
     private DataGauge _dataGauge;
     private PlayerCombat _combat;
+    private AnimationPlayer _animPlayer;
 
     private const float DODGE_DURATION = 0.3f;
     private const float DODGE_SPEED = 12.0f;
@@ -32,6 +33,8 @@ public partial class PlayerController : CharacterBody3D
         _camera = GetNodeOrNull<PlayerCamera>("PlayerCamera");
         _dataGauge = GetNodeOrNull<DataGauge>("DataGauge");
         _combat = GetNodeOrNull<PlayerCombat>("PlayerCombat");
+        // AnimationPlayer aus KayKit Knight GLB
+        _animPlayer = GetNodeOrNull<AnimationPlayer>("CharacterMesh/kaykit_knight/AnimationPlayer");
         AddToGroup("player");
     }
 
@@ -143,6 +146,7 @@ public partial class PlayerController : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
+        UpdateAnimation(velocity);
     }
 
     private void StartDodge(Vector3 direction)
@@ -187,5 +191,24 @@ public partial class PlayerController : CharacterBody3D
             }
         }
         return nearest;
+    }
+
+    private void UpdateAnimation(Vector3 velocity)
+    {
+        if (_animPlayer == null) return;
+        bool isAttacking = _combat?.IsAttacking ?? false;
+        if (_isDodging)       { PlayAnim("Dodge_Forward"); return; }
+        if (isAttacking)      { return; } // combat handles attack anims
+        float speed = new Vector2(velocity.X, velocity.Z).Length();
+        if (speed > 5f)       PlayAnim("Running_A");
+        else if (speed > 0.2f) PlayAnim("Walking_A");
+        else                  PlayAnim("Idle");
+    }
+
+    private void PlayAnim(string name)
+    {
+        if (_animPlayer == null) return;
+        if (_animPlayer.CurrentAnimation != name)
+            _animPlayer.Play(name);
     }
 }

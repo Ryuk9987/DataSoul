@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://datasoul_player"]
+[gd_scene load_steps=16 format=3 uid="uid://datasoul_player"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.cs" id="1_ctrl"]
 [ext_resource type="Script" path="res://scripts/player/PlayerCamera.cs" id="2_cam"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/systems/LevelSystem.cs" id="8_level"]
 [ext_resource type="Script" path="res://scripts/assets/PlayerVisual.cs" id="9_visual"]
 [ext_resource type="PackedScene" path="res://assets/models/player/player_capsule.glb" id="10_mesh"]
+[ext_resource type="PackedScene" path="res://assets/models/player/kaykit_knight.glb" id="11_knight"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -41,9 +42,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 script = ExtResource("9_visual")
 
 [node name="PlayerMesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 
 [node name="player_capsule" parent="PlayerMesh" instance=ExtResource("10_mesh")]
+
+[node name="CharacterMesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="kaykit_knight" parent="CharacterMesh" instance=ExtResource("11_knight")]
 
 [node name="HitboxArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.8)

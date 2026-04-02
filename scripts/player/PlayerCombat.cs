@@ -138,6 +138,19 @@ public partial class PlayerCombat : Node
         _comboResetTimer = COMBO_WINDOW;
         _hitThisAttack.Clear();
 
+        // Attack animation
+        var anim = _controller?.GetNodeOrNull<AnimationPlayer>("CharacterMesh/kaykit_knight/AnimationPlayer");
+        if (anim != null)
+        {
+            string animName = isHeavy ? "1H_Melee_Attack_Stab" : newState switch {
+                ComboState.Light1 => "1H_Melee_Attack_Chop",
+                ComboState.Light2 => "1H_Melee_Attack_Slice_Horizontal",
+                ComboState.Light3 => "1H_Melee_Attack_Slice_Diagonal",
+                _ => "1H_Melee_Attack_Chop"
+            };
+            anim.Play(animName);
+        }
+
         float baseDamage = (_stats?.Attack ?? 10f) * multiplier;
         var origin = _controller?.GlobalPosition ?? Vector3.Zero;
         var forward = -(_controller?.Transform.Basis.Z ?? Vector3.Forward);

@@ -12,6 +12,9 @@ public partial class LyraDialogue : Node
     private bool _lowHpTriggered = false;
     private bool _secretRoomFound = false;
     private bool _bossDefeated = false;
+    private bool _loyalty30Triggered = false;
+    private bool _loyalty50Triggered = false;
+    private bool _loyalty75Triggered = false;
     private float _combatCooldown = 0f;
     private float _killCooldown = 0f;
 
@@ -46,6 +49,37 @@ public partial class LyraDialogue : Node
     {
         if (_combatCooldown > 0) _combatCooldown -= (float)delta;
         if (_killCooldown > 0) _killCooldown -= (float)delta;
+        CheckLoyaltyMilestones();
+    }
+
+    private void CheckLoyaltyMilestones()
+    {
+        var loyalty = LoyaltySystem.Instance?.GetLoyalty("lyra") ?? 0;
+
+        if (!_loyalty30Triggered && loyalty >= 30)
+        {
+            _loyalty30Triggered = true;
+            DialogueSystem.Instance?.ShowLine(LYRA,
+                "Du kämpfst anders als alle Helden die ich in den Büchern gelesen habe. Weniger... heldenhaft. Aber irgendwie funktioniert es.", 6f);
+        }
+        else if (!_loyalty50Triggered && loyalty >= 50)
+        {
+            _loyalty50Triggered = true;
+            DialogueSystem.Instance?.ShowSequence(new[]
+            {
+                new DialogueSystem.DialogueLine(LYRA, "Hast du das Brotherhood-Emblem an den Terminals gesehen?", 4f),
+                new DialogueSystem.DialogueLine(LYRA, "Ich kenne dieses Symbol. Aus Archiven die... eigentlich gesperrt sein sollten.", 5f),
+            });
+        }
+        else if (!_loyalty75Triggered && loyalty >= 75)
+        {
+            _loyalty75Triggered = true;
+            DialogueSystem.Instance?.ShowSequence(new[]
+            {
+                new DialogueSystem.DialogueLine(LYRA, "Ich glaube nicht mehr alles was sie mir beigebracht haben.", 4f),
+                new DialogueSystem.DialogueLine(LYRA, "Das ist... unangenehm zu sagen. Aber ich glaube, du solltest es wissen.", 5f),
+            });
+        }
     }
 
     private void ConnectSignals()

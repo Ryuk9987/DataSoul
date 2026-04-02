@@ -174,6 +174,14 @@ public partial class HUDController : CanvasLayer
         if (_companionHpBar == null) return;
         _companionHpBar.MaxValue = max;
         _companionHpBar.Value    = current;
+
+        // Loyalität im Label anzeigen
+        if (_companionLabel != null)
+        {
+            int loyalty = (int)(LoyaltySystem.Instance?.GetLoyalty("lyra") ?? 0);
+            string heart = loyalty >= 75 ? " ♥" : "";
+            _companionLabel.Text = $"LYRA  {loyalty}/100{heart}";
+        }
     }
 
     public void UpdateLevel(int level)

@@ -11,7 +11,7 @@ public partial class PlayerCamera : Node3D
     private SpringArm3D _springArm;
     private Camera3D _camera;
     private float _yaw = 0f;
-    private float _pitch = -15.0f;
+    private float _pitch = -0.25f;
     private float _currentDistance;
     private bool _inCombat = false;
     private Node3D _lockOnTarget = null;

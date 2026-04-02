@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://datasoul_zone4"]
+[gd_scene load_steps=10 format=3 uid="uid://datasoul_zone4"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/BreachInstanceAlpha.tscn" id="1_boss"]
 [ext_resource type="Script" path="res://scripts/world/Zone4Controller.cs" id="2_zone"]
@@ -26,6 +26,12 @@ albedo_color = Color(0.05, 0.05, 0.08, 1)
 emission_enabled = true
 emission = Color(0.1, 0.0, 0.2, 1)
 emission_energy_multiplier = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallNS"]
+size = Vector3(27, 10, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallEW"]
+size = Vector3(0.5, 10, 27)
 
 [sub_resource type="BoxShape3D" id="BoxShape_ruin"]
 size = Vector3(1.5, 3, 1.5)
@@ -72,6 +78,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 light_color = Color(0.9, 0.3, 0.4, 1)
 light_energy = 2.8
 omni_range = 25.0
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -13)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 13)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallEast" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallEast"]
+shape = SubResource("BoxShape_wallEW")
+
+[node name="WallWest" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
+shape = SubResource("BoxShape_wallEW")
 
 [node name="Boss" parent="." instance=ExtResource("1_boss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

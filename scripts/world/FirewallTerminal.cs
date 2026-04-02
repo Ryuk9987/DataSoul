@@ -66,7 +66,7 @@ public partial class FirewallTerminal : StaticBody3D
         {
             _playerNearby = true;
             _nearbyPlayer = player;
-            DialogueSystem.Instance?.ShowLine("System", $"[F] Terminal aktivieren", 0f);
+            DialogueSystem.Instance?.ShowLine("System", "[F] Terminal aktivieren", 9999f);
         }
     }
 
@@ -76,6 +76,7 @@ public partial class FirewallTerminal : StaticBody3D
         {
             _playerNearby = false;
             _nearbyPlayer = null;
+            DialogueSystem.Instance?.HideImmediate();
         }
     }
 

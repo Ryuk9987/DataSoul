@@ -111,7 +111,9 @@ public partial class DialogueSystem : CanvasLayer
         _speakerLabel.Text = line.Speaker;
         _textLabel.Text = line.Text;
         _panel.Visible = true;
-        _autoHideTimer.WaitTime = line.Duration;
+        float waitTime = Mathf.Max(line.Duration, 0.1f);
+        if (waitTime <= 0f) { OnAutoHide(); return; }
+        _autoHideTimer.WaitTime = waitTime;
         _autoHideTimer.Start();
     }
 
@@ -119,5 +121,13 @@ public partial class DialogueSystem : CanvasLayer
     {
         if (_queue.Count > 0) ShowNext();
         else { _panel.Visible = false; _showing = false; }
+    }
+
+    public void HideImmediate()
+    {
+        _autoHideTimer.Stop();
+        _queue.Clear();
+        _panel.Visible = false;
+        _showing = false;
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://datasoul_zone2"]
+[gd_scene load_steps=19 format=3 uid="uid://datasoul_zone2"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FirewallNode.tscn" id="1_fw"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/OverseerUnit7.tscn" id="2_overseer"]

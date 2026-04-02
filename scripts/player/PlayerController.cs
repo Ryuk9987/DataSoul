@@ -10,6 +10,7 @@ public partial class PlayerController : CharacterBody3D
     private DataGauge _dataGauge;
     private PlayerCombat _combat;
     private AnimationPlayer _animPlayer;
+    private Node3D _characterMesh;
 
     private const float DODGE_DURATION = 0.3f;
     private const float DODGE_SPEED = 12.0f;
@@ -33,7 +34,8 @@ public partial class PlayerController : CharacterBody3D
         _camera = GetNodeOrNull<PlayerCamera>("PlayerCamera");
         _dataGauge = GetNodeOrNull<DataGauge>("DataGauge");
         _combat = GetNodeOrNull<PlayerCombat>("PlayerCombat");
-        // AnimationPlayer aus KayKit Knight GLB
+        // CharacterMesh + AnimationPlayer aus KayKit Knight GLB
+        _characterMesh = GetNodeOrNull<Node3D>("CharacterMesh");
         _animPlayer = GetNodeOrNull<AnimationPlayer>("CharacterMesh/kaykit_knight/AnimationPlayer");
         AddToGroup("player");
     }
@@ -79,32 +81,12 @@ public partial class PlayerController : CharacterBody3D
                 velocity.X = moveDir.X * speed;
                 velocity.Z = moveDir.Z * speed;
 
-                // Spieler dreht sich sanft zur Bewegungsrichtung — aber NUR
-                // wenn sich die Richtung nicht stark ändert (verhindert 180°-Flip bei S).
-                // Strafe (A/D/S) dreht nicht weiter als 90° von der aktuellen Blickrichtung.
+                // Mesh zur Bewegungsrichtung drehen (nicht den CharacterBody3D!)
                 var lookDir = new Vector3(moveDir.X, 0f, moveDir.Z).Normalized();
-                var currentForward = -Transform.Basis.Z;
-                float dot = currentForward.Dot(lookDir);
-
-                // Nur drehen wenn Bewegungsrichtung nicht fast direkt hinter dem Spieler liegt
-                if (dot > -0.1f)
+                if (_characterMesh != null && lookDir.LengthSquared() > 0.001f)
                 {
-                    // Smooth rotation via Slerp
                     var targetBasis = Basis.LookingAt(lookDir, Vector3.Up);
-                    Basis = Basis.Slerp(targetBasis, 0.25f);
-                }
-                else
-                {
-                    // Bei S: Kamera-Vorwärtsrichtung beibehalten, nicht flippen
-                    if (_camera != null)
-                    {
-                        var camFwd = new Vector3(_camera.ForwardDirection.X, 0f, _camera.ForwardDirection.Z).Normalized();
-                        if (camFwd.LengthSquared() > 0.001f)
-                        {
-                            var targetBasis = Basis.LookingAt(camFwd, Vector3.Up);
-                            Basis = Basis.Slerp(targetBasis, 0.1f);
-                        }
-                    }
+                    _characterMesh.Basis = _characterMesh.Basis.Slerp(targetBasis, 0.2f);
                 }
             }
             else
@@ -146,6 +128,20 @@ public partial class PlayerController : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
+
+        // Lock-On: Mesh zum Ziel drehen
+        var lockTarget = _camera?.GetLockOnTarget();
+        if (lockTarget != null && IsInstanceValid(lockTarget) && _characterMesh != null)
+        {
+            var dir = (lockTarget.GlobalPosition - GlobalPosition);
+            dir.Y = 0;
+            if (dir.LengthSquared() > 0.01f)
+            {
+                var tb = Basis.LookingAt(dir.Normalized(), Vector3.Up);
+                _characterMesh.Basis = _characterMesh.Basis.Slerp(tb, 0.25f);
+            }
+        }
+
         UpdateAnimation(velocity);
     }
 

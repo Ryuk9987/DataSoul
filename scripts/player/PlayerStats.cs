@@ -17,6 +17,7 @@ public partial class PlayerStats : Node
     [Signal] public delegate void DiedEventHandler();
 
     [Export] public Background PlayerBackground { get; set; } = Background.Gamer;
+    public string PlayerName { get; set; } = "Held";
 
     public float MaxHealth { get; private set; } = 100;
     public float CurrentHealth { get; private set; } = 100;
@@ -29,6 +30,12 @@ public partial class PlayerStats : Node
 
     public override void _Ready()
     {
+        // Charakterdaten aus Charaktererstellung übernehmen falls vorhanden
+        if (GameSession.IsInitialized)
+        {
+            PlayerBackground = GameSession.PlayerBackground;
+            PlayerName = GameSession.PlayerName;
+        }
         ApplyBackgroundBonuses();
     }
 

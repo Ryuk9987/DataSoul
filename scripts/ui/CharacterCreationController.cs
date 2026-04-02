@@ -12,7 +12,8 @@ public partial class CharacterCreationController : Control
     [Export] private Label _infoLabel;
     [Export] private Button _startButton;
     
-    private PlayerStats.Background _selectedBackground;
+    private PlayerStats.Background _selectedBackground = PlayerStats.Background.Gamer;
+    private bool _backgroundSelected = false;
     
     public override void _Ready()
     {
@@ -28,6 +29,7 @@ public partial class CharacterCreationController : Control
     private void SelectBackground(PlayerStats.Background background)
     {
         _selectedBackground = background;
+        _backgroundSelected = true;
         UpdateInfoLabel();
     }
     
@@ -65,17 +67,17 @@ public partial class CharacterCreationController : Control
             return;
         }
         
-        if (_selectedBackground == null)
+        if (!_backgroundSelected)
         {
             GD.Print("Bitte wähle einen Background aus.");
             return;
         }
         
-        // Speichere die Charakterdaten
-        PlayerStats playerStats = GetNode<PlayerStats>("/root/PlayerStats");
-        playerStats.PlayerName = _nameLineEdit.Text;
-        playerStats.PlayerBackground = _selectedBackground;
-        
+        // Speichere die Charakterdaten im GameSession-Singleton
+        GameSession.PlayerName = _nameLineEdit.Text;
+        GameSession.PlayerBackground = _selectedBackground;
+        GameSession.IsInitialized = true;
+
         // Lade die nächste Szene
         GetTree().ChangeSceneToFile("res://scenes/world/FirewallRuins/FirewallRuins.tscn");
     }

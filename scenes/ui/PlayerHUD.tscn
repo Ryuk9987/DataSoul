@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://datasoul_hud"]
+[gd_scene load_steps=1 format=3 uid="uid://datasoul_hud"]
 
 [ext_resource type="Script" path="res://scripts/ui/HUDController.cs" id="1_hud"]
 
@@ -29,7 +29,6 @@ custom_minimum_size = Vector2(200, 18)
 max_value = 100.0
 value = 100.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/fill = SubResource("StyleBoxFlat_hp")
 show_percentage = false
 
 [node name="HPLabel" type="Label" parent="MarginContainer/TopLeft"]
@@ -45,6 +44,17 @@ show_percentage = false
 [node name="DataLabel" type="Label" parent="MarginContainer/TopLeft"]
 text = "DATA GAUGE"
 theme_override_colors/font_color = Color(0.2, 0.8, 1.0, 1)
+
+[node name="XPBar" type="ProgressBar" parent="MarginContainer/TopLeft"]
+custom_minimum_size = Vector2(200, 8)
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="XPLabel" type="Label" parent="MarginContainer/TopLeft"]
+text = "XP"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 10
 
 [node name="CompanionHP" type="ProgressBar" parent="."]
 anchors_preset = 0
@@ -184,6 +194,30 @@ visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(1, 0, 0, 0.15)
+color = Color(1, 0, 0, 0.1)
 mouse_filter = 2
 visible = false
+
+[node name="SynergyGauge" type="VBoxContainer" parent="."]
+anchors_preset = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -80.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 4
+
+[node name="SynergyLabel" type="Label" parent="SynergyGauge"]
+text = "SYNERGY"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.9, 0.5, 1.0, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="SynergyBar" type="ProgressBar" parent="SynergyGauge"]
+custom_minimum_size = Vector2(150, 16)
+max_value = 100.0
+value = 0.0
+show_percentage = false

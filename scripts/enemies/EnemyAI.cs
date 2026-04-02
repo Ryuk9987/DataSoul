@@ -177,7 +177,15 @@ public partial class EnemyAI : EnemyBase
             var playerStats = _player.GetNodeOrNull<PlayerStats>("PlayerStats");
             playerStats?.TakeDamage(Atk);
         }
+
+        OnAttack();
     }
+
+    /// <summary>
+    /// Called after a melee attack executes. Override in subclasses to add
+    /// attack-specific behaviour (e.g. DataWraith invisibility / vulnerability).
+    /// </summary>
+    protected virtual void OnAttack() { }
 
     private void ShootProjectile()
     {

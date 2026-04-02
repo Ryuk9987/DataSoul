@@ -1,0 +1,105 @@
+[gd_scene load_steps=14 format=3 uid="uid://datasoul_zone1"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/FragmentedSentinel.tscn" id="1_sentinel"]
+[ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
+[ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="3_zone"]
+[ext_resource type="PackedScene" path="res://scenes/world/DataNode.tscn" id="4_datanode"]
+[ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.12, 0.12, 0.16, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall"]
+size = Vector3(8, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(8, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.2, 0.2, 0.25, 1)
+roughness = 0.9
+
+[sub_resource type="BoxShape3D" id="BoxShape_pillar"]
+size = Vector3(1.5, 5, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+size = Vector3(1.5, 5, 1.5)
+
+[node name="Zone1" type="Node3D"]
+script = ExtResource("3_zone")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape_floor")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("Mat_Floor")
+
+[node name="Wall1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -18)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall1"]
+shape = SubResource("BoxShape_wall")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall1"]
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="Wall2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, -5)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+shape = SubResource("BoxShape_wall")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="Pillar1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.5, -8)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillar1"]
+shape = SubResource("BoxShape_pillar")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillar1"]
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="Pillar2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, 5)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillar2"]
+shape = SubResource("BoxShape_pillar")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillar2"]
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.4, 0.3, 0, 0.6, 0.8, -0.5, -0.7, 0.5, 0, 10, 0)
+light_color = Color(0.7, 0.75, 1.0, 1)
+light_energy = 1.4
+shadow_enabled = true
+
+[node name="DataNode1" parent="." instance=ExtResource("4_datanode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+NodeId = "ruins_zone1"
+NodeLabel = "Firewall Ruins — Eingang"
+
+[node name="Sentinel1" parent="." instance=ExtResource("1_sentinel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="Sentinel2" parent="." instance=ExtResource("1_sentinel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 8)
+
+[node name="Sentinel3" parent="." instance=ExtResource("1_sentinel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -10)
+
+[node name="DoorToZone2" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
+IsLocked = true
+TargetZoneName = "Zone2"
+
+; Brotherhood-Namensliste — Environmental Storytelling
+[node name="BrotherhoodNameList" parent="." instance=ExtResource("5_envstory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 1.5, -5)
+StoryText = "VERMISSTE HELDEN — AKTUALISIERT 847.3 PC\n\nKael Dawnward — Vermisst seit 12.847 PC\nAria Solmere — Process Terminated — Order of the Root\nTomas Veth — Process Terminated — Order of the Root\nYuki Hana — Status unbekannt\nDrei weitere — [GESCHWÄRZT]\n\nBitte melden Sie unberechtigte Datenzugriffe umgehend der Brotherhood."
+InteractLabel = "[F] Tafel lesen"

@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://datasoul_firewallnode"]
+[gd_scene load_steps=6 format=3 uid="uid://datasoul_firewallnode"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
+[ext_resource type="PackedScene" uid="uid://datasoul_projectile" path="res://scenes/enemies/Projectile.tscn" id="2_proj"]
+[ext_resource type="Script" path="res://scripts/assets/FirewallNodeVisual.cs" id="3_visual"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1"]
 size = Vector3(1, 2, 1)
@@ -23,6 +25,7 @@ IsRanged = true
 RangedRange = 12.0
 ProjectileCooldown = 2.0
 SkillDropId = "common_electro_resistance"
+ProjectileScene = ExtResource("2_proj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1")
@@ -33,3 +36,6 @@ surface_material_override/0 = SubResource("Mat_Firewall")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -12)
+
+[node name="FirewallNodeVisual" type="Node3D" parent="."]
+script = ExtResource("3_visual")

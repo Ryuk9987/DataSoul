@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3 uid="uid://datasoul_zone2"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/FirewallNode.tscn" id="1_fw"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/OverseerUnit7.tscn" id="2_overseer"]
+[ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="3_door"]
+[ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
+[ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(30, 0.5, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(30, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.1, 0.1, 0.14, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_pillar"]
+size = Vector3(2, 7, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+size = Vector3(2, 7, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Pillar"]
+albedo_color = Color(0.18, 0.18, 0.22, 1)
+roughness = 0.95
+
+[sub_resource type="BoxShape3D" id="BoxShape_arch"]
+size = Vector3(10, 0.8, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arch"]
+size = Vector3(10, 0.8, 2)
+
+[node name="Zone2" type="Node3D"]
+script = ExtResource("4_zone")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape_floor")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("Mat_Floor")
+
+[node name="PillarLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3.5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PillarLeft"]
+shape = SubResource("BoxShape_pillar")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PillarLeft"]
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_Pillar")
+
+[node name="PillarRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PillarRight"]
+shape = SubResource("BoxShape_pillar")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PillarRight"]
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_Pillar")
+
+[node name="Archway" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Archway"]
+shape = SubResource("BoxShape_arch")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Archway"]
+mesh = SubResource("BoxMesh_arch")
+surface_material_override/0 = SubResource("Mat_Pillar")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.4, 0.3, 0, 0.6, 0.8, -0.5, -0.7, 0.5, 0, 15, 0)
+light_color = Color(0.6, 0.65, 0.9, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="FirewallNodeLeft" parent="." instance=ExtResource("1_fw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 8)
+
+[node name="FirewallNodeRight" parent="." instance=ExtResource("1_fw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 8)
+
+[node name="OverseerUnit7" parent="." instance=ExtResource("2_overseer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16)
+
+[node name="DoorToZone3" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+IsLocked = true
+TargetZoneName = "Zone3"
+
+; Brotherhood Terminal Log — Overseer Unit 7 Wartungsprotokoll
+[node name="OverseerTerminalLog" parent="." instance=ExtResource("5_envstory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 0)
+StoryText = "OVERSEER UNIT 7 — WARTUNGSPROTOKOLL\n\nLetzte Wartung: 12.803 PC\nStatus: KORRUMPIERT\nEmpfehlung: Sofortige Isolierung\nAutorisierung: [AUSSTEHEND seit 44 Jahren]\n\nHinweis: Unit zeigt anomales Verhalten. Reagiert nicht mehr auf Brotherhood-Credentials."
+InteractLabel = "[F] Terminal lesen"

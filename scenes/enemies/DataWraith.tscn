@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_datawraith"]
+
+[ext_resource type="Script" path="res://scripts/enemies/DataWraith.cs" id="1_ai"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.35
+height = 1.7
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+radius = 0.35
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wraith"]
+albedo_color = Color(0.15, 0.0, 0.25, 0.5)
+transparency = 1
+cull_mode = 0
+emission_enabled = true
+emission = Color(0.3, 0.0, 0.5, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="SphereShape3D" id="AggroShape"]
+radius = 3.0
+
+[node name="DataWraith" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_ai")
+MaxHp = 20.0
+Atk = 10.0
+Def = 1.0
+Spd = 7.0
+AggroRange = 3.0
+AttackRange = 1.2
+SkillDropId = "common_shadow_veil"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1")
+surface_material_override/0 = SubResource("Mat_Wraith")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="AggroArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AggroArea"]
+shape = SubResource("AggroShape")

@@ -1,0 +1,81 @@
+[gd_scene load_steps=18 format=3 uid="uid://datasoul_firewallruins"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone1.tscn" id="1_z1"]
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone2.tscn" id="2_z2"]
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone3.tscn" id="3_z3"]
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone4.tscn" id="4_z4"]
+[ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/SecretRoom.tscn" id="5_sr"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="6_player"]
+[ext_resource type="PackedScene" path="res://scenes/companions/Lyra.tscn" id="7_lyra"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PlayerHUD.tscn" id="8_hud"]
+[ext_resource type="Script" path="res://scripts/systems/GameManager.cs" id="9_gm"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="10_pause"]
+[ext_resource type="Script" path="res://scripts/systems/ZoneManager.cs" id="11_zm"]
+[ext_resource type="Script" path="res://scripts/ui/DialogueSystem.cs" id="12_ds"]
+[ext_resource type="Script" path="res://scripts/companions/LoyaltySystem.cs" id="13_ls"]
+[ext_resource type="Script" path="res://scripts/systems/SynergySystem.cs" id="14_syn"]
+[ext_resource type="PackedScene" path="res://scenes/ui/FragmentMenu.tscn" id="15_fm"]
+[ext_resource type="Script" path="res://scripts/systems/CorruptionSystem.cs" id="16_cs"]
+
+[sub_resource type="NavigationMesh" id="NavMesh_1"]
+agent/radius = 0.5
+
+[sub_resource type="Environment" id="Env_dungeon"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.25, 0.28, 0.4, 1)
+ambient_light_energy = 0.85
+
+[node name="FirewallRuins" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_dungeon")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavMesh_1")
+
+[node name="Zone1" parent="." instance=ExtResource("1_z1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Zone2" parent="." instance=ExtResource("2_z2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
+
+[node name="Zone3" parent="." instance=ExtResource("3_z3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+
+[node name="Zone4" parent="." instance=ExtResource("4_z4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -150)
+
+[node name="SecretRoom" parent="." instance=ExtResource("5_sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -100)
+
+[node name="Player" parent="." instance=ExtResource("6_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+
+[node name="Lyra" parent="." instance=ExtResource("7_lyra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 8)
+
+[node name="HUD" parent="." instance=ExtResource("8_hud")]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("9_gm")
+
+[node name="ZoneManager" type="Node" parent="."]
+script = ExtResource("11_zm")
+
+[node name="PauseMenu" parent="." instance=ExtResource("10_pause")]
+
+[node name="DialogueSystem" type="CanvasLayer" parent="."]
+script = ExtResource("12_ds")
+
+[node name="LoyaltySystem" type="Node" parent="."]
+script = ExtResource("13_ls")
+
+[node name="SynergySystem" type="Node" parent="."]
+script = ExtResource("14_syn")
+
+[node name="FragmentMenu" parent="." instance=ExtResource("15_fm")]
+
+[node name="CorruptionSystem" type="Node" parent="."]
+script = ExtResource("16_cs")

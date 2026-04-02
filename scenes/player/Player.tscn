@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scripts/systems/DataGauge.cs" id="5_gauge"]
 [ext_resource type="Script" path="res://scripts/player/DataAbsorption.cs" id="6_absorb"]
 [ext_resource type="Script" path="res://scripts/systems/SkillSystem.cs" id="7_skills"]
+[ext_resource type="Script" path="res://scripts/systems/LevelSystem.cs" id="8_level"]
+[ext_resource type="Script" path="res://scripts/assets/PlayerVisual.cs" id="9_visual"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -34,6 +36,9 @@ mesh = SubResource("CapsuleMesh_1")
 surface_material_override/0 = SubResource("Mat_Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
+[node name="PlayerVisual" type="Node3D" parent="MeshInstance3D"]
+script = ExtResource("9_visual")
+
 [node name="HitboxArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.8)
 
@@ -47,6 +52,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="PlayerCamera"]
 spring_length = 5.0
+margin = 0.3
+collision_mask = 4
 transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="PlayerCamera/SpringArm3D"]
@@ -66,5 +73,8 @@ script = ExtResource("6_absorb")
 
 [node name="SkillSystem" type="Node" parent="."]
 script = ExtResource("7_skills")
+
+[node name="LevelSystem" type="Node" parent="."]
+script = ExtResource("8_level")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

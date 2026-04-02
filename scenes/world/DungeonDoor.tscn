@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_door"]
+
+[ext_resource type="Script" path="res://scripts/world/DungeonDoor.cs" id="1_door"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_door"]
+size = Vector3(4.0, 3.0, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_door"]
+size = Vector3(4.0, 3.0, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_DoorLocked"]
+albedo_color = Color(0.6, 0.05, 0.05, 1)
+emission_enabled = true
+emission = Color(0.8, 0.0, 0.0, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="SphereShape3D" id="InteractShape"]
+radius = 2.5
+
+[node name="DungeonDoor" type="StaticBody3D"]
+script = ExtResource("1_door")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_door")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_door")
+surface_material_override/0 = SubResource("Mat_DoorLocked")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="InteractArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("InteractShape")

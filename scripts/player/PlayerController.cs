@@ -159,6 +159,7 @@ public partial class PlayerController : CharacterBody3D
         _dodgeTimer = DODGE_DURATION;
         _dodgeDirection = direction.Normalized();
         EmitSignal(SignalName.DodgeStarted);
+        AudioManager.Instance?.PlaySfx(_hitIncoming ? "dodge_counter" : "dodge", GlobalPosition);
     }
 
     // Call this when an enemy is about to hit the player (e.g. from EnemyAI)

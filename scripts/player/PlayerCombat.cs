@@ -82,7 +82,10 @@ public partial class PlayerCombat : Node
 
         // Skill 1: Code-Injection
         if (InputMap.HasAction("skill_1") && Input.IsActionJustPressed("skill_1"))
+        {
             UseCodeInjection();
+            AudioManager.Instance?.PlaySfx2D("skill_activate");
+        }
 
         // Synergy-Attack: Q
         if (InputMap.HasAction("synergy") && Input.IsActionJustPressed("synergy"))
@@ -174,6 +177,7 @@ public partial class PlayerCombat : Node
                 _dataGauge?.AddGauge(isHeavy ? DataGauge.HEAVY_HIT : DataGauge.LIGHT_HIT);
                 SynergySystem.Instance?.AddGauge(isHeavy ? 8f : 4f);
                 EmitSignal(SignalName.HitLanded, enemy, baseDamage, isHeavy);
+                AudioManager.Instance?.PlaySfx(isHeavy ? "hit_heavy" : "hit_light", GlobalPosition);
             }
         }
     }

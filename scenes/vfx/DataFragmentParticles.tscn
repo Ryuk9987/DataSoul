@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_datafragparticles"]
+
+[sub_resource type="ParticleProcessMaterial" id="FragmentMat"]
+emission_shape = 2
+emission_sphere_radius = 0.3
+direction = Vector3(0, 1, 0)
+spread = 60.0
+initial_velocity_min = 1.5
+initial_velocity_max = 4.0
+gravity = Vector3(0, -1.5, 0)
+scale_min = 0.05
+scale_max = 0.18
+color = Color(0.0, 0.9, 1.0, 1.0)
+color_ramp = null
+
+[sub_resource type="BoxMesh" id="FragMesh"]
+size = Vector3(0.08, 0.08, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="FragMatMesh"]
+albedo_color = Color(0.0, 0.9, 1.0, 1.0)
+emission_enabled = true
+emission = Color(0.0, 0.9, 1.0, 1.0)
+emission_energy_multiplier = 2.0
+transparency = 1
+alpha_scissor_threshold = 0.1
+
+[node name="DataFragmentParticles" type="GPUParticles3D"]
+amount = 24
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("FragmentMat")
+draw_pass_1 = SubResource("FragMesh")

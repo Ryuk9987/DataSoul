@@ -68,11 +68,13 @@ public partial class PlayerStats : Node
         float actualDamage = damage * (1 - Defense / 100);
         CurrentHealth -= actualDamage;
         EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
+        AudioManager.Instance?.PlaySfx2D("player_hurt");
 
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
             EmitSignal(SignalName.Died);
+            AudioManager.Instance?.PlaySfx2D("player_death");
         }
     }
 

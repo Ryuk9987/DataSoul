@@ -32,6 +32,7 @@ public partial class DataAbsorption : Node
         _pendingSkillId = enemy.SkillDropId;
         _isAbsorbing = true;
         EmitSignal(SignalName.AbsorptionStarted, _pendingSkillId);
+        AudioManager.Instance?.PlaySfx("absorption", GetParent<Node3D>()?.GlobalPosition ?? Vector3.Zero);
         _absorptionTimer.Start();
     }
 

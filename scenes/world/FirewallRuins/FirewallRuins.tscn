@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://datasoul_firewallruins"]
+[gd_scene load_steps=27 format=3 uid="uid://datasoul_firewallruins"]
 
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone1.tscn" id="1_z1"]
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallRuins/Zone2.tscn" id="2_z2"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/systems/SynergySystem.cs" id="14_syn"]
 [ext_resource type="PackedScene" path="res://scenes/ui/FragmentMenu.tscn" id="15_fm"]
 [ext_resource type="Script" path="res://scripts/systems/CorruptionSystem.cs" id="16_cs"]
+[ext_resource type="Script" path="res://scripts/systems/AudioManager.cs" id="17_audio"]
 
 [sub_resource type="BoxShape3D" id="Wall_NS"]
 size = Vector3(50, 12, 4.0)
@@ -185,3 +186,6 @@ script = ExtResource("14_syn")
 
 [node name="CorruptionSystem" type="Node" parent="."]
 script = ExtResource("16_cs")
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("17_audio")

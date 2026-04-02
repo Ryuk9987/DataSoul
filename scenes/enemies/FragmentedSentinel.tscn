@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://datasoul_sentinel"]
+[gd_scene load_steps=6 format=3 uid="uid://datasoul_sentinel"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
 [ext_resource type="Script" path="res://scripts/assets/SentinelVisual.cs" id="2_visual"]
+[ext_resource type="PackedScene" path="res://assets/models/enemies/fragmented_sentinel.glb" id="3_mesh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -33,11 +34,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_1")
-surface_material_override/0 = SubResource("Mat_Sentinel")
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
 [node name="SentinelVisual" type="Node3D" parent="MeshInstance3D"]
 script = ExtResource("2_visual")
+
+[node name="EnemyMesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="fragmented_sentinel" parent="EnemyMesh" instance=ExtResource("3_mesh")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 

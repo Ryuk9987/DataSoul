@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://datasoul_firewallnode"]
+[gd_scene load_steps=7 format=3 uid="uid://datasoul_firewallnode"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
 [ext_resource type="PackedScene" uid="uid://datasoul_projectile" path="res://scenes/enemies/Projectile.tscn" id="2_proj"]
 [ext_resource type="Script" path="res://scripts/assets/FirewallNodeVisual.cs" id="3_visual"]
+[ext_resource type="PackedScene" path="res://assets/models/enemies/corrupted_firewall_node.glb" id="4_mesh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1"]
 size = Vector3(1, 2, 1)
@@ -32,7 +33,11 @@ shape = SubResource("BoxShape3D_1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_1")
-surface_material_override/0 = SubResource("Mat_Firewall")
+visible = false
+
+[node name="EnemyMesh" type="Node3D" parent="."]
+
+[node name="corrupted_firewall_node" parent="EnemyMesh" instance=ExtResource("4_mesh")]
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -12)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://datasoul_zone2"]
+[gd_scene load_steps=11 format=3 uid="uid://datasoul_zone2"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FirewallNode.tscn" id="1_fw"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/OverseerUnit7.tscn" id="2_overseer"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="3_door"]
 [ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
 [ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
+[ext_resource type="PackedScene" path="res://assets/models/world/firewall_ruins/zone2_corridor_boss.glb" id="6_levelglb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(30, 0.5, 50)
@@ -76,6 +77,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 8)
 
 [node name="FirewallNodeRight" parent="." instance=ExtResource("1_fw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 8)
+
+[node name="LevelGeometry" parent="." instance=ExtResource("6_levelglb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="OverseerUnit7" parent="." instance=ExtResource("2_overseer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16)

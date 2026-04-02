@@ -61,12 +61,15 @@ omni_range = 20.0
 
 [node name="Terminal1" parent="." instance=ExtResource("3_terminal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+TerminalId = 1
 
 [node name="Terminal2" parent="." instance=ExtResource("3_terminal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
+TerminalId = 2
 
 [node name="Terminal3" parent="." instance=ExtResource("3_terminal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+TerminalId = 3
 
 [node name="Wraith1" parent="." instance=ExtResource("1_wraith")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 3)

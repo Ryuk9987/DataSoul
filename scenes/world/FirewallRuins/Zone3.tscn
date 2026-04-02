@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://datasoul_zone3"]
+[gd_scene load_steps=12 format=3 uid="uid://datasoul_zone3"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/DataWraith.tscn" id="1_wraith"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]

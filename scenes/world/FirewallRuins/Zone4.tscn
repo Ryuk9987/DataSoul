@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://datasoul_zone4"]
+[gd_scene load_steps=13 format=3 uid="uid://datasoul_zone4"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/BreachInstanceAlpha.tscn" id="1_boss"]
 [ext_resource type="Script" path="res://scripts/world/Zone4Controller.cs" id="2_zone"]

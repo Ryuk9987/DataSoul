@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://datasoul_zone1"]
+[gd_scene load_steps=15 format=3 uid="uid://datasoul_zone1"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FragmentedSentinel.tscn" id="1_sentinel"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
@@ -21,6 +21,10 @@ size = Vector3(42, 8, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape_wallEW"]
 size = Vector3(0.5, 8, 42)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.2, 0.2, 0.25, 1)
+roughness = 0.9
 
 [sub_resource type="BoxShape3D" id="BoxShape_pillar"]
 size = Vector3(1.5, 5, 1.5)

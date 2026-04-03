@@ -120,11 +120,13 @@
 - [x] GpuParticles3D an 5 Emitter-Stellen (blau/golden)
 - [x] `SummoningFocus` Node3D als Cutscene-Hook bereit
 
-### 5.3 Intro-Sequenz → `clickadventure-writer` + `csharp-godot`
-- [ ] Beschwörungsritual Cutscene-Text + Regie-Anweisungen
-- [ ] Ankunft in DataWorld — erster Dialog
-- [ ] Lyra Erstkontakt-Dialog
-- [ ] Erster Auftrag (König/Rat schickt Held zu Firewall Ruins)
+### 5.3 Intro-Sequenz → `clickadventure-writer` + `csharp-godot` ✅
+- [x] Beschwörungsritual Cutscene-Text + Regie-Anweisungen
+- [x] Ankunft in DataWorld — erster Dialog (NARRATOR-Sequenz)
+- [x] Lyra Erstkontakt-Dialog (inkl. 5 Background-Varianten)
+- [x] Erster Auftrag — Briefing mit Magister Aldric (inkl. Suspense-Subtext)
+- [x] Lyra-Kommentar beim Verlassen der Akademie
+- [x] Regie-Anweisungen: Kamera, Glitch-Events, Szenen-Übergänge
 - [ ] Cutscene in Godot implementieren (csharp-godot)
 
 ### Story & Dialoge (bereits erledigt)
@@ -178,6 +180,20 @@
   - Ambient: `ambient_ruins.wav` als automatischer Loop im AudioManager
 - README.md und PROJECT_CONTEXT.md für DataSoul erstellt
 
+### Zuletzt erledigt (2026-04-03 — Phase 5.3)
+- **Intro-Sequenz Dialoge ✅**
+  - `intro_sequence.json`: 8 Dialogue-Keys, 40+ Einträge, vollständig Godot-kompatibel
+    - `ritual_cutscene`: 11 Einträge (Beschwörung, Portal-Öffnung, Ankunft, Glitch-Momente)
+    - `lyra_first_contact`: 7 Einträge (Erstkontakt, Persönlichkeit, Zuteilung)
+    - 5× Background-Varianten: programmer / gamer / hacker / creator / analyst
+    - `first_quest_briefing`: 11 Einträge (Aldric, Bedrohung, suspense-Subtext, ausweichende Antworten)
+    - `leaving_akademie`: 3 Einträge (Lyra murmelt Lehrbuch, Nervosität)
+  - `intro_sequence_regie.md`: vollständige Regie-Anweisungen
+    - Kamera-Bewegungen pro Dialog-Eintrag
+    - 6 Glitch-Events + Idle-Glitch (GlitchController-Parameter)
+    - Emotion-Tag → Animation-Mapping
+    - Technische Hinweise für csharp-godot (Background-Mapping, Dialogue-Keys, Kamera-System)
+
 ### Nächste offene Punkte (Priorität)
-1. **Phase 5.3:** Intro-Sequenz / Beschwörungsritual → `clickadventure-writer` + `csharp-godot`
+1. **Phase 5.3 Teil 2:** Cutscene in Godot implementieren → `csharp-godot` (CutsceneCamera.cs, AnimationPlayer, Signal-Hooks)
 2. **Phase 6:** Companion Story, Synergy-Attack, Data-Node FastTravel → `csharp-godot`

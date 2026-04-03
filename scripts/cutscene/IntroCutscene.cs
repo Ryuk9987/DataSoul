@@ -94,6 +94,10 @@ public partial class IntroCutscene : Node
         BuildGlitchOverlay();
         SetupLineTimer();
         BuildCutsceneCamera();
+
+        // Cutscene startet automatisch beim Laden der Szene (kommt immer von CharacterCreation)
+        // Kurzes Defer damit alle Nodes vollständig initialisiert sind
+        CallDeferred(MethodName.OnSummoningTriggered);
     }
 
     // ── Öffentliche API ───────────────────────────────────────────────────────

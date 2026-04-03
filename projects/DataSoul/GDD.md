@@ -1,8 +1,9 @@
-# DataSoul — Game Design Document v1.1
-**Stand:** 2026-03-31  
-**Status:** Konzeptphase  
+# DataSoul — Game Design Document v1.2
+**Stand:** 2026-04-03  
+**Status:** Prototyp aktiv  
 **Engine:** Godot (C#)  
-**Genre:** 3D Action-JRPG / Isekai
+**Genre:** 3D Action-JRPG / Isekai  
+**Art Style:** Anime · Düster · Mittelalter-Setting · Referenz: .hack
 
 ---
 
@@ -1030,12 +1031,12 @@ Nach dem Sieg: Legendary Fragment → *"Echo Strike"* (kurze Klonattacke). Monol
 ## 14. Offene Fragen / TODO
 
 - [ ] Die Certificate Authority ausarbeiten — wer/was steckt dahinter?
-- [ ] Art Style Reference sammeln (visuell näher zu .hack oder SAO?)
+- [x] Art Style Reference → **Anime, düster, Mittelalter-Setting, Referenz: .hack**
 - [ ] Soundtrack-Richtung — Referenz-Samples vorlegen wenn soweit
 - [ ] Malware-Ursprung klären — wer hat die Korruption eingeschleust?
 - [ ] Story weiter schreiben → Companions + Dungeons entstehen organisch daraus
 - [ ] Kampfsystem detaillieren (Combo-Trees, Absorption-Animationen)
-- [ ] Charaktererstellung (UI/UX Konzept)
+- [x] Charaktererstellung → `CharacterCreation.tscn` implementiert (Name + Background)
 
 ---
 

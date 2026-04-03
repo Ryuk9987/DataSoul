@@ -596,7 +596,7 @@ public partial class IntroCutscene : Node
 
         var rect = new ColorRect();
         rect.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-        rect.Color = new Color(1, 1, 1, 1); // Farbe wird vom Shader ignoriert
+        rect.Color = new Color(0, 0, 0, 0); // Transparent — Shader zeichnet selbst
 
         var shader = ResourceLoader.Load<Shader>("res://assets/shaders/ScreenGlitch.gdshader");
         if (shader != null)

@@ -29,7 +29,7 @@ mouse_filter = 2
 ; ─────────────────────────────────────────────
 [node name="ParticleLayer" type="Node" parent="."]
 
-[node name="Particles" type="GpuParticles2D" parent="ParticleLayer"]
+[node name="Particles" type="GPUParticles2D" parent="ParticleLayer"]
 position = Vector2(640, 360)
 amount = 60
 lifetime = 8.0

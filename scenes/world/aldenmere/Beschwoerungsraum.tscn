@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://datasoul_beschwoerungsraum"]
+[gd_scene load_steps=19 format=3 uid="uid://datasoul_beschwoerungsraum"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/BeschwoerungsraumZone.cs" id="1_script"]
+[ext_resource type="Script" path="res://scripts/cutscene/IntroCutscene.cs" id="19_cutscene"]
 [ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/beschwoerungsraum.glb" id="2_room"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
 
@@ -184,7 +185,12 @@ stream = ExtResource("3_ambient")
 autoplay = true
 volume_db = -12.0
 
+; === Cutscene Controller ===
+[node name="IntroCutscene" type="Node" parent="."]
+script = ExtResource("19_cutscene")
+
 [connection signal="body_entered" from="Triggers/FocusTrigger" to="." method="OnFocusTriggerBodyEntered"]
 [connection signal="body_exited" from="Triggers/FocusTrigger" to="." method="OnFocusTriggerBodyExited"]
 [connection signal="body_entered" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyEntered"]
 [connection signal="body_exited" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyExited"]
+[connection signal="SummoningTriggered" from="." to="IntroCutscene" method="OnSummoningTriggered"]

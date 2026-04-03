@@ -87,9 +87,10 @@ public partial class PlayerController : CharacterBody3D
                 if (_characterMesh != null && lookDir.LengthSquared() > 0.001f)
                 {
                     float targetAngle = Mathf.Atan2(-lookDir.X, -lookDir.Z);
-                    float currentAngle = _characterMesh.Rotation.Y;
+                    float currentAngle = _characterMesh.GlobalRotation.Y;
                     float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, 0.2f);
-                    _characterMesh.Rotation = new Vector3(0, smoothAngle, 0);
+                    var gr = _characterMesh.GlobalRotation;
+                    _characterMesh.GlobalRotation = new Vector3(gr.X, smoothAngle, gr.Z);
                 }
             }
             else
@@ -142,8 +143,9 @@ public partial class PlayerController : CharacterBody3D
             {
                 var d = dir.Normalized();
                 float lockAngle = Mathf.Atan2(-d.X, -d.Z);
-                float curAngle = _characterMesh.Rotation.Y;
-                _characterMesh.Rotation = new Vector3(0, Mathf.LerpAngle(curAngle, lockAngle, 0.25f), 0);
+                float curAngle = _characterMesh.GlobalRotation.Y;
+                var lgr = _characterMesh.GlobalRotation;
+                _characterMesh.GlobalRotation = new Vector3(lgr.X, Mathf.LerpAngle(curAngle, lockAngle, 0.25f), lgr.Z);
             }
         }
 

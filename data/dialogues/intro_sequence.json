@@ -1,0 +1,215 @@
+{
+  "dialogues": {
+    "ritual_cutscene": [
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Mögen die Schichten sich öffnen. Möge das Muster erkennen, was es verloren hat.",
+        "emotion": "solemn"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Im Namen Valdris' — im Namen des Gleichgewichts — rufen wir jetzt. Aus den Tiefen der anderen Realität: Erscheine, Auserwählter.",
+        "emotion": "solemn"
+      },
+      {
+        "speaker": "NARRATOR",
+        "text": "Der Runenkreis erwacht. Goldenes Licht pulst durch die eingemeißelten Zeichen — doch zwischen den Symbolen flackern kurz etwas, das nicht dort sein sollte. Ziffern. Fragmente. Code.",
+        "emotion": ""
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Das Portal öffnet sich! Die Verbindung ist— warte. Die Signatur ist... ungewöhnlich.",
+        "emotion": "confused"
+      },
+      {
+        "speaker": "Akademiewächter",
+        "text": "Herr Zeremonienmeister — das Muster stimmt nicht. Die Datenschichten des Beschwörungsstroms sind... fragmentiert.",
+        "emotion": "alarmed"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Still. Das Ritual ist bereits vollzogen. Was auch immer kommt — es kommt.",
+        "emotion": "tense"
+      },
+      {
+        "speaker": "NARRATOR",
+        "text": "Das Portal reißt auf. Ein blendend weißes Loch in der Luft — und durch dieses Loch fällt jemand. Hart. Auf den Steinboden des Beschwörungsraums.",
+        "emotion": ""
+      },
+      {
+        "speaker": "NARRATOR",
+        "text": "Für einen Moment ist alles still. Dann: ein Flimmern. Die Wände des Raums pulsieren kurz wie Bildschirmrauschen. Die Fackeln flackern zu schnell. Niemand sonst scheint es zu bemerken.",
+        "emotion": ""
+      },
+      {
+        "speaker": "NARRATOR",
+        "text": "Du öffnest die Augen. Die Welt sieht... falsch aus. Nicht falsch wie ein Traum. Falsch wie ein schlecht gerendetes Bild.",
+        "emotion": ""
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Es hat funktioniert. Gott sei Dank. Wir hatten unsere Zweifel, aber... es hat funktioniert.",
+        "emotion": "relieved"
+      },
+      {
+        "speaker": "NARRATOR",
+        "text": "Du bist aufgestanden. Deine Beine fühlen sich seltsam an — als wären sie aus Daten zusammengesetzt, die sich noch nicht sicher sind was sie sein wollen. Über dir hängen die Runen im Bogen. Sie leuchten noch immer. Zwischen den Symbolen siehst du kurz — für eine Zehntelsekunde — Zahlen.",
+        "emotion": ""
+      }
+    ],
+
+    "lyra_first_contact": [
+      {
+        "speaker": "Lyra",
+        "text": "Ähm. Hallo. Ich bin Lyra. Heiladeptin, zweiter Rang, zugewiesen als deine... also als dein... Protokoll sagt 'Begleiterin für Einsätze im Auftrag der Akademie'. Das ist du. Ich meine — das bin ich. Für dich. Ähm.",
+        "emotion": "nervous"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Laut Protokoll sollte ich zuerst fragen ob du verletzt bist. Also — bist du verletzt? Du bist gerade durch einen Datenstrom aus einer anderen Realität gefallen, daher nehme ich an... wahrscheinlich ja, zumindest ein bisschen.",
+        "emotion": "concerned"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Ich bin ausgebildete Heiladeptin. Ich kann das behandeln. Falls du verletzt bist. Was du wahrscheinlich bist.",
+        "emotion": "nervous"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Okay. Lass mich von vorne anfangen. Du wurdest beschworen. Das Königreich Valdris hat ein Beschwörungsritual durchgeführt — sehr altes Protokoll, erste Erwähnung im Buch der Schichten, Kapitel 7, wenn das hilft — um jemanden aus einer anderen Realität zu rufen. Jemanden mit besonderen... Fähigkeiten.",
+        "emotion": "explaining"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Das bist jetzt du. Die Akademie hat mich zugeteilt. Als deine Begleiterin. Ich bin... sehr geehrt. Und auch ein bisschen erschrocken, aber das ist normal, steht so im Handbuch.",
+        "emotion": "nervous"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Und bevor du fragst: Nein, ich bin nicht die erste Wahl gewesen. Ich bin — offiziell — 'noch nicht bereit für Missionen höherer Priorität'. Das hat Magister Aldric genau so formuliert. Vor allen anderen. Aber das spielt keine Rolle jetzt.",
+        "emotion": "hurt"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Was eine Rolle spielt: Valdris braucht Hilfe. Und du bist derjenige der helfen soll. Und ich soll sicherstellen dass du dabei nicht stirbst. Das ist mein Job. Ich bin sehr gut in meinem Job.",
+        "emotion": "determined"
+      }
+    ],
+
+    "lyra_first_contact_programmer": [
+      {
+        "speaker": "Lyra",
+        "text": "Du bist also ein... Architekt von Systemen. Einer der Schichten aufbaut und Strukturen erschafft. Das erklärt vielleicht warum deine Beschwörungs-Signatur so ungewöhnlich war — als würde ein Systemcode versuchen sich selbst zu laden. Faszinierend. Und ein bisschen beunruhigend. Aber hauptsächlich faszinierend.",
+        "emotion": "intrigued"
+      }
+    ],
+
+    "lyra_first_contact_gamer": [
+      {
+        "speaker": "Lyra",
+        "text": "Du hast Erfahrung mit... Welten die nach Regeln funktionieren? Mit Systemen die man erlernen und meistern kann? Das... das ist eigentlich eine sehr nützliche Eigenschaft für das was uns erwartet. Ich wollte das nur sagen. Professionell gesehen.",
+        "emotion": "cautiously_optimistic"
+      }
+    ],
+
+    "lyra_first_contact_hacker": [
+      {
+        "speaker": "Lyra",
+        "text": "Ein Eindringling in Systeme. Jemand der Grenzen austestet und Schwachstellen findet. Ich muss ehrlich sein — das macht mir ein bisschen Sorgen. Andererseits steht im sechsten Kapitel des Feldeinsatz-Handbuchs: 'Unkonventionelle Fähigkeiten sind in unkonventionellen Situationen von unschätzbarem Wert.' Ich halte mich daran.",
+        "emotion": "wary_but_accepting"
+      }
+    ],
+
+    "lyra_first_contact_creator": [
+      {
+        "speaker": "Lyra",
+        "text": "Du erschaffst Dinge. Formst sie aus... aus Vorstellung und Absicht. Das Beschwörungsritual hat einmal einen Künstler gerufen — Akt 3, Annalen Valdris', vor zweihundert Jahren. Er hat die Welt nicht gerettet, aber er hat sie verändert. Das Buch erwähnt ihn mit bemerkenswertem Respekt.",
+        "emotion": "thoughtful"
+      }
+    ],
+
+    "lyra_first_contact_analyst": [
+      {
+        "speaker": "Lyra",
+        "text": "Du beobachtest Muster. Erkennst Zusammenhänge in Daten die anderen verborgen bleiben. Das ist... das ist tatsächlich genau das was ich erhofft hatte. Nicht dass ich irgendwelche Erwartungen hatte. Ich hatte definitiv keine Erwartungen. Das wäre unprofessionell.",
+        "emotion": "quietly_pleased"
+      }
+    ],
+
+    "first_quest_briefing": [
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Willkommen in Valdris, Beschworener. Ich bin Magister Aldric — Zeremonienmeister der Königlichen Akademie. Im Namen des Rates spreche ich dir unseren... Dank aus.",
+        "emotion": "formal"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Ich werde nicht lügen: das Ritual war komplizierter als erwartet. Deine Ankunft war... ungewöhnlich. Aber du bist hier. Das ist was zählt.",
+        "emotion": "measured"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Valdris steht vor einer Bedrohung. An der Grenzregion zwischen unserem Territorium und dem Königreich Aqualis — in den Ruinen die wir die Firewall Ruins nennen — ist etwas erwacht. Korrupte Entitäten. Wesen, die sich in die Strukturen der Welt eingefressen haben wie... wie Parasiten.",
+        "emotion": "grave"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Unsere Wachen konnten nicht vordringen. Die Entitäten wachsen. Wenn wir nichts tun, werden die Ruins nicht die Grenze ihrer Ausbreitung sein.",
+        "emotion": "urgent"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Magister — wenn ich fragen darf: Woher kommen die Entitäten? Das Handbuch klassifiziert korrupte Wesen normalerweise nach Ursprung. Wenn wir die Quelle kennen—",
+        "emotion": "analytical"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Die Ursache ist... noch Gegenstand der Untersuchung. Eure Aufgabe ist die Ruins zu säubern. Nicht zu analysieren.",
+        "emotion": "dismissive"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "... Verstanden, Magister.",
+        "emotion": "uncertain"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Ihr werdet die Ruins erkunden, die Quelle der Korruption lokalisieren und neutralisieren. Lyra ist ausreichend ausgebildet um dich zu unterstützen. Ihr habt alles was ihr braucht.",
+        "emotion": "formal"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Noch eine Sache. Es mag sein dass ihr auf... Anomalien stoßt. Dinge die ihr nicht vollständig versteht. Bringt nichts zurück das ihr nicht versteht. Und stellt keine Fragen an die Objekte die ihr findet.",
+        "emotion": "deliberate"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Keine... Fragen an Objekte? Das klingt wie— ich meine, das ist eine sehr spezifische Instruktion.",
+        "emotion": "puzzled"
+      },
+      {
+        "speaker": "Zeremonienmeister",
+        "text": "Viel Erfolg, Beschworener. Valdris zählt auf euch.",
+        "emotion": "solemn"
+      }
+    ],
+
+    "leaving_akademie": [
+      {
+        "speaker": "Lyra",
+        "text": "Hmm. 'Keine Fragen an Objekte stellen.' Das steht nirgendwo im Handbuch. Ich habe das gesamte Handbuch gelesen. Zweimal.",
+        "emotion": "murmuring"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "Das ist in Ordnung. Wir sind ausgebildet. Das Protokoll für unbekannte Situationen ist klar: beobachten, dokumentieren, nicht anfassen bevor Klassifizierung abgeschlossen. Ich habe das.",
+        "emotion": "reassuring_herself"
+      },
+      {
+        "speaker": "Lyra",
+        "text": "... Kapitel elf, Seite zweihundertdreiundzwanzig: 'Ein guter Feldeinsatz beginnt mit vollständiger Information.' Wir haben keine vollständige Information. Das ist in Ordnung. Das ist vollkommen in Ordnung.",
+        "emotion": "nervous"
+      }
+    ]
+  }
+}

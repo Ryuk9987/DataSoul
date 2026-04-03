@@ -97,8 +97,34 @@
 
 ---
 
-## Phase 5 — Story & Dialoge
-- [ ] Intro-Sequenz (Beschwörungsritual, Ankunft in DataWorld) → `clickadventure-writer`
+## Phase 5 — Aldenmere (Startstadt) + Intro-Sequenz
+
+> **Hinweis:** Firewall Ruins = Prototyp-Dungeon (Mechanik-Test). Echter Spielstart ist Aldenmere.
+> Reihenfolge: Assets → Szene → Intro-Dialoge/Cutscene
+
+### 5.1 Aldenmere Assets → `nano-banana-artist`
+- [ ] Stadt-Blockout / Hauptplatz GLB
+- [ ] Akademie-Gebäude GLB (Außen + Innen)
+- [ ] Beschwörungsraum GLB (im Akademie-Keller)
+- [ ] Atmosphärische Props (Brunnen, Marktstände, Laternen, Fahnen)
+- [ ] Ambient-Sound Aldenmere (ruhige Stadtgeräusche)
+
+### 5.2 Aldenmere Szene → `csharp-godot`
+- [ ] `Aldenmere.tscn` aufbauen (Hauptplatz, Akademie-Eingang)
+- [ ] `AkademieInnen.tscn` + `Beschwoerungsraum.tscn`
+- [ ] NPCs platzieren (Akademie-Wachen, Bürger)
+- [ ] Trigger-Zonen (Eingang Akademie, Beschwörungsraum)
+- [ ] Übergang: Beschwörungsraum → CharacterCreation → Spielwelt
+- [ ] Übergang: Aldenmere → Firewall Ruins (erster Auftrag)
+
+### 5.3 Intro-Sequenz → `clickadventure-writer` + `csharp-godot`
+- [ ] Beschwörungsritual Cutscene-Text + Regie-Anweisungen
+- [ ] Ankunft in DataWorld — erster Dialog
+- [ ] Lyra Erstkontakt-Dialog
+- [ ] Erster Auftrag (König/Rat schickt Held zu Firewall Ruins)
+- [ ] Cutscene in Godot implementieren (csharp-godot)
+
+### Story & Dialoge (bereits erledigt)
 - [x] Lyra Intro-Dialog
 - [x] Zone 1–4 Environmental Storytelling
 - [x] Datenkristall-Aufzeichnung (Geheimraum)

@@ -67,25 +67,26 @@ public partial class IntroCutscene : Node
 
     // ── Kamera-Positionen ─────────────────────────────────────────────────────
     // Beschwoerungsraum-Koordinaten (approx., angepasst an Szene)
-    private static readonly Vector3 CAM_BIRD_EYE     = new(0f, 8f,  0f);     // Vogelperspektive
-    private static readonly Vector3 CAM_ALDRIC        = new(-3f, 1.8f, 2f);   // Magister Aldric Halbtotale
-    private static readonly Vector3 CAM_RUNE_ZOOM     = new(0f, 2f, 2f);      // Zoom auf Runenkreis
-    private static readonly Vector3 CAM_RUNE_ORBIT_A  = new(3f, 3f, 3f);      // Orbit A
-    private static readonly Vector3 CAM_WIDE_ROOM     = new(0f, 4f, 7f);      // Weiter Raum-Schuss
-    private static readonly Vector3 CAM_FROG_EYE      = new(0f, 0.3f, 3f);    // Bodenperspektive
-    private static readonly Vector3 CAM_THIRD_PERSON  = new(0f, 2.5f, 5f);    // Third-Person Standard
-    private static readonly Vector3 CAM_OTS_LYRA      = new(-1.5f, 1.8f, 3f); // Über-Schulter hinter Lyra
-    private static readonly Vector3 CAM_LYRA_CLOSE    = new(-2f, 1.6f, 1.5f); // Close-Up Lyra
-    private static readonly Vector3 CAM_LYRA_FRONT    = new(0f, 1.7f, 2.5f);  // Frontansicht Lyra
-    private static readonly Vector3 CAM_ALDRIC_WIDE   = new(0f, 3f, 8f);      // Weite Briefing-Einst.
-    private static readonly Vector3 CAM_ALDRIC_CLOSE  = new(2f, 1.7f, 1.5f);  // Close-Up Aldric
+    // Kamera-Positionen für kleinen Kellerraum (Kenney room-small ~4×4 Units)
+    private static readonly Vector3 CAM_BIRD_EYE     = new(0f, 3.5f, 0.5f);  // Vogelperspektive (niedrig, Raum ist klein)
+    private static readonly Vector3 CAM_ALDRIC        = new(-1f, 1.6f, 1.8f); // Magister Aldric Halbtotale
+    private static readonly Vector3 CAM_RUNE_ZOOM     = new(0f, 1.5f, 1.5f);  // Zoom auf Runenkreis
+    private static readonly Vector3 CAM_RUNE_ORBIT_A  = new(1.5f, 2f, 1.5f);  // Orbit A
+    private static readonly Vector3 CAM_WIDE_ROOM     = new(0f, 2.5f, 2.5f);  // Weiter Raum-Schuss
+    private static readonly Vector3 CAM_FROG_EYE      = new(0f, 0.4f, 1.5f);  // Bodenperspektive
+    private static readonly Vector3 CAM_THIRD_PERSON  = new(0f, 1.8f, 2.5f);  // Third-Person Standard
+    private static readonly Vector3 CAM_OTS_LYRA      = new(-0.8f, 1.6f, 1.8f); // Über-Schulter Lyra
+    private static readonly Vector3 CAM_LYRA_CLOSE    = new(-0.8f, 1.5f, 0.8f); // Close-Up Lyra
+    private static readonly Vector3 CAM_LYRA_FRONT    = new(0f, 1.5f, 1.5f);  // Frontansicht Lyra
+    private static readonly Vector3 CAM_ALDRIC_WIDE   = new(0f, 2f, 3f);      // Weite Briefing-Einst.
+    private static readonly Vector3 CAM_ALDRIC_CLOSE  = new(0.8f, 1.5f, 0.8f); // Close-Up Aldric
 
     // ── LookAt-Targets ────────────────────────────────────────────────────────
-    private static readonly Vector3 TARGET_RUNE    = new(0f, 0f,  0f);
-    private static readonly Vector3 TARGET_ALDRIC  = new(-3f, 1.6f, 0f);
-    private static readonly Vector3 TARGET_LYRA    = new(-2f, 1.5f, 0f);
-    private static readonly Vector3 TARGET_PLAYER  = new(0f, 1.2f, 0f);
-    private static readonly Vector3 TARGET_ROOM    = new(0f, 2f,  0f);
+    private static readonly Vector3 TARGET_RUNE    = new(0f, 0.1f, 0f);
+    private static readonly Vector3 TARGET_ALDRIC  = new(-1f, 1.4f, 0f);
+    private static readonly Vector3 TARGET_LYRA    = new(-0.8f, 1.4f, 0f);
+    private static readonly Vector3 TARGET_PLAYER  = new(0f, 1.0f, 0f);
+    private static readonly Vector3 TARGET_ROOM    = new(0f, 1.5f, 0f);
 
     // ─────────────────────────────────────────────────────────────────────────
     public override void _Ready()

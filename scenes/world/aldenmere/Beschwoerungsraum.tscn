@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://datasoul_beschwoerungsraum"]
+[gd_scene load_steps=17 format=3 uid="uid://datasoul_beschwoerungsraum"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/BeschwoerungsraumZone.cs" id="1_script"]
 [ext_resource type="Script" path="res://scripts/cutscene/IntroCutscene.cs" id="19_cutscene"]
+[ext_resource type="Script" path="res://scripts/ui/DialogueSystem.cs" id="20_dialogue"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-small.glb" id="10_room_small"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door.glb" id="11_gate_door"]
@@ -218,6 +219,9 @@ autoplay = true
 volume_db = -12.0
 
 ; === Cutscene Controller ===
+[node name="DialogueSystem" type="CanvasLayer" parent="."]
+script = ExtResource("20_dialogue")
+
 [node name="IntroCutscene" type="Node" parent="."]
 script = ExtResource("19_cutscene")
 

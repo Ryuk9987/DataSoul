@@ -86,11 +86,10 @@ public partial class PlayerController : CharacterBody3D
                 var lookDir = new Vector3(moveDir.X, 0f, moveDir.Z).Normalized();
                 if (_characterMesh != null && lookDir.LengthSquared() > 0.001f)
                 {
-                    float targetAngle = Mathf.Atan2(-lookDir.X, -lookDir.Z);
-                    float currentAngle = _characterMesh.GlobalRotation.Y;
-                    float smoothAngle = Mathf.LerpAngle(currentAngle, targetAngle, 0.2f);
-                    var gr = _characterMesh.GlobalRotation;
-                    _characterMesh.GlobalRotation = new Vector3(gr.X, smoothAngle, gr.Z);
+                    var flatDir = new Vector3(lookDir.X, 0f, lookDir.Z).Normalized();
+                    // LookingAt zeigt -Z zur Zielrichtung; KayKit-Modell hat +Z als Front → negieren
+                    var targetBasis = Basis.LookingAt(-flatDir, Vector3.Up);
+                    _characterMesh.GlobalBasis = _characterMesh.GlobalBasis.Slerp(targetBasis, 0.2f);
                 }
             }
             else
@@ -142,10 +141,8 @@ public partial class PlayerController : CharacterBody3D
             if (dir.LengthSquared() > 0.01f)
             {
                 var d = dir.Normalized();
-                float lockAngle = Mathf.Atan2(-d.X, -d.Z);
-                float curAngle = _characterMesh.GlobalRotation.Y;
-                var lgr = _characterMesh.GlobalRotation;
-                _characterMesh.GlobalRotation = new Vector3(lgr.X, Mathf.LerpAngle(curAngle, lockAngle, 0.25f), lgr.Z);
+                var lockBasis = Basis.LookingAt(-d, Vector3.Up);
+                _characterMesh.GlobalBasis = _characterMesh.GlobalBasis.Slerp(lockBasis, 0.25f);
             }
         }
 

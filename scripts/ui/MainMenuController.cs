@@ -135,7 +135,7 @@ public partial class MainMenuController : Control
 
     private void OnVolumeChanged(double value)
     {
-        AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Master"), (float)GD.Linear2Db((float)value));
+        AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Master"), Mathf.LinearToDb((float)value));
     }
 
     private void OnFullscreenToggled(bool pressed)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://datasoul_firewallnode"]
+[gd_scene load_steps=8 format=3 uid="uid://datasoul_firewallnode"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
 [ext_resource type="PackedScene" uid="uid://datasoul_projectile" path="res://scenes/enemies/Projectile.tscn" id="2_proj"]
 [ext_resource type="Script" path="res://scripts/assets/FirewallNodeVisual.cs" id="3_visual"]
 [ext_resource type="PackedScene" path="res://assets/models/enemies/corrupted_firewall_node.glb" id="4_mesh"]
+[ext_resource type="Script" uid="uid://o87vzbz0k04y" path="res://scripts/enemies/GlitchController.cs" id="5_glitch"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1"]
 size = Vector3(1, 2, 1)
@@ -44,3 +45,8 @@ target_position = Vector3(0, 0, -12)
 
 [node name="FirewallNodeVisual" type="Node3D" parent="."]
 script = ExtResource("3_visual")
+
+[node name="GlitchController" type="Node" parent="."]
+script = ExtResource("5_glitch")
+NormalIntensity = 0.15
+IsBoss = false

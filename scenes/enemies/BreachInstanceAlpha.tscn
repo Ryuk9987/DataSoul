@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://datasoul_boss"]
+[gd_scene load_steps=5 format=3 uid="uid://datasoul_boss"]
 
 [ext_resource type="Script" path="res://scripts/enemies/BreachInstanceAlpha.cs" id="1_boss"]
+[ext_resource type="Script" uid="uid://o87vzbz0k04y" path="res://scripts/enemies/GlitchController.cs" id="2_glitch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.6
@@ -29,3 +30,8 @@ surface_material_override/0 = SubResource("Mat_Boss")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="GlitchController" type="Node" parent="."]
+script = ExtResource("2_glitch")
+NormalIntensity = 0.2
+IsBoss = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://datasoul_sentinel"]
+[gd_scene load_steps=8 format=3 uid="uid://datasoul_sentinel"]
 
 [ext_resource type="Script" path="res://scripts/enemies/EnemyAI.cs" id="1_ai"]
 [ext_resource type="Script" path="res://scripts/assets/SentinelVisual.cs" id="2_visual"]
 [ext_resource type="PackedScene" path="res://assets/models/enemies/fragmented_sentinel.glb" id="3_mesh"]
 [ext_resource type="PackedScene" path="res://assets/models/enemies/kaykit_rogue_hooded.glb" id="4_kaykit"]
+[ext_resource type="Script" uid="uid://o87vzbz0k04y" path="res://scripts/enemies/GlitchController.cs" id="5_glitch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -56,3 +57,8 @@ visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AggroArea"]
 shape = SubResource("AggroShape")
+
+[node name="GlitchController" type="Node" parent="."]
+script = ExtResource("5_glitch")
+NormalIntensity = 0.2
+IsBoss = false

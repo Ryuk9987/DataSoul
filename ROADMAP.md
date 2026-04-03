@@ -5,6 +5,7 @@
 ## Phase 3: [x] Basis-Szene (FirewallRuins)
 ## Phase 4: [x] Kampf-System
 ## Phase 5: [x] Intro-Sequenz
+## Phase 5b: ✅ Startmenü (MainMenu.tscn) — Buttons, Einstellungen, Credits, Partikel-Hintergrund
 ## Phase 6: [ ] Haupt-Quests
 ## Phase 7: [ ] Skilltree
 ## Phase 8: [ ] Endboss

@@ -19,7 +19,7 @@ Ein Spieler landet in einer digitalen Welt (DataWorld) und kämpft sich durch de
 ## Quickstart (Dev)
 
 1. Projekt in **Godot 4.6 (mit .NET/C# Support)** öffnen → `game/` Ordner
-2. Startszene: `res://scenes/ui/CharacterCreation.tscn`
+2. Startszene: `res://scenes/ui/MainMenu.tscn` ← Hauptmenü
 3. Direkt ins Gameplay: `res://scenes/world/FirewallRuins/FirewallRuins.tscn`
 
 ---

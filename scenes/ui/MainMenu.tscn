@@ -1,0 +1,471 @@
+[gd_scene load_steps=2 format=3 uid="uid://datasoul_mainmenu"]
+
+[ext_resource type="Script" path="res://scripts/ui/MainMenuController.cs" id="1_ctrl"]
+
+; =====================================================================
+; MainMenu — DataSoul
+; Dunkler Anime/Mittelalter-Stil (Referenz: .hack)
+; Hintergrund: #0a0d14 (fast schwarz, leicht bläulich)
+; Akzentfarbe: #00e5ff (cyan-blau)
+; =====================================================================
+
+[node name="MainMenu" type="Control"]
+script = ExtResource("1_ctrl")
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+
+; ─────────────────────────────────────────────
+; Hintergrund (dunkel-bläulich)
+; ─────────────────────────────────────────────
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.039, 0.051, 0.078, 1)
+mouse_filter = 2
+
+; ─────────────────────────────────────────────
+; Partikel-Layer (schwebende Datenfragmente)
+; ─────────────────────────────────────────────
+[node name="ParticleLayer" type="Node" parent="."]
+
+[node name="Particles" type="GpuParticles2D" parent="ParticleLayer"]
+position = Vector2(640, 360)
+amount = 60
+lifetime = 8.0
+speed_scale = 0.4
+local_coords = false
+process_material = SubResource("particle_material")
+texture = null
+
+[sub_resource type="ParticleProcessMaterial" id="particle_material"]
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, -5, 0)
+scale_min = 1.5
+scale_max = 3.5
+color = Color(0.0, 0.898, 1.0, 0.45)
+emission_shape = 3
+emission_box_extents = Vector3(640, 360, 0)
+
+; ─────────────────────────────────────────────
+; Hexagonale Runen-Dekoration (links)
+; ─────────────────────────────────────────────
+[node name="RuneDecoLeft" type="Label" parent="."]
+anchor_top = 0.1
+anchor_bottom = 0.9
+offset_left = 8
+offset_right = 48
+text = "⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡"
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 0.18)
+theme_override_font_sizes/font_size = 18
+mouse_filter = 2
+
+; ─────────────────────────────────────────────
+; Hexagonale Runen-Dekoration (rechts)
+; ─────────────────────────────────────────────
+[node name="RuneDecoRight" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 0.1
+anchor_bottom = 0.9
+offset_left = -48
+offset_right = -8
+text = "⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡
+⬡"
+vertical_alignment = 1
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 0.18)
+theme_override_font_sizes/font_size = 18
+mouse_filter = 2
+
+; ─────────────────────────────────────────────
+; Horizontale Trennlinie (oben)
+; ─────────────────────────────────────────────
+[node name="TopLine" type="ColorRect" parent="."]
+anchor_right = 1.0
+offset_top = 88
+offset_bottom = 90
+color = Color(0.0, 0.898, 1.0, 0.25)
+mouse_filter = 2
+
+; ─────────────────────────────────────────────
+; Horizontale Trennlinie (unten)
+; ─────────────────────────────────────────────
+[node name="BottomLine" type="ColorRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+anchor_right = 1.0
+offset_top = -90
+offset_bottom = -88
+color = Color(0.0, 0.898, 1.0, 0.25)
+mouse_filter = 2
+
+; ─────────────────────────────────────────────
+; Haupt-Layout (vertikal, zentriert)
+; ─────────────────────────────────────────────
+[node name="CenterLayout" type="CenterContainer" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MenuContainer" type="VBoxContainer" parent="Background/CenterLayout"]
+custom_minimum_size = Vector2(480, 0)
+theme_override_constants/separation = 0
+
+; ─── Titel-Block ───
+[node name="TitleBlock" type="VBoxContainer" parent="Background/CenterLayout/MenuContainer"]
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="Background/CenterLayout/MenuContainer/TitleBlock"]
+text = "DataSoul"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 64
+theme_override_colors/font_shadow_color = Color(0.0, 0.898, 1.0, 0.6)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 8
+
+[node name="SubtitleLabel" type="Label" parent="Background/CenterLayout/MenuContainer/TitleBlock"]
+text = "Die Simulation wartet."
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.55, 0.58, 0.65, 1.0)
+theme_override_font_sizes/font_size = 15
+
+[node name="TitleSpacer" type="Control" parent="Background/CenterLayout/MenuContainer"]
+custom_minimum_size = Vector2(0, 40)
+
+; ─── Button-Liste ───
+[node name="ButtonList" type="VBoxContainer" parent="Background/CenterLayout/MenuContainer"]
+theme_override_constants/separation = 6
+
+; 1. Fortsetzen
+[node name="ContinueButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "▶  Fortsetzen"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.55, 0.58, 0.65, 1.0)
+theme_override_colors/font_hover_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_colors/font_pressed_color = Color(0.0, 0.7, 0.85, 1.0)
+theme_override_colors/font_disabled_color = Color(0.3, 0.32, 0.36, 0.5)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; 2. Neues Spiel
+[node name="NewGameButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "◆  Neues Spiel"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_colors/font_hover_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_colors/font_pressed_color = Color(0.0, 0.7, 0.85, 1.0)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; 3. Spiel Laden
+[node name="LoadGameButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "◈  Spiel Laden"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_colors/font_hover_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_colors/font_pressed_color = Color(0.0, 0.7, 0.85, 1.0)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; 4. Einstellungen
+[node name="SettingsButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "⚙  Einstellungen"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_colors/font_hover_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_colors/font_pressed_color = Color(0.0, 0.7, 0.85, 1.0)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; 5. Credits
+[node name="CreditsButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "✦  Credits"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_colors/font_hover_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_colors/font_pressed_color = Color(0.0, 0.7, 0.85, 1.0)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; 6. Beenden
+[node name="QuitButton" type="Button" parent="Background/CenterLayout/MenuContainer/ButtonList"]
+text = "✕  Beenden"
+custom_minimum_size = Vector2(480, 46)
+theme_override_colors/font_color = Color(0.65, 0.35, 0.35, 1.0)
+theme_override_colors/font_hover_color = Color(1.0, 0.35, 0.35, 1.0)
+theme_override_colors/font_pressed_color = Color(0.85, 0.2, 0.2, 1.0)
+theme_override_font_sizes/font_size = 17
+flat = true
+
+; ─── Versions-Info (unten rechts) ───
+[node name="VersionLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -120
+offset_right = -8
+offset_top = -24
+offset_bottom = -6
+text = "v0.1.0-alpha"
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.35, 0.38, 0.45, 0.7)
+theme_override_font_sizes/font_size = 11
+mouse_filter = 2
+
+; =====================================================================
+; OVERLAY-PANELS (anfangs unsichtbar)
+; =====================================================================
+
+; ─────────────────────────────────────────────
+; Einstellungen-Panel
+; ─────────────────────────────────────────────
+[node name="SettingsPanel" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -220
+offset_right = 220
+offset_top = -170
+offset_bottom = 170
+color = Color(0.055, 0.07, 0.11, 0.97)
+mouse_filter = 0
+
+[node name="BorderTop" type="ColorRect" parent="SettingsPanel"]
+anchor_right = 1.0
+offset_bottom = 2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="BorderBottom" type="ColorRect" parent="SettingsPanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+anchor_right = 1.0
+offset_top = -2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="PanelContent" type="VBoxContainer" parent="SettingsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_right = -20
+offset_top = 16
+offset_bottom = -16
+theme_override_constants/separation = 18
+
+[node name="PanelTitle" type="Label" parent="SettingsPanel/PanelContent"]
+text = "⚙ Einstellungen"
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="HSep1" type="HSeparator" parent="SettingsPanel/PanelContent"]
+
+[node name="VolumeRow" type="HBoxContainer" parent="SettingsPanel/PanelContent"]
+theme_override_constants/separation = 12
+
+[node name="VolumeLabel" type="Label" parent="SettingsPanel/PanelContent/VolumeRow"]
+text = "Lautstärke"
+custom_minimum_size = Vector2(110, 0)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_font_sizes/font_size = 15
+size_flags_vertical = 4
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel/PanelContent/VolumeRow"]
+custom_minimum_size = Vector2(200, 28)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.8
+size_flags_horizontal = 3
+
+[node name="FullscreenRow" type="HBoxContainer" parent="SettingsPanel/PanelContent"]
+theme_override_constants/separation = 12
+
+[node name="FullscreenLabel" type="Label" parent="SettingsPanel/PanelContent/FullscreenRow"]
+text = "Vollbild"
+custom_minimum_size = Vector2(110, 0)
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_font_sizes/font_size = 15
+size_flags_vertical = 4
+
+[node name="FullscreenToggle" type="CheckButton" parent="SettingsPanel/PanelContent/FullscreenRow"]
+button_pressed = false
+
+[node name="Spacer" type="Control" parent="SettingsPanel/PanelContent"]
+custom_minimum_size = Vector2(0, 8)
+
+[node name="CloseButton" type="Button" parent="SettingsPanel/PanelContent"]
+text = "Schließen"
+custom_minimum_size = Vector2(0, 38)
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 15
+
+; ─────────────────────────────────────────────
+; Credits-Panel
+; ─────────────────────────────────────────────
+[node name="CreditsPanel" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -240
+offset_right = 240
+offset_top = -140
+offset_bottom = 140
+color = Color(0.055, 0.07, 0.11, 0.97)
+mouse_filter = 0
+
+[node name="BorderTop" type="ColorRect" parent="CreditsPanel"]
+anchor_right = 1.0
+offset_bottom = 2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="BorderBottom" type="ColorRect" parent="CreditsPanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+anchor_right = 1.0
+offset_top = -2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="PanelContent" type="VBoxContainer" parent="CreditsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_right = -20
+offset_top = 16
+offset_bottom = -16
+theme_override_constants/separation = 16
+
+[node name="PanelTitle" type="Label" parent="CreditsPanel/PanelContent"]
+text = "✦ Credits"
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="HSep1" type="HSeparator" parent="CreditsPanel/PanelContent"]
+
+[node name="CreditsGameTitle" type="Label" parent="CreditsPanel/PanelContent"]
+text = "DataSoul"
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="CreditsSubtitle" type="Label" parent="CreditsPanel/PanelContent"]
+text = "Ein Spiel von"
+theme_override_colors/font_color = Color(0.55, 0.58, 0.65, 1.0)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="CreditsAuthor" type="Label" parent="CreditsPanel/PanelContent"]
+text = "Erickos Mohor"
+theme_override_colors/font_color = Color(0.85, 0.88, 0.95, 1.0)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="HSep2" type="HSeparator" parent="CreditsPanel/PanelContent"]
+
+[node name="CreditsEngine" type="Label" parent="CreditsPanel/PanelContent"]
+text = "Erstellt mit Godot Engine 4"
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 0.9)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CreditsPanel/PanelContent"]
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="CreditsPanel/PanelContent"]
+text = "Schließen"
+custom_minimum_size = Vector2(0, 38)
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 15
+
+; ─────────────────────────────────────────────
+; "Noch nicht implementiert"-Dialog
+; ─────────────────────────────────────────────
+[node name="NotImplementedDialog" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -200
+offset_right = 200
+offset_top = -90
+offset_bottom = 90
+color = Color(0.055, 0.07, 0.11, 0.97)
+mouse_filter = 0
+
+[node name="BorderTop" type="ColorRect" parent="NotImplementedDialog"]
+anchor_right = 1.0
+offset_bottom = 2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="BorderBottom" type="ColorRect" parent="NotImplementedDialog"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+anchor_right = 1.0
+offset_top = -2
+color = Color(0.0, 0.898, 1.0, 0.6)
+mouse_filter = 2
+
+[node name="DialogContent" type="VBoxContainer" parent="NotImplementedDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_right = -20
+offset_top = 16
+offset_bottom = -16
+theme_override_constants/separation = 16
+
+[node name="DialogTitle" type="Label" parent="NotImplementedDialog/DialogContent"]
+text = "ℹ Information"
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="HSep" type="HSeparator" parent="NotImplementedDialog/DialogContent"]
+
+[node name="DialogMessage" type="Label" parent="NotImplementedDialog/DialogContent"]
+text = "Noch nicht implementiert."
+theme_override_colors/font_color = Color(0.75, 0.78, 0.85, 1.0)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="NotImplementedDialog/DialogContent"]
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="NotImplementedDialog/DialogContent"]
+text = "OK"
+custom_minimum_size = Vector2(0, 38)
+theme_override_colors/font_color = Color(0.0, 0.898, 1.0, 1.0)
+theme_override_font_sizes/font_size = 15

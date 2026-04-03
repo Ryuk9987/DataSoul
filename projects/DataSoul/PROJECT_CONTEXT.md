@@ -18,7 +18,7 @@ Vor jeder Änderung zuerst hier lesen, dann README.md.
 
 - **Godot 4.6** mit **.NET/C#**
 - **Forward Plus** Renderer
-- Startszene: `res://scenes/ui/CharacterCreation.tscn`
+- Startszene: `res://scenes/ui/MainMenu.tscn` ← **Hauptmenü (neu)**
 - Game Loop Entry: `res://scenes/world/FirewallRuins/FirewallRuins.tscn`
 
 ---

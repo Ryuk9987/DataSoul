@@ -58,7 +58,7 @@ public partial class DataAbsorption : Node
             return;
         }
 
-        var particles = _particleScene.Instantiate<GPUParticles3D>();
+        var particles = _particleScene.Instantiate<GpuParticles3D>();
         if (particles == null) return;
 
         // In die aktuelle Szene einfügen und positionieren

@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://datasoul_mainmenu"]
+[gd_scene load_steps=3 format=3 uid="uid://datasoul_mainmenu"]
 
 [ext_resource type="Script" path="res://scripts/ui/MainMenuController.cs" id="1_ctrl"]
+
+[sub_resource type="ParticleProcessMaterial" id="particle_material"]
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, -5, 0)
+scale_min = 1.5
+scale_max = 3.5
+color = Color(0.0, 0.898, 1.0, 0.45)
+emission_shape = 3
+emission_box_extents = Vector3(640, 360, 0)
 
 ; =====================================================================
 ; MainMenu — DataSoul
@@ -37,18 +49,6 @@ speed_scale = 0.4
 local_coords = false
 process_material = SubResource("particle_material")
 texture = null
-
-[sub_resource type="ParticleProcessMaterial" id="particle_material"]
-direction = Vector3(0, -1, 0)
-spread = 180.0
-initial_velocity_min = 10.0
-initial_velocity_max = 40.0
-gravity = Vector3(0, -5, 0)
-scale_min = 1.5
-scale_max = 3.5
-color = Color(0.0, 0.898, 1.0, 0.45)
-emission_shape = 3
-emission_box_extents = Vector3(640, 360, 0)
 
 ; ─────────────────────────────────────────────
 ; Hexagonale Runen-Dekoration (links)

@@ -17,8 +17,7 @@ float rand(float x) {
 void fragment() {
     if (glitch_intensity <= 0.001) {
         COLOR = texture(TEXTURE, UV);
-        return;
-    }
+    } else {
 
     float t = TIME * glitch_speed;
     vec2 uv = UV;
@@ -57,4 +56,5 @@ void fragment() {
     col += vec3(line_flash * 0.8);
 
     COLOR = vec4(col, a);
+    } // end else
 }

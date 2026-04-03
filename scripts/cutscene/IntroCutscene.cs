@@ -522,8 +522,9 @@ public partial class IntroCutscene : Node
         var dir = (lookAt - pos).Normalized();
         if (dir.LengthSquared() > 0.001f)
         {
-            // LookingAt: Kamera schaut zu lookAt
-            _cutsceneCamera.GlobalBasis = Basis.LookingAt(dir, Vector3.Up);
+            // Fallback: wenn dir fast parallel zu Up ist (z.B. Bird-Eye), Back als Up verwenden
+            var up = (Mathf.Abs(dir.Dot(Vector3.Up)) > 0.99f) ? Vector3.Back : Vector3.Up;
+            _cutsceneCamera.GlobalBasis = Basis.LookingAt(dir, up);
         }
     }
 

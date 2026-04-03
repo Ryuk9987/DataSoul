@@ -102,20 +102,23 @@
 > **Hinweis:** Firewall Ruins = Prototyp-Dungeon (Mechanik-Test). Echter Spielstart ist Aldenmere.
 > Reihenfolge: Assets → Szene → Intro-Dialoge/Cutscene
 
-### 5.1 Aldenmere Assets → `nano-banana-artist`
-- [ ] Stadt-Blockout / Hauptplatz GLB
-- [ ] Akademie-Gebäude GLB (Außen + Innen)
-- [ ] Beschwörungsraum GLB (im Akademie-Keller)
-- [ ] Atmosphärische Props (Brunnen, Marktstände, Laternen, Fahnen)
-- [ ] Ambient-Sound Aldenmere (ruhige Stadtgeräusche)
+### 5.1 Aldenmere Assets → `nano-banana-artist` ✅
+- [x] Stadt-Blockout / Hauptplatz GLB → `aldenmere_main_square.glb`
+- [x] Akademie-Gebäude GLB (Außen + Innen) → `akademie_exterior.glb`, `akademie_interior_hall.glb`
+- [x] Beschwörungsraum GLB (im Akademie-Keller) → `beschwoerungsraum.glb`
+- [x] Atmosphärische Props (Brunnen, Marktstände, Laternen, Fahnen) → `aldenmere_props.glb`
+- [x] Ambient-Sound Aldenmere (ruhige Stadtgeräusche) → `ambient_aldenmere.wav`
 
-### 5.2 Aldenmere Szene → `csharp-godot`
-- [ ] `Aldenmere.tscn` aufbauen (Hauptplatz, Akademie-Eingang)
-- [ ] `AkademieInnen.tscn` + `Beschwoerungsraum.tscn`
-- [ ] NPCs platzieren (Akademie-Wachen, Bürger)
-- [ ] Trigger-Zonen (Eingang Akademie, Beschwörungsraum)
-- [ ] Übergang: Beschwörungsraum → CharacterCreation → Spielwelt
-- [ ] Übergang: Aldenmere → Firewall Ruins (erster Auftrag)
+### 5.2 Aldenmere Szene → `csharp-godot` ✅
+- [x] `Aldenmere.tscn` aufbauen (Hauptplatz, Akademie-Eingang, Props, 4 NPCs)
+- [x] `AkademieInnen.tscn` + `Beschwoerungsraum.tscn`
+- [x] NPCs platzieren (Wachen, Bürger, Händler — 4× CharacterBody3D)
+- [x] Trigger-Zonen: Akademie-Eingang, Südausgang → FirewallRuins, Keller, SummoningFocus
+- [x] Übergang: Beschwörungsraum → Signal `SummoningTriggered` (Cutscene-Hook)
+- [x] Übergang: Aldenmere → Firewall Ruins (Südausgang → Zone1.tscn)
+- [x] Ambient-Musik (loopend) in allen 3 Szenen
+- [x] GpuParticles3D an 5 Emitter-Stellen (blau/golden)
+- [x] `SummoningFocus` Node3D als Cutscene-Hook bereit
 
 ### 5.3 Intro-Sequenz → `clickadventure-writer` + `csharp-godot`
 - [ ] Beschwörungsritual Cutscene-Text + Regie-Anweisungen
@@ -162,6 +165,12 @@
 - **StaticBody ohne MeshInstance:** Kollidiert nicht zuverlässig → immer MeshInstance3D dazu
 
 ### Zuletzt erledigt (2026-04-03)
+- **Phase 5.2 Aldenmere Szenen ✅**
+  - `Aldenmere.tscn`: Hauptplatz, Props, 4 NPCs, Ambient-Musik, Trigger Akademie + Südausgang
+  - `AkademieInnen.tscn`: Innenhalle, Kollisionen, Trigger Keller + Ausgang
+  - `Beschwoerungsraum.tscn`: 5× GpuParticles3D (blau/golden), SummoningFocus Node3D, Signal `SummoningTriggered`, Trigger Ausgang
+  - Szenen-Wechsel via `GetTree().ChangeSceneToFile()` für alle Übergänge
+  - C#-Scripts: `AldenmereZone.cs`, `AkademieInnenZone.cs`, `BeschwoerungsraumZone.cs`
 - **Phase 3 vollständig integriert ✅**
   - Kampf-SFX: alle 8 Dateien (hit_light/heavy, dodge, dodge_counter, skill_activate, player_hurt, player_death, absorption) via AudioManager in C#-Code eingebunden
   - GlitchShader: neuer `GlitchController.cs` als Node auf allen 4 Gegner-Szenen — dynamische Intensität, overload_mode bei <25% HP, Boss-Phasen
@@ -170,5 +179,5 @@
 - README.md und PROJECT_CONTEXT.md für DataSoul erstellt
 
 ### Nächste offene Punkte (Priorität)
-1. **Phase 5:** Intro-Sequenz → `clickadventure-writer`
+1. **Phase 5.3:** Intro-Sequenz / Beschwörungsritual → `clickadventure-writer` + `csharp-godot`
 2. **Phase 6:** Companion Story, Synergy-Attack, Data-Node FastTravel → `csharp-godot`

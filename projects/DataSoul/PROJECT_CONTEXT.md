@@ -104,9 +104,61 @@ FirewallRuins (Node3D)
 
 ---
 
+## Aldenmere Szenen-Hierarchie (Phase 5.2)
+
+```
+Aldenmere.tscn  (AldenmereZone.cs)
+  ├── LevelGeometry (aldenmere_main_square.glb)
+  ├── Props (aldenmere_props.glb)
+  ├── Collision/ (StaticBody3D Boden + 4 Wände)
+  ├── Triggers/
+  │   ├── AkademieTrigger (Area3D → AkademieInnen.tscn)
+  │   └── SuedausgangTrigger (Area3D → FirewallRuins/Zone1.tscn)
+  ├── SpawnPoint (Node3D, Zentrum)
+  ├── NPCs/ (4× CharacterBody3D — Bürger, Händler, Wache)
+  ├── Lighting/ (DirectionalLight3D + OmniLight3D ambient)
+  └── AmbientMusic (AudioStreamPlayer, loop)
+
+AkademieInnen.tscn  (AkademieInnenZone.cs)
+  ├── LevelGeometry (akademie_interior_hall.glb)
+  ├── Collision/ (StaticBody3D Boden + 4 Wände)
+  ├── Triggers/
+  │   ├── KellerTrigger (Area3D → Beschwoerungsraum.tscn)
+  │   └── AusgangTrigger (Area3D → Aldenmere.tscn)
+  ├── SpawnPoint (Node3D, Eingang)
+  ├── Lighting/ (blaue Deckenleuchten + Wandfackeln)
+  └── AmbientMusic (AudioStreamPlayer, loop)
+
+Beschwoerungsraum.tscn  (BeschwoerungsraumZone.cs)
+  ├── LevelGeometry (beschwoerungsraum.glb)
+  ├── Collision/ (StaticBody3D Boden + 4 Wände)
+  ├── Particles/ (5× GpuParticles3D, blau/golden, loopend)
+  ├── SummoningFocus (Node3D + OmniLight3D) ← Cutscene-Hook
+  ├── Triggers/
+  │   ├── FocusTrigger (Area3D → Signal SummoningTriggered)
+  │   └── AusgangTrigger (Area3D → AkademieInnen.tscn)
+  ├── SpawnPoint (Node3D, Eingang)
+  ├── Lighting/ (RuneGlow blau/lila)
+  └── AmbientMusic (AudioStreamPlayer, loop)
+```
+
+### Szenen-Übergänge (alle via GetTree().ChangeSceneToFile())
+- Aldenmere → AkademieInnen: `F` in AkademieTrigger-Zone
+- Aldenmere → Zone1 (FirewallRuins): `F` in SuedausgangTrigger-Zone
+- AkademieInnen → Beschwoerungsraum: `F` in KellerTrigger-Zone
+- AkademieInnen ← Beschwoerungsraum: `F` in AusgangTrigger-Zone
+- Beschwoerungsraum: `F` bei SummoningFocus → Signal `SummoningTriggered` (Phase-5.3-Hook)
+
+---
+
 ## Stand (2026-04-03)
 
-- Phase 1–4 vollständig ✅
+- Phase 1–5.2 vollständig ✅
+- Phase 5.2 Aldenmere Szenen ✅
+  - `Aldenmere.tscn`, `AkademieInnen.tscn`, `Beschwoerungsraum.tscn` angelegt
+  - 3 C#-Scripts: AldenmereZone, AkademieInnenZone, BeschwoerungsraumZone
+  - 5× GpuParticles3D im Beschwörungsraum (blau + golden)
+  - SummoningFocus mit Signal `SummoningTriggered` → bereit für Intro-Cutscene (5.3)
 - Phase 3 vollständig integriert ✅
   - SFX: alle 8 Dateien über AudioManager eingebunden
   - GlitchShader: auf allen 4 Gegnern via GlitchController.cs

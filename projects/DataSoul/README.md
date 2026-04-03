@@ -52,6 +52,8 @@ game/
       player/       ← player_capsule.glb, kaykit_knight.glb
       companions/   ← lyra.glb
       vfx/          ← absorption_orb.glb
+      world/
+        aldenmere/  ← aldenmere_main_square, akademie_exterior/interior, beschwoerungsraum, props
     shaders/
       GlitchShader.gdshader   ← Glitch-Effekt auf Gegnern
       toon_character.gdshader
@@ -63,6 +65,7 @@ game/
     companions/     ← Lyra.tscn
     vfx/            ← DataFragmentParticles.tscn
     world/FirewallRuins/ ← Zone1–4, SecretRoom, FirewallRuins.tscn
+    world/aldenmere/ ← Aldenmere.tscn, AkademieInnen.tscn, Beschwoerungsraum.tscn
     ui/             ← CharacterCreation, HUD, PauseMenu, FragmentMenu
   scripts/
     player/         ← PlayerController, PlayerCombat, PlayerStats, DataAbsorption
@@ -71,6 +74,7 @@ game/
     companions/     ← CompanionBase, CompanionAI, LoyaltySystem, LyraDialogue
     ui/             ← HUDController, DialogueSystem, etc.
     world/          ← DungeonZone, FirewallTerminal, DataCrystal, etc.
+    world/aldenmere/ ← AldenmereZone, AkademieInnenZone, BeschwoerungsraumZone
 ```
 
 ---
@@ -79,7 +83,8 @@ game/
 
 - **AudioManager** (Node in FirewallRuins.tscn): Lädt alle SFX beim Start, spielt Ambient automatisch
 - SFX via `AudioManager.Instance?.PlaySfx("name", position)` (3D) oder `PlaySfx2D("name")` (UI/global)
-- Ambient `ambient_ruins.wav` startet automatisch als Loop
+- Ambient `ambient_ruins.wav` startet automatisch als Loop (Firewall Ruins)
+- Ambient `ambient_aldenmere.wav` läuft als Loop in allen Aldenmere-Szenen (AudioStreamPlayer, loop_mode=1)
 
 ## Glitch-Shader
 

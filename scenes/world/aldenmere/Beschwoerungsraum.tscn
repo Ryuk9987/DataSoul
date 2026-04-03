@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://datasoul_beschwoerungsraum"]
+[gd_scene load_steps=20 format=3 uid="uid://datasoul_beschwoerungsraum"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/BeschwoerungsraumZone.cs" id="1_script"]
 [ext_resource type="Script" path="res://scripts/cutscene/IntroCutscene.cs" id="19_cutscene"]
@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door.glb" id="11_gate_door"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/stairs.glb" id="12_stairs"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-corner.glb" id="13_corner"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-a.glb" id="21_char_a"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-b.glb" id="22_char_b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape_npc"]
+radius = 0.4
+height = 1.8
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(14, 0.4, 14)
@@ -213,9 +219,25 @@ light_color = Color(0.15, 0.1, 0.35, 1)
 light_energy = 0.6
 omni_range = 15.0
 
+; === NPCs — Zeremonienmeister + Assistent (Kenney Blocky Characters) ===
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="NPC_Zeremonienmeister" type="StaticBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Zeremonienmeister"]
+shape = SubResource("CapsuleShape_npc")
+[node name="CharacterMesh" parent="NPCs/NPC_Zeremonienmeister" instance=ExtResource("21_char_a")]
+
+[node name="NPC_Assistent" type="StaticBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Assistent"]
+shape = SubResource("CapsuleShape_npc")
+[node name="CharacterMesh" parent="NPCs/NPC_Assistent" instance=ExtResource("22_char_b")]
+
+; === Ambient Sound (deaktiviert bis echter Sound vorliegt) ===
 [node name="AmbientMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ambient")
-autoplay = true
+autoplay = false
 volume_db = -12.0
 
 ; === Cutscene Controller ===

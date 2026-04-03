@@ -25,6 +25,21 @@ Vor jeder Änderung zuerst hier lesen, dann README.md.
 
 ## Kern-Systeme
 
+### CutsceneTTS
+- `scripts/cutscene/CutsceneTTS.cs` — statische Klasse für TTS Voice Acting
+- Nutzt `DisplayServer.TtsSpeak()` (System-Stimmen: SAPI/Windows, espeak/Linux)
+- Stimm-Profile: Pitch + Rate je Sprecher (Zeremonienmeister, Magister Aldric, Lyra, NARRATOR)
+- Integration: `IntroCutscene.cs` ruft `Speak()` nach `ShowLine()` und `Stop()` am Ende
+- Bevorzugt deutsche Systemstimmen, Fallback auf erste verfügbare
+
+### NPCs (Kenney Blocky Characters, CC0)
+- Assets: `res://assets/models/characters/kenney/character-a.glb` bis `character-r.glb`
+- **Beschwoerungsraum.tscn**: NPC_Zeremonienmeister (char-a, links -1.5m), NPC_Assistent (char-b, rechts +1.5m)
+- **Aldenmere.tscn**: NPC_Buerger1/2 (char-c/d), NPC_Haendler (char-e), NPC_Wache (char-f)
+- **AkademieInnen.tscn**: NPC_Student1 (char-g), NPC_Student2 (char-h)
+- Alle NPCs: StaticBody3D + CapsuleShape3D Collision, keine KI
+- AmbientMusic autoplay=false in allen Aldenmere-Szenen (noise WAV stummgeschaltet)
+
 ### AudioManager
 - **Node** in `FirewallRuins.tscn` (kein Autoload, aber `ProcessMode = Always`)
 - Singleton: `AudioManager.Instance`

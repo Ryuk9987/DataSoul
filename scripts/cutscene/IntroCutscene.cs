@@ -231,6 +231,9 @@ public partial class IntroCutscene : Node
         float duration = ComputeDuration(line.Text);
         DialogueSystem.Instance?.ShowLine(line.Speaker, line.Text, duration);
 
+        // TTS Voice Acting
+        CutsceneTTS.Speak(line.Speaker, line.Text);
+
         // Kamera + Glitch nach Dialog-Anzeige
         HandleDirectionAfter(_currentSeqName, _currentLineIdx);
 
@@ -801,6 +804,9 @@ public partial class IntroCutscene : Node
         // Spieler-Kamera wieder aktiv
         if (_playerCamera != null) _playerCamera.Current = true;
         if (_cutsceneCamera != null) _cutsceneCamera.Current = false;
+
+        // TTS stoppen
+        CutsceneTTS.Stop();
 
         // Dialogue ausblenden
         DialogueSystem.Instance?.HideImmediate();

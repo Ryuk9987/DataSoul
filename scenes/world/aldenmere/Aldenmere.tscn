@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://datasoul_aldenmere"]
+[gd_scene load_steps=20 format=3 uid="uid://datasoul_aldenmere"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/AldenmereZone.cs" id="1_script"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="4_ambient"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-wall.glb" id="12_wall"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-corner.glb" id="13_corner"]
 [ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door.glb" id="14_gate_door"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-c.glb" id="30_char_c"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-d.glb" id="31_char_d"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-e.glb" id="32_char_e"]
+[ext_resource type="PackedScene" path="res://assets/models/characters/kenney/character-f.glb" id="33_char_f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(32, 0.4, 32)
@@ -32,15 +36,6 @@ size = Vector3(6, 3, 2)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape_npc"]
 radius = 0.4
 height = 1.8
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_npc"]
-top_radius = 0.3
-bottom_radius = 0.3
-height = 1.8
-
-[sub_resource type="StandardMaterial3D" id="Mat_NPC"]
-albedo_color = Color(0.25, 0.2, 0.35, 1)
-roughness = 0.8
 
 [node name="Aldenmere" type="Node3D"]
 script = ExtResource("1_script")
@@ -156,43 +151,32 @@ shape = SubResource("BoxShape_suedTrigger")
 [node name="SpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 
+; === NPCs — Bürger, Händler, Wache (Kenney Blocky Characters) ===
 [node name="NPCs" type="Node3D" parent="."]
 
-[node name="NPC_Buerger1" type="CharacterBody3D" parent="NPCs"]
+[node name="NPC_Buerger1" type="StaticBody3D" parent="NPCs"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Buerger1"]
 shape = SubResource("CapsuleShape_npc")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Buerger1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("CylinderMesh_npc")
-surface_material_override/0 = SubResource("Mat_NPC")
+[node name="CharacterMesh" parent="NPCs/NPC_Buerger1" instance=ExtResource("30_char_c")]
 
-[node name="NPC_Buerger2" type="CharacterBody3D" parent="NPCs"]
+[node name="NPC_Buerger2" type="StaticBody3D" parent="NPCs"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Buerger2"]
 shape = SubResource("CapsuleShape_npc")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Buerger2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("CylinderMesh_npc")
-surface_material_override/0 = SubResource("Mat_NPC")
+[node name="CharacterMesh" parent="NPCs/NPC_Buerger2" instance=ExtResource("31_char_d")]
 
-[node name="NPC_Haendler" type="CharacterBody3D" parent="NPCs"]
+[node name="NPC_Haendler" type="StaticBody3D" parent="NPCs"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Haendler"]
 shape = SubResource("CapsuleShape_npc")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Haendler"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("CylinderMesh_npc")
-surface_material_override/0 = SubResource("Mat_NPC")
+[node name="CharacterMesh" parent="NPCs/NPC_Haendler" instance=ExtResource("32_char_e")]
 
-[node name="NPC_Wache" type="CharacterBody3D" parent="NPCs"]
+[node name="NPC_Wache" type="StaticBody3D" parent="NPCs"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -11)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Wache"]
 shape = SubResource("CapsuleShape_npc")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Wache"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("CylinderMesh_npc")
-surface_material_override/0 = SubResource("Mat_NPC")
+[node name="CharacterMesh" parent="NPCs/NPC_Wache" instance=ExtResource("33_char_f")]
 
 [node name="Lighting" type="Node3D" parent="."]
 
@@ -208,9 +192,10 @@ light_color = Color(0.15, 0.12, 0.25, 1)
 light_energy = 0.5
 omni_range = 40.0
 
+; === Ambient Sound (deaktiviert bis echter Sound vorliegt) ===
 [node name="AmbientMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ambient")
-autoplay = true
+autoplay = false
 volume_db = -8.0
 
 [connection signal="body_entered" from="Triggers/AkademieTrigger" to="." method="OnAkademieTriggerBodyEntered"]

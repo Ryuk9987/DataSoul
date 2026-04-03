@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://datasoul_ambient_aldenmere"
-path="res://.godot/imported/ambient_aldenmere.wav-datasoul_ambient.sample"
+uid="uid://dtbrmyt2jlfto"
+path="res://.godot/imported/ambient_aldenmere.wav-7641dc7a813957ab9fdf40526efe8037.sample"
 
 [deps]
 
 source_file="res://assets/audio/music/ambient_aldenmere.wav"
-dest_files=["res://.godot/imported/ambient_aldenmere.wav-datasoul_ambient.sample"]
+dest_files=["res://.godot/imported/ambient_aldenmere.wav-7641dc7a813957ab9fdf40526efe8037.sample"]
 
 [params]
 

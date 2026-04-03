@@ -97,7 +97,7 @@
 
 ---
 
-## Phase 5 — Aldenmere (Startstadt) + Intro-Sequenz
+## Phase 5 — Aldenmere (Startstadt) + Intro-Sequenz ✅
 
 > **Hinweis:** Firewall Ruins = Prototyp-Dungeon (Mechanik-Test). Echter Spielstart ist Aldenmere.
 > Reihenfolge: Assets → Szene → Intro-Dialoge/Cutscene
@@ -127,7 +127,18 @@
 - [x] Erster Auftrag — Briefing mit Magister Aldric (inkl. Suspense-Subtext)
 - [x] Lyra-Kommentar beim Verlassen der Akademie
 - [x] Regie-Anweisungen: Kamera, Glitch-Events, Szenen-Übergänge
-- [ ] Cutscene in Godot implementieren (csharp-godot)
+- [x] Cutscene in Godot implementieren (csharp-godot)
+
+### 5.4 Cutscene-Implementierung → `csharp-godot` ✅
+- [x] `scripts/cutscene/IntroCutscene.cs` — CutsceneController mit 5-Sequenzen-Ablauf
+- [x] `assets/shaders/ScreenGlitch.gdshader` — Screen-Overlay-Glitch (canvas_item, CanvasLayer)
+- [x] Signal `SummoningTriggered` → `IntroCutscene.OnSummoningTriggered()` verbunden
+- [x] `IntroCutscene`-Node in `Beschwoerungsraum.tscn` integriert
+- [x] Kamera-Bewegungen via Tween (alle 5 Sequenzen: Regie-Anweisungen 1:1)
+- [x] 6 Glitch-Events + dauerhafter Idle-Glitch (ab ritual[8])
+- [x] Background-spezifische Lyra-Dialog-Variante (GameSession.PlayerBackground)
+- [x] Spieler-Input gesperrt / freigegeben
+- [x] Szenen-Wechsel zu Aldenmere.tscn nach leaving_akademie
 
 ### Story & Dialoge (bereits erledigt)
 - [x] Lyra Intro-Dialog
@@ -194,6 +205,33 @@
     - Emotion-Tag → Animation-Mapping
     - Technische Hinweise für csharp-godot (Background-Mapping, Dialogue-Keys, Kamera-System)
 
+### Zuletzt erledigt (2026-04-03 — Phase 5.4 Cutscene-Implementierung)
+- **IntroCutscene.cs** — vollständiger CutsceneController
+  - 5 Sequenzen: ritual_cutscene → lyra_first_contact → lyra_first_contact_{bg} → first_quest_briefing → leaving_akademie
+  - Kamera: CutsceneCamera (Camera3D) mit Tween-basierter Bewegung (Sine/InOut)
+  - 6 Glitch-Events laut Regie-Anweisungen + dauerhafter Idle-Glitch ab ritual[8]
+  - Background-Mapping: GameSession.PlayerBackground → lyra_first_contact_{programmer|gamer|hacker|creator|analyst}
+  - F-Taste: vorzeitiges Weiterspringen (nur wenn Cutscene aktiv)
+  - Ende: Spieler-Input zurück, PlayerCamera aktiv, Szene → Aldenmere.tscn
+- **ScreenGlitch.gdshader** — neuer Screen-Overlay-Shader
+  - canvas_item, CanvasLayer Layer=10
+  - Horizontal-Shift in Bändern, RGB-Aberration, Scan-Lines (optional), Weißblitz-Linie
+  - Nur für Spieler sichtbar — NPCs nie betroffen (.hack-Prinzip)
+- **Beschwoerungsraum.tscn** erweitert
+  - IntroCutscene Node (res://scripts/cutscene/IntroCutscene.cs)
+  - Signal: SummoningTriggered → IntroCutscene.OnSummoningTriggered()
+
+### Zuletzt erledigt (2026-04-03 — Kenney Dungeon Asset Integration)
+- **Alle 7 Szenen auf Kenney Modular Dungeon Kit umgestellt** (CC0 Assets, `res://assets/models/world/kenney_dungeon/`)
+- **Aldenmere-Gruppe:**
+  - `Beschwoerungsraum.tscn`: `room-small.glb` ×2 + `gate-door.glb` + `stairs.glb` + `template-corner.glb` ×4 — altes `beschwoerungsraum.glb` ersetzt. Partikel, SummoningFocus, Trigger, Cutscene unverändert.
+  - `AkademieInnen.tscn`: `room-wide.glb` + `room-large.glb` + `corridor-wide.glb` ×2 + `gate.glb` + `stairs.glb` — altes `akademie_interior_hall.glb` ersetzt. Trigger/Spawnpunkt unverändert.
+  - `Aldenmere.tscn`: 2×2 `room-large.glb`/`room-large-variation.glb` Platz + `template-wall.glb` ×16 Umrandung + `template-corner.glb` ×4 + `gate-door.glb` ×2 (Nord/Süd) — alte `aldenmere_main_square.glb` + `aldenmere_props.glb` ersetzt. NPCs, Trigger, Lighting unverändert.
+- **FirewallRuins-Gruppe:**
+  - `Zone1.tscn`: 2×2 `room-large` Raster + `corridor.glb` ×2 Nordausgang + `gate-metal-bars.glb` + Wände/Ecken — altes `zone1_outer_ruins.glb` ersetzt. Sentinels, DataNode, DungeonDoor, EnvironmentStory unverändert.
+  - `Zone2.tscn`: 5× `corridor-wide.glb` + `corridor-intersection.glb` + `room-wide.glb` Boss-Kammer + Wände — altes `zone2_corridor_boss.glb` ersetzt. FirewallNodes, Overseer, Doors unverändert.
+  - `Zone3.tscn`: 2× `room-wide.glb` + `corridor-corner.glb` ×2 Abzweigungen + Wände — neu (Zone3 hatte kein GLB). DataWraiths, Terminals, Doors, EnvironmentStory unverändert.
+  - `Zone4.tscn`: 2×2 `room-large` Boss-Arena + `room-corner.glb` ×4 Ruinen-Ecken + Wände/Ecken — neu (Zone4 hatte kein GLB). Monolith-BoxMesh, Boss, Lighting unverändert.
+
 ### Nächste offene Punkte (Priorität)
-1. **Phase 5.3 Teil 2:** Cutscene in Godot implementieren → `csharp-godot` (CutsceneCamera.cs, AnimationPlayer, Signal-Hooks)
-2. **Phase 6:** Companion Story, Synergy-Attack, Data-Node FastTravel → `csharp-godot`
+1. **Phase 6:** Companion Story, Synergy-Attack, Data-Node FastTravel → `csharp-godot`

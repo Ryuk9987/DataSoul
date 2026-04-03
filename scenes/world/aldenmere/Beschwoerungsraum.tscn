@@ -1,0 +1,190 @@
+[gd_scene load_steps=18 format=3 uid="uid://datasoul_beschwoerungsraum"]
+
+[ext_resource type="Script" path="res://scripts/world/aldenmere/BeschwoerungsraumZone.cs" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/beschwoerungsraum.glb" id="2_room"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(14, 0.4, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallNS"]
+size = Vector3(14, 8, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallEW"]
+size = Vector3(1, 8, 14)
+
+[sub_resource type="BoxShape3D" id="BoxShape_focusTrigger"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape_ausgangTrigger"]
+size = Vector3(3, 3, 2)
+
+; === Partikel-Material (blau/golden, Rune-Licht-Partikel) ===
+[sub_resource type="ParticleProcessMaterial" id="ParticleMat_Blue"]
+direction = Vector3(0, 1, 0)
+spread = 45.0
+initial_velocity_min = 0.3
+initial_velocity_max = 0.8
+gravity = Vector3(0, 0.05, 0)
+scale_min = 0.05
+scale_max = 0.15
+color = Color(0.3, 0.6, 1.0, 0.85)
+emission_shape = 1
+emission_sphere_radius = 0.3
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleMat_Gold"]
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.6
+gravity = Vector3(0, 0.02, 0)
+scale_min = 0.04
+scale_max = 0.12
+color = Color(1.0, 0.85, 0.2, 0.9)
+emission_shape = 1
+emission_sphere_radius = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_particle"]
+radius = 0.05
+height = 0.1
+
+[node name="Beschwoerungsraum" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="LevelGeometry" parent="." instance=ExtResource("2_room")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Collision" type="Node3D" parent="."]
+
+[node name="FloorCollider" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/FloorCollider"]
+shape = SubResource("BoxShape_floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -7)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallNorth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallSouth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 7)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallSouth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallEast" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 4, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallEast"]
+shape = SubResource("BoxShape_wallEW")
+
+[node name="WallWest" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 4, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallWest"]
+shape = SubResource("BoxShape_wallEW")
+
+; === 5 Partikel-Emitter an den GLB-Emitter-Stellen (Runenkreis, Radius ~4m) ===
+[node name="Particles" type="Node3D" parent="."]
+
+[node name="Emitter1" type="GpuParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -4)
+amount = 24
+lifetime = 2.0
+preprocess = 1.0
+randomness = 0.3
+fixed_fps = 30
+process_material = SubResource("ParticleMat_Blue")
+draw_pass_1 = SubResource("SphereMesh_particle")
+emitting = true
+
+[node name="Emitter2" type="GpuParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8, 0.1, -1.2)
+amount = 24
+lifetime = 2.0
+preprocess = 1.0
+randomness = 0.3
+fixed_fps = 30
+process_material = SubResource("ParticleMat_Gold")
+draw_pass_1 = SubResource("SphereMesh_particle")
+emitting = true
+
+[node name="Emitter3" type="GpuParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35, 0.1, 3.2)
+amount = 24
+lifetime = 2.0
+preprocess = 1.0
+randomness = 0.3
+fixed_fps = 30
+process_material = SubResource("ParticleMat_Blue")
+draw_pass_1 = SubResource("SphereMesh_particle")
+emitting = true
+
+[node name="Emitter4" type="GpuParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35, 0.1, 3.2)
+amount = 24
+lifetime = 2.0
+preprocess = 1.0
+randomness = 0.3
+fixed_fps = 30
+process_material = SubResource("ParticleMat_Gold")
+draw_pass_1 = SubResource("SphereMesh_particle")
+emitting = true
+
+[node name="Emitter5" type="GpuParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8, 0.1, -1.2)
+amount = 24
+lifetime = 2.0
+preprocess = 1.0
+randomness = 0.3
+fixed_fps = 30
+process_material = SubResource("ParticleMat_Blue")
+draw_pass_1 = SubResource("SphereMesh_particle")
+emitting = true
+
+; === Fokuspunkt (Cutscene-Hook) ===
+[node name="SummoningFocus" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="FocusLight" type="OmniLight3D" parent="SummoningFocus"]
+light_color = Color(0.5, 0.4, 1.0, 1)
+light_energy = 1.5
+omni_range = 5.0
+
+; === Trigger-Zonen ===
+[node name="Triggers" type="Node3D" parent="."]
+
+[node name="FocusTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/FocusTrigger"]
+shape = SubResource("BoxShape_focusTrigger")
+
+[node name="AusgangTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6.5)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/AusgangTrigger"]
+shape = SubResource("BoxShape_ausgangTrigger")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 5.5)
+
+; === Beleuchtung ===
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="RuneGlow" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_color = Color(0.3, 0.2, 0.9, 1)
+light_energy = 1.8
+omni_range = 12.0
+
+[node name="AmbientGlow" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+light_color = Color(0.15, 0.1, 0.35, 1)
+light_energy = 0.6
+omni_range = 15.0
+
+[node name="AmbientMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ambient")
+autoplay = true
+volume_db = -12.0
+
+[connection signal="body_entered" from="Triggers/FocusTrigger" to="." method="OnFocusTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/FocusTrigger" to="." method="OnFocusTriggerBodyExited"]
+[connection signal="body_entered" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyExited"]

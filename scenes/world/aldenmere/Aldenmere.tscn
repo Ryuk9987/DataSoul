@@ -1,0 +1,153 @@
+[gd_scene load_steps=18 format=3 uid="uid://datasoul_aldenmere"]
+
+[ext_resource type="Script" path="res://scripts/world/aldenmere/AldenmereZone.cs" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/aldenmere_main_square.glb" id="2_square"]
+[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/aldenmere_props.glb" id="3_props"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="4_ambient"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(32, 0.4, 32)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallN"]
+size = Vector3(32, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallS"]
+size = Vector3(32, 10, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallE"]
+size = Vector3(1, 10, 32)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallW"]
+size = Vector3(1, 10, 32)
+
+[sub_resource type="BoxShape3D" id="BoxShape_akademieTrigger"]
+size = Vector3(4, 3, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape_suedTrigger"]
+size = Vector3(6, 3, 2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape_npc"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_npc"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_NPC"]
+albedo_color = Color(0.25, 0.2, 0.35, 1)
+roughness = 0.8
+
+[node name="Aldenmere" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="LevelGeometry" parent="." instance=ExtResource("2_square")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Props" parent="." instance=ExtResource("3_props")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Collision" type="Node3D" parent="."]
+
+[node name="FloorCollider" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/FloorCollider"]
+shape = SubResource("BoxShape_floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -16)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallNorth"]
+shape = SubResource("BoxShape_wallN")
+
+[node name="WallSouth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallSouth"]
+shape = SubResource("BoxShape_wallS")
+
+[node name="WallEast" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallEast"]
+shape = SubResource("BoxShape_wallE")
+
+[node name="WallWest" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 5, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallWest"]
+shape = SubResource("BoxShape_wallW")
+
+[node name="Triggers" type="Node3D" parent="."]
+
+[node name="AkademieTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -12)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/AkademieTrigger"]
+shape = SubResource("BoxShape_akademieTrigger")
+
+[node name="SuedausgangTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 14)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/SuedausgangTrigger"]
+shape = SubResource("BoxShape_suedTrigger")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="NPC_Buerger1" type="CharacterBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Buerger1"]
+shape = SubResource("CapsuleShape_npc")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Buerger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CylinderMesh_npc")
+surface_material_override/0 = SubResource("Mat_NPC")
+
+[node name="NPC_Buerger2" type="CharacterBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Buerger2"]
+shape = SubResource("CapsuleShape_npc")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Buerger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CylinderMesh_npc")
+surface_material_override/0 = SubResource("Mat_NPC")
+
+[node name="NPC_Haendler" type="CharacterBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Haendler"]
+shape = SubResource("CapsuleShape_npc")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Haendler"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CylinderMesh_npc")
+surface_material_override/0 = SubResource("Mat_NPC")
+
+[node name="NPC_Wache" type="CharacterBody3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -11)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/NPC_Wache"]
+shape = SubResource("CapsuleShape_npc")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/NPC_Wache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CylinderMesh_npc")
+surface_material_override/0 = SubResource("Mat_NPC")
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting"]
+transform = Transform3D(0.866, -0.35, 0.36, 0, 0.72, 0.69, -0.5, -0.61, 0.62, 0, 20, 0)
+light_color = Color(0.6, 0.55, 0.8, 1)
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="AmbientLight" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+light_color = Color(0.15, 0.12, 0.25, 1)
+light_energy = 0.5
+omni_range = 40.0
+
+[node name="AmbientMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ambient")
+autoplay = true
+volume_db = -8.0
+
+[connection signal="body_entered" from="Triggers/AkademieTrigger" to="." method="OnAkademieTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/AkademieTrigger" to="." method="OnAkademieTriggerBodyExited"]
+[connection signal="body_entered" from="Triggers/SuedausgangTrigger" to="." method="OnSuedausgangTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/SuedausgangTrigger" to="." method="OnSuedausgangTriggerBodyExited"]

@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://datasoul_akademie_innen"]
+
+[ext_resource type="Script" path="res://scripts/world/aldenmere/AkademieInnenZone.cs" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/akademie_interior_hall.glb" id="2_hall"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(18, 0.4, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallNS"]
+size = Vector3(18, 12, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wallEW"]
+size = Vector3(1, 12, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape_kellerTrigger"]
+size = Vector3(3, 3, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape_ausgangTrigger"]
+size = Vector3(4, 3, 2)
+
+[node name="AkademieInnen" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="LevelGeometry" parent="." instance=ExtResource("2_hall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Collision" type="Node3D" parent="."]
+
+[node name="FloorCollider" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/FloorCollider"]
+shape = SubResource("BoxShape_floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -10)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallNorth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallSouth" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 10)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallSouth"]
+shape = SubResource("BoxShape_wallNS")
+
+[node name="WallEast" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 6, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallEast"]
+shape = SubResource("BoxShape_wallEW")
+
+[node name="WallWest" type="StaticBody3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 6, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallWest"]
+shape = SubResource("BoxShape_wallEW")
+
+[node name="Triggers" type="Node3D" parent="."]
+
+[node name="KellerTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -8)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/KellerTrigger"]
+shape = SubResource("BoxShape_kellerTrigger")
+
+[node name="AusgangTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 9)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/AusgangTrigger"]
+shape = SubResource("BoxShape_ausgangTrigger")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="CeilingLight" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+light_color = Color(0.4, 0.5, 1.0, 1)
+light_energy = 1.2
+omni_range = 20.0
+shadow_enabled = true
+
+[node name="WallTorch1" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -5)
+light_color = Color(1.0, 0.6, 0.2, 1)
+light_energy = 0.8
+omni_range = 8.0
+
+[node name="WallTorch2" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3, -5)
+light_color = Color(1.0, 0.6, 0.2, 1)
+light_energy = 0.8
+omni_range = 8.0
+
+[node name="WallTorch3" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, 5)
+light_color = Color(1.0, 0.6, 0.2, 1)
+light_energy = 0.8
+omni_range = 8.0
+
+[node name="AmbientMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ambient")
+autoplay = true
+volume_db = -10.0
+
+[connection signal="body_entered" from="Triggers/KellerTrigger" to="." method="OnKellerTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/KellerTrigger" to="." method="OnKellerTriggerBodyExited"]
+[connection signal="body_entered" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyEntered"]
+[connection signal="body_exited" from="Triggers/AusgangTrigger" to="." method="OnAusgangTriggerBodyExited"]

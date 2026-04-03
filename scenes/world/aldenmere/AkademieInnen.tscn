@@ -1,8 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://datasoul_akademie_innen"]
+[gd_scene load_steps=12 format=3 uid="uid://datasoul_akademie_innen"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/AkademieInnenZone.cs" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/akademie_interior_hall.glb" id="2_hall"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-wide.glb" id="10_room_wide"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-large.glb" id="11_room_large"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/corridor-wide.glb" id="12_corridor_wide"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate.glb" id="13_gate"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/stairs.glb" id="14_stairs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(18, 0.4, 20)
@@ -22,8 +26,32 @@ size = Vector3(4, 3, 2)
 [node name="AkademieInnen" type="Node3D"]
 script = ExtResource("1_script")
 
-[node name="LevelGeometry" parent="." instance=ExtResource("2_hall")]
+; === Level Geometrie — Kenney Modular Dungeon ===
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+; Haupthalle: room-wide als breite Haupthalle
+[node name="MainHall" parent="LevelGeometry" instance=ExtResource("10_room_wide")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+; Erweiterte Halle mit room-large dahinter
+[node name="HallExtension" parent="LevelGeometry" instance=ExtResource("11_room_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+; Gang Nord-Links (Richtung Keller)
+[node name="CorridorNorthLeft" parent="LevelGeometry" instance=ExtResource("12_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
+
+; Gang Nord-Rechts
+[node name="CorridorNorthRight" parent="LevelGeometry" instance=ExtResource("12_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -8)
+
+; Eingangstor (Südseite)
+[node name="MainGate" parent="LevelGeometry" instance=ExtResource("13_gate")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 9)
+
+; Treppe zum Keller (Nordseite, Richtung Beschwoerungsraum)
+[node name="KellerStairs" parent="LevelGeometry" instance=ExtResource("14_stairs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
 [node name="Collision" type="Node3D" parent="."]
 

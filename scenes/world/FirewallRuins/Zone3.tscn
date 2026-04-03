@@ -1,19 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://datasoul_zone3"]
+[gd_scene load_steps=13 format=3 uid="uid://datasoul_zone3"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/DataWraith.tscn" id="1_wraith"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="2_door"]
 [ext_resource type="PackedScene" path="res://scenes/world/FirewallTerminal.tscn" id="3_terminal"]
 [ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
 [ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-wide.glb" id="10_room_wide"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-wide-variation.glb" id="11_room_wide_v"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/corridor-corner.glb" id="12_corner_corr"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-wall.glb" id="13_wall"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(35, 0.5, 35)
-
-[sub_resource type="BoxMesh" id="BoxMesh_floor"]
-size = Vector3(35, 0.5, 35)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
-albedo_color = Color(0.08, 0.08, 0.15, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape_wallNS"]
 size = Vector3(37, 8, 0.5)
@@ -24,12 +22,56 @@ size = Vector3(0.5, 8, 37)
 [node name="Zone3" type="Node3D"]
 script = ExtResource("4_zone")
 
+; === Level Geometrie — Kenney Modular Dungeon (Terminal-Kammer Zone 3) ===
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+; Hauptkammer: 2 room-wide nebeneinander
+[node name="RoomLeft" parent="LevelGeometry" instance=ExtResource("10_room_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="RoomRight" parent="LevelGeometry" instance=ExtResource("11_room_wide_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+; Seitliche Abzweigungen (Ecken-Korridore)
+[node name="SideNW" parent="LevelGeometry" instance=ExtResource("12_corner_corr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -8)
+
+[node name="SideNE" parent="LevelGeometry" instance=ExtResource("12_corner_corr")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 12, 0, -8)
+
+; Wände rundum
+[node name="WallN1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -17)
+[node name="WallN2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
+[node name="WallN3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -17)
+
+[node name="WallS1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -8, 0, 17)
+[node name="WallS2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 17)
+[node name="WallS3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8, 0, 17)
+
+[node name="WallE1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17, 0, -8)
+[node name="WallE2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17, 0, 0)
+[node name="WallE3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 17, 0, 8)
+
+[node name="WallW1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -17, 0, -8)
+[node name="WallW2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -17, 0, 0)
+[node name="WallW3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -17, 0, 8)
+
+; === Kollision ===
 [node name="Floor" type="StaticBody3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape_floor")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("BoxMesh_floor")
-surface_material_override/0 = SubResource("Mat_Floor")
 
 [node name="WallNorth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -18)
@@ -51,12 +93,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 4, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
 shape = SubResource("BoxShape_wallEW")
 
+; === Beleuchtung ===
 [node name="OmniLight1" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 light_color = Color(0.4, 0.55, 1.0, 1)
 light_energy = 2.2
 omni_range = 20.0
 
+; === Spielinhalt ===
 [node name="Terminal1" parent="." instance=ExtResource("3_terminal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
 TerminalId = 1

@@ -1,9 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://datasoul_aldenmere"]
+[gd_scene load_steps=22 format=3 uid="uid://datasoul_aldenmere"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/AldenmereZone.cs" id="1_script"]
-[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/aldenmere_main_square.glb" id="2_square"]
-[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/aldenmere_props.glb" id="3_props"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="4_ambient"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-large.glb" id="10_room_large"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-large-variation.glb" id="11_room_large_v"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-wall.glb" id="12_wall"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-corner.glb" id="13_corner"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door.glb" id="14_gate_door"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(32, 0.4, 32)
@@ -42,11 +45,74 @@ roughness = 0.8
 [node name="Aldenmere" type="Node3D"]
 script = ExtResource("1_script")
 
-[node name="LevelGeometry" parent="." instance=ExtResource("2_square")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+; === Level Geometrie — Kenney Modular Dungeon ===
+; Hauptplatz: 2×2 Raster aus room-large (je ~8×8m), ergibt ~16×16m Platz
+[node name="LevelGeometry" type="Node3D" parent="."]
 
-[node name="Props" parent="." instance=ExtResource("3_props")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="PlatzNW" parent="LevelGeometry" instance=ExtResource("10_room_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="PlatzNE" parent="LevelGeometry" instance=ExtResource("11_room_large_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="PlatzSW" parent="LevelGeometry" instance=ExtResource("11_room_large_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="PlatzSE" parent="LevelGeometry" instance=ExtResource("10_room_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+
+; Umrandung: Wände Nord/Süd (je 4 Segmente à ~4m)
+[node name="WallN1" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -14)
+[node name="WallN2" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -14)
+[node name="WallN3" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -14)
+[node name="WallN4" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -14)
+
+[node name="WallS1" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -12, 0, 14)
+[node name="WallS2" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -4, 0, 14)
+[node name="WallS3" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 4, 0, 14)
+; Süd-Eingang in der Mitte (gate-door statt Wand)
+[node name="GateSouth" parent="LevelGeometry" instance=ExtResource("14_gate_door")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 12, 0, 14)
+
+; Wände Ost/West (je 4 Segmente)
+[node name="WallE1" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, -12)
+[node name="WallE2" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, -4)
+[node name="WallE3" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, 4)
+[node name="WallE4" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, 12)
+
+[node name="WallW1" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, -12)
+[node name="WallW2" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, -4)
+[node name="WallW3" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, 4)
+[node name="WallW4" parent="LevelGeometry" instance=ExtResource("12_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, 12)
+
+; Ecken
+[node name="CornerNW" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, -14)
+[node name="CornerNE" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -14)
+[node name="CornerSW" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -14, 0, 14)
+[node name="CornerSE" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, 14)
+
+; Eingang zur Akademie (Nordseite)
+[node name="GateNorthAkademie" parent="LevelGeometry" instance=ExtResource("14_gate_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
 
 [node name="Collision" type="Node3D" parent="."]
 

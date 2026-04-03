@@ -1,41 +1,20 @@
-[gd_scene load_steps=19 format=3 uid="uid://datasoul_zone2"]
+[gd_scene load_steps=14 format=3 uid="uid://datasoul_zone2"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/FirewallNode.tscn" id="1_fw"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/OverseerUnit7.tscn" id="2_overseer"]
 [ext_resource type="PackedScene" path="res://scenes/world/DungeonDoor.tscn" id="3_door"]
 [ext_resource type="Script" path="res://scripts/world/DungeonZone.cs" id="4_zone"]
 [ext_resource type="PackedScene" path="res://scenes/world/EnvironmentStory.tscn" id="5_envstory"]
-[ext_resource type="PackedScene" path="res://assets/models/world/firewall_ruins/zone2_corridor_boss.glb" id="6_levelglb"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/corridor-wide.glb" id="10_corridor_wide"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/corridor-intersection.glb" id="11_intersection"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-wide.glb" id="12_room_wide"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-wall.glb" id="13_wall"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door-window.glb" id="14_gate_window"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(30, 0.5, 50)
 
-[sub_resource type="BoxMesh" id="BoxMesh_floor"]
-size = Vector3(30, 0.5, 50)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
-albedo_color = Color(0.1, 0.1, 0.14, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape_pillar"]
-size = Vector3(2, 7, 2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
-size = Vector3(2, 7, 2)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Pillar"]
-albedo_color = Color(0.18, 0.18, 0.22, 1)
-roughness = 0.95
-
-[sub_resource type="BoxShape3D" id="BoxShape_arch"]
-size = Vector3(10, 0.8, 2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_arch"]
-size = Vector3(10, 0.8, 2)
-
 [sub_resource type="BoxShape3D" id="BoxShape_wallL"]
-size = Vector3(0.5, 8, 50)
-
-[sub_resource type="BoxShape3D" id="BoxShape_wallR"]
 size = Vector3(0.5, 8, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape_wallBack"]
@@ -47,36 +26,49 @@ size = Vector3(30, 0.5, 50)
 [node name="Zone2" type="Node3D"]
 script = ExtResource("4_zone")
 
+; === Level Geometrie — Kenney Modular Dungeon (Korridor-Boss-Zone) ===
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+; Langer breiter Korridor (5 Segmente à 4m = 20m Länge)
+[node name="Corridor1" parent="LevelGeometry" instance=ExtResource("10_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+[node name="Corridor2" parent="LevelGeometry" instance=ExtResource("10_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+[node name="Corridor3" parent="LevelGeometry" instance=ExtResource("10_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+[node name="Corridor4" parent="LevelGeometry" instance=ExtResource("10_corridor_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+; Kreuzung in der Mitte (Overseer-Bereich)
+[node name="CorridorIntersection" parent="LevelGeometry" instance=ExtResource("11_intersection")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+
+; Boss-Kammer am Ende
+[node name="BossRoom" parent="LevelGeometry" instance=ExtResource("12_room_wide")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+
+; Seitenwände
+[node name="WallLeft1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, -14)
+[node name="WallLeft2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, -6)
+[node name="WallLeft3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -14, 0, 2)
+[node name="WallRight1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, -14)
+[node name="WallRight2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, -6)
+[node name="WallRight3" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14, 0, 2)
+
+; Tür zu Zone3
+[node name="GateToZone3" parent="LevelGeometry" instance=ExtResource("14_gate_window")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
+
+; === Kollision ===
 [node name="Floor" type="StaticBody3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape_floor")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("BoxMesh_floor")
-surface_material_override/0 = SubResource("Mat_Floor")
-
-[node name="PillarLeft" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3.5, 0)
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PillarLeft"]
-shape = SubResource("BoxShape_pillar")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PillarLeft"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Mat_Pillar")
-
-[node name="PillarRight" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.5, 0)
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PillarRight"]
-shape = SubResource("BoxShape_pillar")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PillarRight"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Mat_Pillar")
-
-[node name="Archway" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Archway"]
-shape = SubResource("BoxShape_arch")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Archway"]
-mesh = SubResource("BoxMesh_arch")
-surface_material_override/0 = SubResource("Mat_Pillar")
 
 [node name="WallLeft" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 0)
@@ -86,7 +78,7 @@ shape = SubResource("BoxShape_wallL")
 [node name="WallRight" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallRight"]
-shape = SubResource("BoxShape_wallR")
+shape = SubResource("BoxShape_wallL")
 
 [node name="WallBack" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -25)
@@ -103,20 +95,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
 shape = SubResource("BoxShape_ceiling")
 
+; === Beleuchtung ===
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866, -0.4, 0.3, 0, 0.6, 0.8, -0.5, -0.7, 0.5, 0, 15, 0)
 light_color = Color(0.6, 0.65, 0.9, 1)
 light_energy = 1.2
 shadow_enabled = true
 
+; === Spielinhalt ===
 [node name="FirewallNodeLeft" parent="." instance=ExtResource("1_fw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 8)
 
 [node name="FirewallNodeRight" parent="." instance=ExtResource("1_fw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 8)
-
-[node name="LevelGeometry" parent="." instance=ExtResource("6_levelglb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="OverseerUnit7" parent="." instance=ExtResource("2_overseer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16)

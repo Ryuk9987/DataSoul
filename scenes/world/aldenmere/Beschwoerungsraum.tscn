@@ -1,9 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://datasoul_beschwoerungsraum"]
+[gd_scene load_steps=16 format=3 uid="uid://datasoul_beschwoerungsraum"]
 
 [ext_resource type="Script" path="res://scripts/world/aldenmere/BeschwoerungsraumZone.cs" id="1_script"]
 [ext_resource type="Script" path="res://scripts/cutscene/IntroCutscene.cs" id="19_cutscene"]
-[ext_resource type="PackedScene" path="res://assets/models/world/aldenmere/beschwoerungsraum.glb" id="2_room"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/ambient_aldenmere.wav" id="3_ambient"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-small.glb" id="10_room_small"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/gate-door.glb" id="11_gate_door"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/stairs.glb" id="12_stairs"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-corner.glb" id="13_corner"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(14, 0.4, 14)
@@ -52,8 +55,37 @@ height = 0.1
 [node name="Beschwoerungsraum" type="Node3D"]
 script = ExtResource("1_script")
 
-[node name="LevelGeometry" parent="." instance=ExtResource("2_room")]
+; === Level Geometrie — Kenney Modular Dungeon ===
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+; Hauptraum: room-small als Basis des Beschwoerungsraums (Kellerraum, ~4×4m)
+[node name="RoomBase" parent="LevelGeometry" instance=ExtResource("10_room_small")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+; Zweiter room-small-Block versetzt für größere Fläche
+[node name="RoomBase2" parent="LevelGeometry" instance=ExtResource("10_room_small")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+; Ecken des Raums
+[node name="CornerNW" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -5, 0, -5)
+
+[node name="CornerNE" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 0, -5)
+
+[node name="CornerSW" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
+
+[node name="CornerSE" parent="LevelGeometry" instance=ExtResource("13_corner")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 5, 0, 5)
+
+; Eingangs-Tor (Südseite, z=6.5)
+[node name="EntranceGate" parent="LevelGeometry" instance=ExtResource("11_gate_door")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 6)
+
+; Treppe am Eingang (Keller → Aufgang)
+[node name="EntranceStairs" parent="LevelGeometry" instance=ExtResource("12_stairs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="Collision" type="Node3D" parent="."]
 
@@ -82,7 +114,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 4, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Collision/WallWest"]
 shape = SubResource("BoxShape_wallEW")
 
-; === 5 Partikel-Emitter an den GLB-Emitter-Stellen (Runenkreis, Radius ~4m) ===
+; === 5 Partikel-Emitter an den Runenkreis-Stellen (Radius ~4m) ===
 [node name="Particles" type="Node3D" parent="."]
 
 [node name="Emitter1" type="GPUParticles3D" parent="Particles"]

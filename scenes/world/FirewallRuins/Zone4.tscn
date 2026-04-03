@@ -1,19 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://datasoul_zone4"]
+[gd_scene load_steps=11 format=3 uid="uid://datasoul_zone4"]
 
 [ext_resource type="PackedScene" path="res://scenes/enemies/BreachInstanceAlpha.tscn" id="1_boss"]
 [ext_resource type="Script" path="res://scripts/world/Zone4Controller.cs" id="2_zone"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-large.glb" id="10_room_large"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-large-variation.glb" id="11_room_large_v"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/room-corner.glb" id="12_room_corner"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-wall.glb" id="13_wall"]
+[ext_resource type="PackedScene" path="res://assets/models/world/kenney_dungeon/template-corner.glb" id="14_corner"]
 
 [sub_resource type="BoxShape3D" id="BoxShape_floor"]
 size = Vector3(25, 0.5, 25)
-
-[sub_resource type="BoxMesh" id="BoxMesh_floor"]
-size = Vector3(25, 0.5, 25)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
-albedo_color = Color(0.06, 0.06, 0.1, 1)
-emission_enabled = true
-emission = Color(0.05, 0.0, 0.1, 1)
-emission_energy_multiplier = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape_monolith"]
 size = Vector3(1.2, 6, 1.2)
@@ -42,13 +38,72 @@ size = Vector3(1.5, 3, 1.5)
 [node name="Zone4" type="Node3D"]
 script = ExtResource("2_zone")
 
+; === Level Geometrie — Kenney Modular Dungeon (Boss-Kammer Zone 4) ===
+; Quadratische Boss-Arena: 2×2 room-large Anordnung
+[node name="LevelGeometry" type="Node3D" parent="."]
+
+[node name="RoomNW" parent="LevelGeometry" instance=ExtResource("10_room_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="RoomNE" parent="LevelGeometry" instance=ExtResource("11_room_large_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="RoomSW" parent="LevelGeometry" instance=ExtResource("11_room_large_v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="RoomSE" parent="LevelGeometry" instance=ExtResource("10_room_large")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+; Ruinen-Ecken (room-corner als verfallene Abzweigungen)
+[node name="RuinCornerNW" parent="LevelGeometry" instance=ExtResource("12_room_corner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+
+[node name="RuinCornerNE" parent="LevelGeometry" instance=ExtResource("12_room_corner")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 10, 0, -10)
+
+[node name="RuinCornerSW" parent="LevelGeometry" instance=ExtResource("12_room_corner")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -10, 0, 10)
+
+[node name="RuinCornerSE" parent="LevelGeometry" instance=ExtResource("12_room_corner")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 10, 0, 10)
+
+; Außenwände
+[node name="WallN1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -13)
+[node name="WallN2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -13)
+
+[node name="WallS1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -6, 0, 13)
+[node name="WallS2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 6, 0, 13)
+
+[node name="WallE1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13, 0, -6)
+[node name="WallE2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13, 0, 6)
+
+[node name="WallW1" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -13, 0, -6)
+[node name="WallW2" parent="LevelGeometry" instance=ExtResource("13_wall")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -13, 0, 6)
+
+; Ecken
+[node name="CornerNW" parent="LevelGeometry" instance=ExtResource("14_corner")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -13, 0, -13)
+[node name="CornerNE" parent="LevelGeometry" instance=ExtResource("14_corner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -13)
+[node name="CornerSW" parent="LevelGeometry" instance=ExtResource("14_corner")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -13, 0, 13)
+[node name="CornerSE" parent="LevelGeometry" instance=ExtResource("14_corner")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 13, 0, 13)
+
+; === Kollision ===
 [node name="Floor" type="StaticBody3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape_floor")
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("BoxMesh_floor")
-surface_material_override/0 = SubResource("Mat_Floor")
 
+; === Monolith-Zentralpunkt (Boss-Szene-Prop, bleibt als BoxMesh) ===
 [node name="MonolithCenter" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MonolithCenter"]
@@ -73,12 +128,6 @@ shape = SubResource("BoxShape_ruin")
 mesh = SubResource("BoxMesh_ruin")
 surface_material_override/0 = SubResource("Mat_Monolith")
 
-[node name="OmniLight_Boss" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
-light_color = Color(0.9, 0.3, 0.4, 1)
-light_energy = 2.8
-omni_range = 25.0
-
 [node name="WallNorth" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -13)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
@@ -99,5 +148,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 5, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
 shape = SubResource("BoxShape_wallEW")
 
+; === Beleuchtung ===
+[node name="OmniLight_Boss" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+light_color = Color(0.9, 0.3, 0.4, 1)
+light_energy = 2.8
+omni_range = 25.0
+
+; === Spielinhalt ===
 [node name="Boss" parent="." instance=ExtResource("1_boss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
